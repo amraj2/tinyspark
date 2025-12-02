@@ -1,0 +1,119 @@
+import os
+import random
+import logging
+from pathlib import Path
+from typing import Optional, Set
+
+
+KID_SAFE_THEMES = [
+    "a friendly dragon reading a book in a sunny meadow",
+    "a brave astronaut kid exploring a candy planet",
+    "a tiny robot helping plant a magical garden",
+    "a pirate cat sailing a rainbow sea",
+    "a cozy treehouse with twinkling lights at dusk",
+    "a superhero dog rescuing balloons in a park",
+    "a city made of toys with gentle clouds",
+    "a secret library inside a mountain with glowing books",
+    "a festival of lanterns with smiling animals",
+    "a lighthouse guiding paper boats at sunset",
+]
+
+
+def _get_used_prompts(generated_dir: Path) -> Set[str]:
+    """Get set of prompts that have already been generated."""
+    used = set()
+    try:
+        if not generated_dir.exists():
+            return used
+
+        for file in generated_dir.glob("*.png"):
+            # Convert filename back to prompt
+            # Format: "a-friendly-dragon-reading-a-book-in-a-sunny-meadow.png"
+            prompt = file.stem.replace('-', ' ')
+            used.add(prompt.lower())
+    except Exception:
+        pass
+    return used
+
+
+def _generate_new_prompt_with_openai() -> Optional[str]:
+    """Generate a new kid-safe story prompt using OpenAI."""
+    api_key = os.environ.get("OPENAI_API_KEY")
+    if not api_key or not api_key.startswith("sk-"):
+        return None
+
+    try:
+        from openai import OpenAI
+
+        client = OpenAI(api_key=api_key)
+
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "You are a creative writing assistant for children "
+                        "aged 6-11. Generate a single, kid-friendly story "
+                        "prompt that is appropriate, imaginative, and "
+                        "inspiring. The prompt should be a simple sentence "
+                        "describing a scene or situation, similar to: "
+                        "'a <adjective> <noun> <verb> a <noun> in a <location> '. "
+                        "Return ONLY the prompt text, nothing else."
+                    ),
+                },
+                {
+                    "role": "user",
+                    "content": (
+                        "Generate a new, unique kid-safe story prompt for "
+                        "image generation. Make it creative and different "
+                        "from common themes."
+                    ),
+                },
+            ],
+            max_tokens=50,
+            temperature=0.9,
+        )
+
+        prompt = response.choices[0].message.content.strip()
+        # Remove quotes if present
+        prompt = prompt.strip('"').strip("'")
+        return prompt
+    except Exception as e:
+        logger = logging.getLogger(__name__)
+        logger.warning("Failed to generate new prompt with OpenAI: %s", e)
+        return None
+
+
+def get_unused_prompt(generated_dir: Path) -> str:
+    """Get a random prompt that hasn't been used yet.
+
+    If all prompts have been used, generates a new one with OpenAI.
+    """
+    used_prompts = _get_used_prompts(generated_dir)
+
+    # Get prompts that haven't been used
+    available = [
+        prompt for prompt in KID_SAFE_THEMES
+        if prompt.lower() not in used_prompts
+    ]
+
+    if available:
+        return random.choice(available)
+
+    # All prompts have been used, generate a new one with OpenAI
+    logger = logging.getLogger(__name__)
+    logger.info("All prompts exhausted, generating new prompt with OpenAI")
+    new_prompt = _generate_new_prompt_with_openai()
+
+    if new_prompt:
+        return new_prompt
+
+    # Fallback if OpenAI fails
+    logger.warning("OpenAI prompt generation failed, using random existing")
+    return random.choice(KID_SAFE_THEMES)
+
+
+def random_kid_safe_prompt() -> str:
+    """Legacy function for backward compatibility."""
+    return random.choice(KID_SAFE_THEMES)

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ title or "TinySpark" }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>TinySpark Story Starter</h1>
+      <p class="subtitle">Generate creative images to inspire young writers aged 6-11</p>
+
+      <div class="button-container">
+        <button id="generateBtn" class="kid-button">Generate Story Image</button>
+        <span id="status" class="status-text">Ready</span>
+      </div>
+
+      <div id="promptBox" class="prompt-box" style="display:none;"></div>
+
+      <div class="content-wrapper">
+        <div class="image-container">
+          <img id="image" alt="Story inspiration image" style="display:none;" />
+          <p id="placeholder" class="placeholder-text">
+            Your generated image will appear here
+          </p>
+        </div>
+
+        <section class="tips-section">
+          <h3>Story Writing Guide</h3>
+          <ul>
+            <li>Who are the characters in your story?</li>
+            <li>Where does your story take place?</li>
+            <li>What problem or adventure do they face?</li>
+            <li>How do they solve it or what happens next?</li>
+          </ul>
+        </section>
+      </div>
+    </main>
+
+    <!-- Loading overlay for new image generation -->
+    <div id="loadingOverlay" class="loading-overlay">
+      <div class="loading-content">
+        <h2 class="loading-title">Creating Your Story Image!</h2>
+        <div class="loading-spinner">
+          <div class="spinner-ring"></div>
+          <div class="spinner-ring"></div>
+          <div class="spinner-ring"></div>
+        </div>
+        <p class="loading-message">
+          <span class="loading-emoji">🎨</span>
+          Our artists are working hard!
+          <span class="loading-emoji">✨</span>
+        </p>
+        <p class="loading-subtitle" id="loadingSubtitle">
+          This might take a moment...
+        </p>
+      </div>
+    </div>
+
+    <script>
+      const btn = document.getElementById('generateBtn');
+      const img = document.getElementById('image');
+      const statusEl = document.getElementById('status');
+      const promptBox = document.getElementById('promptBox');
+      const placeholder = document.getElementById('placeholder');
+      const loadingOverlay = document.getElementById('loadingOverlay');
+      const loadingSubtitle = document.getElementById('loadingSubtitle');
+      
+      let clickCount = 0;
+      let subtitleInterval = null;
+
+      const funMessages = [
+        "Mixing colors and magic...",
+        "Drawing your amazing story...",
+        "Almost there, just a bit more...",
+        "Creating something special...",
+        "Your story is coming to life!",
+        "Adding the finishing touches...",
+      ];
+
+      function showLoadingOverlay() {
+        loadingOverlay.classList.add('active');
+        let messageIndex = 0;
+        
+        // Rotate through fun messages every 4 seconds
+        subtitleInterval = setInterval(() => {
+          loadingSubtitle.textContent = funMessages[messageIndex];
+          messageIndex = (messageIndex + 1) % funMessages.length;
+        }, 4000);
+      }
+
+      function hideLoadingOverlay() {
+        loadingOverlay.classList.remove('active');
+        if (subtitleInterval) {
+          clearInterval(subtitleInterval);
+          subtitleInterval = null;
+        }
+      }
+
+      async function getRandomImage() {
+        try {
+          clickCount++;
+          
+          // On 3rd click, generate a new image; otherwise use existing
+          const generateNew = clickCount === 3;
+          
+          if (generateNew) {
+            showLoadingOverlay();
+            statusEl.textContent = 'Generating new image...';
+            clickCount = 0; // Reset counter after generating new image
+          } else {
+            statusEl.textContent = 'Loading image...';
+          }
+          
+          btn.disabled = true;
+          img.style.display = 'none';
+          placeholder.style.display = 'block';
+          promptBox.style.display = 'none';
+          
+          const res = await fetch('/api/random-image', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ generate_new: generateNew }),
+          });
+          
+          if (!res.ok) throw new Error('Request failed');
+          
+          const data = await res.json();
+          promptBox.textContent = 'Story prompt: ' + data.prompt;
+          promptBox.style.display = 'block';
+          
+          img.src = data.image_url;
+          img.onload = () => { 
+            img.style.display = 'block';
+            placeholder.style.display = 'none';
+            hideLoadingOverlay();
+          };
+          
+          statusEl.textContent = 'Complete';
+        } catch (e) {
+          statusEl.textContent = 'Error - please try again';
+          placeholder.style.display = 'block';
+          hideLoadingOverlay();
+        } finally {
+          btn.disabled = false;
+        }
+      }
+
+      btn.addEventListener('click', getRandomImage);
+    </script>
+  </body>
+  </html>
+
+
