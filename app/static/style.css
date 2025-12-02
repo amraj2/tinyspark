@@ -169,6 +169,17 @@ h1 {
   max-width: 100%;
   height: auto;
   display: block;
+  transition: opacity 0.1s ease;
+}
+
+.image-container img.roulette-spinning {
+  opacity: 0.7;
+  animation: roulettePulse 0.2s ease infinite;
+}
+
+@keyframes roulettePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
 }
 
 .status-text {

@@ -17,7 +17,7 @@
       <div class="main-content">
 
       <div class="button-container">
-        <button id="generateBtn" class="kid-button">Generate Story Image</button>
+        <button id="generateBtn" class="kid-button">Generate Story</button>
         <span id="status" class="status-text">Ready</span>
       </div>
 
@@ -76,6 +76,8 @@
       let allImages = [];
       let currentImageIndex = 0;
       let subtitleInterval = null;
+      let rouletteTimeout = null;
+      let preloadedImages = new Map();
 
       const funMessages = [
         "Mixing colors and magic...",
@@ -111,37 +113,139 @@
           if (res.ok) {
             const data = await res.json();
             allImages = data.images || [];
+            console.log('Loaded', allImages.length, 'images');
             // Shuffle the array for random order
             for (let i = allImages.length - 1; i > 0; i--) {
               const j = Math.floor(Math.random() * (i + 1));
               [allImages[i], allImages[j]] = [allImages[j], allImages[i]];
             }
+            // Preload all images for smooth roulette effect
+            preloadImages();
           }
         } catch (e) {
           console.error('Failed to load images:', e);
         }
       }
 
+      function preloadImages() {
+        allImages.forEach((imageData, index) => {
+          const img = new Image();
+          img.src = imageData.url;
+          preloadedImages.set(imageData.url, img);
+        });
+      }
+
+      function showRouletteEffect(targetIndex, onComplete) {
+        if (allImages.length === 0) {
+          if (onComplete) onComplete();
+          return;
+        }
+
+        let currentCycleIndex = 0;
+        let delay = 50; // Start fast (50ms)
+        const minDelay = 300; // Slow down to 300ms
+        const delayIncrement = 15; // Gradually increase delay
+        const minCycles = 3; // Minimum number of full cycles
+        const totalCycles = minCycles + Math.floor(Math.random() * 2); // 3-4 full cycles
+        let cyclesCompleted = 0;
+        let isSlowing = false;
+        const maxDuration = 5000; // Maximum 5 seconds
+        const startTime = Date.now();
+        let animationComplete = false;
+
+        // Calculate how many images to cycle through
+        const totalImages = allImages.length;
+        const totalSteps = totalCycles * totalImages + targetIndex;
+
+        function stopOnTarget() {
+          if (animationComplete) return;
+          animationComplete = true;
+          
+          // Clear any pending timeout
+          if (rouletteTimeout) {
+            clearTimeout(rouletteTimeout);
+            rouletteTimeout = null;
+          }
+          
+          // Stop on target image
+          const targetImage = allImages[targetIndex];
+          img.src = targetImage.url;
+          img.classList.remove('roulette-spinning');
+          img.style.display = 'block';
+          placeholder.style.display = 'none';
+          promptBox.textContent = 'Story prompt: ' + targetImage.prompt;
+          promptBox.style.display = 'block';
+          statusEl.textContent = '';
+          btn.disabled = false;
+          if (onComplete) onComplete();
+        }
+
+        // Set maximum duration timeout
+        const maxDurationTimeout = setTimeout(() => {
+          stopOnTarget();
+        }, maxDuration);
+
+        function cycleImage() {
+          // Check if 5 seconds have passed
+          const elapsed = Date.now() - startTime;
+          if (elapsed >= maxDuration) {
+            clearTimeout(maxDurationTimeout);
+            stopOnTarget();
+            return;
+          }
+
+          if (currentCycleIndex >= totalSteps) {
+            clearTimeout(maxDurationTimeout);
+            stopOnTarget();
+            return;
+          }
+
+          // Show current image in cycle
+          const displayIndex = currentCycleIndex % totalImages;
+          const currentImage = allImages[displayIndex];
+          
+          img.src = currentImage.url;
+          img.style.display = 'block';
+          img.classList.add('roulette-spinning');
+          placeholder.style.display = 'none';
+          promptBox.textContent = 'Story prompt: ' + currentImage.prompt;
+          promptBox.style.display = 'block';
+
+          currentCycleIndex++;
+
+          // Check if we've completed a full cycle
+          if (displayIndex === totalImages - 1) {
+            cyclesCompleted++;
+            // Start slowing down after minimum cycles
+            if (cyclesCompleted >= minCycles && !isSlowing) {
+              isSlowing = true;
+            }
+          }
+
+          // Gradually slow down
+          if (isSlowing && delay < minDelay) {
+            delay = Math.min(delay + delayIncrement, minDelay);
+          }
+
+          rouletteTimeout = setTimeout(cycleImage, delay);
+        }
+
+        // Start the roulette effect
+        statusEl.textContent = 'Spinning...';
+        cycleImage();
+      }
+
       async function getRandomImage() {
         try {
+          // Clear any existing roulette timeout
+          if (rouletteTimeout) {
+            clearTimeout(rouletteTimeout);
+            rouletteTimeout = null;
+          }
+
           // Load all images if we haven't yet
           if (allImages.length === 0) {
             await loadAllImages();
-          }
-          
-          // Check if we've shown all existing images
-          const allImagesShown = currentImageIndex >= allImages.length;
-          const generateNew = allImagesShown;
-          
-          if (generateNew) {
-            showLoadingOverlay();
-            statusEl.textContent = 'Generating new image...';
-            // Reset index after generating new image
-            currentImageIndex = 0;
-            // Reload images to include the new one
-            await loadAllImages();
-          } else {
-            statusEl.textContent = 'Loading image...';
           }
           
           btn.disabled = true;
@@ -149,41 +253,100 @@
           placeholder.style.display = 'block';
           promptBox.style.display = 'none';
           
-          const res = await fetch('/api/random-image', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ 
-              generate_new: generateNew,
-              image_index: generateNew ? null : currentImageIndex
-            }),
-          });
+          // Debug logging
+          console.log('Current index:', currentImageIndex, 'Total images:', allImages.length);
           
-          if (!res.ok) throw new Error('Request failed');
+          // Check if we've shown all existing images
+          // After showing all images, the next click (5th if 4 images exist) generates new
+          // We check BEFORE incrementing, so if index equals length, we've shown all
+          const allImagesShown = allImages.length > 0 && currentImageIndex >= allImages.length;
+          const generateNew = allImagesShown || allImages.length === 0;
           
-          const data = await res.json();
-          promptBox.textContent = 'Story prompt: ' + data.prompt;
-          promptBox.style.display = 'block';
+          console.log('All images shown?', allImagesShown, 'Generate new?', generateNew, 'Condition:', currentImageIndex, '>=', allImages.length);
           
-          img.src = data.image_url;
-          img.onload = () => { 
-            img.style.display = 'block';
-            placeholder.style.display = 'none';
-            hideLoadingOverlay();
+          if (generateNew) {
+            // Generate new image with OpenAI (5th click after showing all existing)
+            console.log('Generating new image via OpenAI');
+            showLoadingOverlay();
+            statusEl.textContent = 'Generating new image...';
             
-            // Increment index for next time (unless we just generated new)
-            if (!generateNew) {
-              currentImageIndex++;
+            const res = await fetch('/api/random-image', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ generate_new: true }),
+            });
+            
+            if (!res.ok) throw new Error('Request failed');
+            
+            const data = await res.json();
+            promptBox.textContent = 'Story prompt: ' + data.prompt;
+            promptBox.style.display = 'block';
+            
+            img.src = data.image_url;
+            img.onload = () => { 
+              img.style.display = 'block';
+              placeholder.style.display = 'none';
+              hideLoadingOverlay();
+              
+              // Reset index and reload images to include the new one
+              currentImageIndex = 0;
+              console.log('Reset index to 0, reloading images');
+              loadAllImages().then(() => {
+                btn.disabled = false;
+              });
+            };
+            
+            statusEl.textContent = '';
+          } else {
+            // Use roulette effect for existing images (1st-4th clicks)
+            if (allImages.length > 0 && currentImageIndex < allImages.length) {
+              const imageIndexToShow = currentImageIndex;
+              console.log('Showing existing image at index:', imageIndexToShow, 'out of', allImages.length);
+              showRouletteEffect(imageIndexToShow, () => {
+                // Increment index only after roulette completes
+                currentImageIndex++;
+                console.log('Roulette complete, index incremented to:', currentImageIndex, 'out of', allImages.length);
+              });
+            } else {
+              // Edge case: should not happen, but generate new if it does
+              console.log('Edge case: allImages.length =', allImages.length, 'currentImageIndex =', currentImageIndex);
+              showLoadingOverlay();
+              statusEl.textContent = 'Generating new image...';
+              
+              const res = await fetch('/api/random-image', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ generate_new: true }),
+              });
+              
+              if (!res.ok) throw new Error('Request failed');
+              
+              const data = await res.json();
+              promptBox.textContent = 'Story prompt: ' + data.prompt;
+              promptBox.style.display = 'block';
+              
+              img.src = data.image_url;
+              img.onload = () => { 
+                img.style.display = 'block';
+                placeholder.style.display = 'none';
+                hideLoadingOverlay();
+                currentImageIndex = 0;
+                loadAllImages().then(() => {
+                  btn.disabled = false;
+                });
+              };
+              
+              statusEl.textContent = '';
             }
-          };
-          
-          statusEl.textContent = 'Complete';
+          }
         } catch (e) {
           statusEl.textContent = 'Error - please try again';
           placeholder.style.display = 'block';
           hideLoadingOverlay();
-        } finally {
           btn.disabled = false;
         }
       }

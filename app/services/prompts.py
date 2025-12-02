@@ -53,20 +53,14 @@ def _generate_new_prompt_with_openai() -> Optional[str]:
                 {
                     "role": "system",
                     "content": (
-                        "You are a creative writing assistant for children "
-                        "aged 6-11. Generate a single, kid-friendly story "
-                        "prompt that is appropriate, imaginative, and "
-                        "inspiring. The prompt should be a simple sentence "
-                        "describing a scene or situation, similar to: "
-                        "'a <adjective> <noun> <verb> a <noun> in a <location> '. "
-                        "Return ONLY the prompt text, nothing else."
+                        "You are a creative writing helper for children aged 6–11. Create one imaginative, age-appropriate story starter written as a single, simple sentence that describes a scene or situation involving a character. Take inspiration from Disney, Marvel, Pixar, Dreamworks Animation, Illumination, Sony Pictures Animation, Universal Pictures, Warner Bros, Studio Ghibli, Steven Spielberg, Chris Meledandri or Glen Keane .’ Output only the story starter, with no extra text."
                     ),
                 },
                 {
                     "role": "user",
                     "content": (
                         "Generate a new, unique kid-safe story prompt for "
-                        "image generation. Make it creative and different "
+                        "image generation."
                         "from common themes."
                     ),
                 },
