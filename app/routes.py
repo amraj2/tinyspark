@@ -98,7 +98,10 @@ def generate_seed():
         for i in range(target_count):
             try:
                 # Generate a new unique prompt using OpenAI
-                prompt = prompts._generate_new_prompt_with_openai()
+                # Pass existing prompts to ensure uniqueness
+                prompt = prompts._generate_new_prompt_with_openai(
+                    existing_prompts=existing_prompts
+                )
 
                 # If OpenAI fails, fall back to unused prompt
                 if not prompt:

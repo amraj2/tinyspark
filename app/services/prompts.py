@@ -36,8 +36,14 @@ def _get_used_prompts(generated_dir: Path) -> Set[str]:
     return used
 
 
-def _generate_new_prompt_with_openai() -> Optional[str]:
-    """Generate a new kid-safe story prompt using OpenAI."""
+def _generate_new_prompt_with_openai(
+    existing_prompts: Optional[Set[str]] = None,
+) -> Optional[str]:
+    """Generate a new kid-safe story prompt using OpenAI.
+
+    Args:
+        existing_prompts: Set of existing prompts to avoid duplicates.
+    """
     api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key or not api_key.startswith("sk-"):
         return None
@@ -47,22 +53,63 @@ def _generate_new_prompt_with_openai() -> Optional[str]:
 
         client = OpenAI(api_key=api_key)
 
+        # Build user message with existing prompts
+        user_content = (
+            "Generate a new, unique kid-safe story prompt for "
+            "image generation. Make it creative and completely different "
+            "from any existing ideas."
+        )
+
+        if existing_prompts and len(existing_prompts) > 0:
+            # Format existing prompts for the AI
+            prompts_list = list(existing_prompts)[:50]  # Limit to 50
+            prompts_text = "\n".join(
+                f"- {prompt}" for prompt in prompts_list
+            )
+            user_content = (
+                "Generate a new, unique kid-safe story prompt for "
+                "image generation. The prompt must be COMPLETELY "
+                "DIFFERENT from all of these existing story ideas:\n\n"
+                f"{prompts_text}\n\n"
+                "Create something fresh, original, and imaginative that "
+                "does NOT repeat any themes, characters, or settings from "
+                "the list above. Think of a completely new scenario, "
+                "character, or adventure that kids aged 6-11 would find "
+                "exciting and inspiring."
+            )
+
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
                 {
                     "role": "system",
                     "content": (
-                        "You are a creative writing helper for children aged 6–11. Create one imaginative, age-appropriate story starter written as a single, simple sentence that describes a scene or situation involving a character. Take inspiration from Disney, Marvel, Pixar, Dreamworks Animation, Illumination, Sony Pictures Animation, Universal Pictures, Warner Bros, Studio Ghibli, Steven Spielberg, Chris Meledandri or Glen Keane .’ Output only the story starter, with no extra text."
+                        "You are a creative writing helper for children "
+                        "aged 6–11. Create one imaginative, "
+                        "age-appropriate story starter written as a single, "
+                        "simple sentence that describes a scene or situation "
+                        "involving a character. The image prompt should "
+                        "inspire a story following the Pixar story formula:\n"
+                        "1. Once upon a time, there was...\n"
+                        "2. Every day, ______.\n"
+                        "3. Until one day, ______.\n"
+                        "4. Because of that, ______.\n"
+                        "5. Because of that, ______.\n"
+                        "6. Until finally, ______.\n\n"
+                        "Your prompt should capture a key moment that could "
+                        "be the 'until one day' turning point or a "
+                        "'because of that' consequence moment - something "
+                        "that sparks adventure, change, or discovery. Take "
+                        "inspiration from Disney, Marvel, Pixar, Dreamworks "
+                        "Animation, Illumination, Sony Pictures Animation, "
+                        "Universal Pictures, Warner Bros, Studio Ghibli, "
+                        "Steven Spielberg, Chris Meledandri or Glen Keane. "
+                        "Output ONLY the story starter text, nothing else."
                     ),
                 },
                 {
                     "role": "user",
-                    "content": (
-                        "Generate a new, unique kid-safe story prompt for "
-                        "image generation."
-                        "from common themes."
-                    ),
+                    "content": user_content,
                 },
             ],
             max_tokens=50,
@@ -98,7 +145,9 @@ def get_unused_prompt(generated_dir: Path) -> str:
     # All prompts have been used, generate a new one with OpenAI
     logger = logging.getLogger(__name__)
     logger.info("All prompts exhausted, generating new prompt with OpenAI")
-    new_prompt = _generate_new_prompt_with_openai()
+    new_prompt = _generate_new_prompt_with_openai(
+        existing_prompts=used_prompts
+    )
 
     if new_prompt:
         return new_prompt
