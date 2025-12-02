@@ -7,9 +7,14 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
   </head>
   <body>
+    <div class="header-section">
+      <div class="header-content">
+        <h1 style="color: white; margin: 0; font-size: 1.75rem; font-weight: 700;">TinySpark Story Starter</h1>
+        <p class="header-subtitle">Generate creative images to inspire young writers aged 6-11</p>
+      </div>
+    </div>
     <main class="container">
-      <h1>TinySpark Story Starter</h1>
-      <p class="subtitle">Generate creative images to inspire young writers aged 6-11</p>
+      <div class="main-content">
 
       <div class="button-container">
         <button id="generateBtn" class="kid-button">Generate Story Image</button>
@@ -35,6 +40,7 @@
             <li>How do they solve it or what happens next?</li>
           </ul>
         </section>
+      </div>
       </div>
     </main>
 
@@ -67,7 +73,8 @@
       const loadingOverlay = document.getElementById('loadingOverlay');
       const loadingSubtitle = document.getElementById('loadingSubtitle');
       
-      let clickCount = 0;
+      let allImages = [];
+      let currentImageIndex = 0;
       let subtitleInterval = null;
 
       const funMessages = [
@@ -98,17 +105,41 @@
         }
       }
 
+      async function loadAllImages() {
+        try {
+          const res = await fetch('/api/existing-images');
+          if (res.ok) {
+            const data = await res.json();
+            allImages = data.images || [];
+            // Shuffle the array for random order
+            for (let i = allImages.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.random() * (i + 1));
+              [allImages[i], allImages[j]] = [allImages[j], allImages[i]];
+            }
+          }
+        } catch (e) {
+          console.error('Failed to load images:', e);
+        }
+      }
+
       async function getRandomImage() {
         try {
-          clickCount++;
+          // Load all images if we haven't yet
+          if (allImages.length === 0) {
+            await loadAllImages();
+          }
           
-          // On 3rd click, generate a new image; otherwise use existing
-          const generateNew = clickCount === 3;
+          // Check if we've shown all existing images
+          const allImagesShown = currentImageIndex >= allImages.length;
+          const generateNew = allImagesShown;
           
           if (generateNew) {
             showLoadingOverlay();
             statusEl.textContent = 'Generating new image...';
-            clickCount = 0; // Reset counter after generating new image
+            // Reset index after generating new image
+            currentImageIndex = 0;
+            // Reload images to include the new one
+            await loadAllImages();
           } else {
             statusEl.textContent = 'Loading image...';
           }
@@ -123,7 +154,10 @@
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ generate_new: generateNew }),
+            body: JSON.stringify({ 
+              generate_new: generateNew,
+              image_index: generateNew ? null : currentImageIndex
+            }),
           });
           
           if (!res.ok) throw new Error('Request failed');
@@ -137,6 +171,11 @@
             img.style.display = 'block';
             placeholder.style.display = 'none';
             hideLoadingOverlay();
+            
+            // Increment index for next time (unless we just generated new)
+            if (!generateNew) {
+              currentImageIndex++;
+            }
           };
           
           statusEl.textContent = 'Complete';
@@ -148,6 +187,9 @@
           btn.disabled = false;
         }
       }
+
+      // Load images on page load
+      loadAllImages();
 
       btn.addEventListener('click', getRandomImage);
     </script>

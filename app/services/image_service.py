@@ -133,6 +133,36 @@ def _openai_generate_image(prompt: str) -> Optional[str]:
         return None
 
 
+def get_all_existing_images() -> list[tuple[str, str]]:
+    """Get all existing images from the generated folder.
+
+    Returns:
+        List of tuples (image_url, prompt) for all images.
+    """
+    try:
+        # Ensure directory exists
+        GENERATED_IMAGES_DIR.mkdir(parents=True, exist_ok=True)
+
+        # Get all PNG files
+        image_files = list(GENERATED_IMAGES_DIR.glob("*.png"))
+
+        if not image_files:
+            return []
+
+        results = []
+        for file in image_files:
+            # Extract prompt from filename (remove .png extension)
+            prompt = file.stem.replace('-', ' ')
+            # Return the URL path
+            image_url = f"/static/generated/{file.name}"
+            results.append((image_url, prompt))
+
+        return results
+    except Exception as e:
+        logger.warning("Failed to get existing images: %s", e)
+        return []
+
+
 def get_random_existing_image() -> Optional[tuple[str, str]]:
     """Get a random existing image from the generated folder.
 
@@ -142,24 +172,12 @@ def get_random_existing_image() -> Optional[tuple[str, str]]:
     try:
         import random
 
-        # Ensure directory exists
-        GENERATED_IMAGES_DIR.mkdir(parents=True, exist_ok=True)
-
-        # Get all PNG files
-        image_files = list(GENERATED_IMAGES_DIR.glob("*.png"))
-
-        if not image_files:
+        all_images = get_all_existing_images()
+        if not all_images:
             return None
 
         # Pick a random image
-        selected_file = random.choice(image_files)
-
-        # Extract prompt from filename (remove .png extension)
-        prompt = selected_file.stem.replace('-', ' ')
-
-        # Return the URL path
-        image_url = f"/static/generated/{selected_file.name}"
-        return (image_url, prompt)
+        return random.choice(all_images)
     except Exception as e:
         logger.warning("Failed to get random existing image: %s", e)
         return None
