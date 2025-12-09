@@ -6,16 +6,7 @@ from typing import Optional, Set
 
 
 KID_SAFE_THEMES = [
-    "a friendly dragon reading a book in a sunny meadow",
-    "a brave astronaut kid exploring a candy planet",
-    "a tiny robot helping plant a magical garden",
-    "a pirate cat sailing a rainbow sea",
-    "a cozy treehouse with twinkling lights at dusk",
-    "a superhero dog rescuing balloons in a park",
-    "a city made of toys with gentle clouds",
-    "a secret library inside a mountain with glowing books",
-    "a festival of lanterns with smiling animals",
-    "a lighthouse guiding paper boats at sunset",
+    "a friendly dragon reading a book in a sunny meadow"
 ]
 
 
