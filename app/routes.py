@@ -79,7 +79,7 @@ def generate_seed():
     import logging
 
     logger = logging.getLogger(__name__)
-    target_count = 1
+    target_count = 20
     generated_count = 0
     errors = []
 
