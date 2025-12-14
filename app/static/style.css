@@ -388,4 +388,38 @@ h1 {
   50% { transform: scale(1.2); }
 }
 
+.footer-section {
+  max-width: 1200px;
+  margin: 3rem auto 2rem;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+.coffee-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--ngk-yellow);
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.coffee-button:hover {
+  background: var(--ngk-yellow-dark);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+  transform: translateY(-1px);
+}
+
+.coffee-icon {
+  font-size: 1.2rem;
+}
+
 
