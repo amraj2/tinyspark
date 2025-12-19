@@ -388,14 +388,10 @@ h1 {
   50% { transform: scale(1.2); }
 }
 
-.footer-section {
-  max-width: 1200px;
-  margin: 3rem auto 2rem;
-  padding: 0 2rem;
-  text-align: center;
-}
-
 .coffee-button {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -407,19 +403,29 @@ h1 {
   font-size: 0.95rem;
   border-radius: 4px;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  z-index: 1000;
 }
 
 .coffee-button:hover {
   background: var(--ngk-yellow-dark);
-  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+  transform: translateY(-2px);
 }
 
 .coffee-icon {
   font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  .coffee-button {
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
+  }
 }
 
 
