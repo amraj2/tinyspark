@@ -92,7 +92,7 @@
       const loadingSubtitle = document.getElementById('loadingSubtitle');
       
       let allImages = [];
-      let currentImageIndex = 0;
+      let clickCount = 0;
       let subtitleInterval = null;
       let rouletteTimeout = null;
       let preloadedImages = new Map();
@@ -167,7 +167,7 @@
         const totalCycles = minCycles + Math.floor(Math.random() * 2); // 3-4 full cycles
         let cyclesCompleted = 0;
         let isSlowing = false;
-        const maxDuration = 5000; // Maximum 5 seconds
+        const maxDuration = 3000; // Maximum 3 seconds
         const startTime = Date.now();
         let animationComplete = false;
 
@@ -266,25 +266,18 @@
             await loadAllImages();
           }
           
+          clickCount++;
+          
           btn.disabled = true;
           img.style.display = 'none';
           placeholder.style.display = 'block';
           promptBox.style.display = 'none';
           
-          // Debug logging
-          console.log('Current index:', currentImageIndex, 'Total images:', allImages.length);
-          
-          // Check if we've shown all existing images
-          // After showing all images, the next click (5th if 4 images exist) generates new
-          // We check BEFORE incrementing, so if index equals length, we've shown all
-          const allImagesShown = allImages.length > 0 && currentImageIndex >= allImages.length;
-          const generateNew = allImagesShown || allImages.length === 0;
-          
-          console.log('All images shown?', allImagesShown, 'Generate new?', generateNew, 'Condition:', currentImageIndex, '>=', allImages.length);
+          // On 4th click, generate new image; otherwise show random existing (1st-3rd)
+          const generateNew = clickCount === 4;
           
           if (generateNew) {
-            // Generate new image with OpenAI (5th click after showing all existing)
-            console.log('Generating new image via OpenAI');
+            // Generate new image with OpenAI (4th click)
             showLoadingOverlay();
             statusEl.textContent = 'Generating new image...';
             
@@ -308,9 +301,8 @@
               placeholder.style.display = 'none';
               hideLoadingOverlay();
               
-              // Reset index and reload images to include the new one
-              currentImageIndex = 0;
-              console.log('Reset index to 0, reloading images');
+              // Reset counter and reload images to include the new one
+              clickCount = 0;
               loadAllImages().then(() => {
                 btn.disabled = false;
               });
@@ -318,18 +310,17 @@
             
             statusEl.textContent = '';
           } else {
-            // Use roulette effect for existing images (1st-4th clicks)
-            if (allImages.length > 0 && currentImageIndex < allImages.length) {
-              const imageIndexToShow = currentImageIndex;
-              console.log('Showing existing image at index:', imageIndexToShow, 'out of', allImages.length);
-              showRouletteEffect(imageIndexToShow, () => {
-                // Increment index only after roulette completes
-                currentImageIndex++;
-                console.log('Roulette complete, index incremented to:', currentImageIndex, 'out of', allImages.length);
+            // Show random existing image (1st-3rd clicks)
+            if (allImages.length > 0) {
+              // Pick a random image index
+              const randomIndex = Math.floor(Math.random() * allImages.length);
+              
+              // Use roulette effect ending on the random image
+              showRouletteEffect(randomIndex, () => {
+                btn.disabled = false;
               });
             } else {
-              // Edge case: should not happen, but generate new if it does
-              console.log('Edge case: allImages.length =', allImages.length, 'currentImageIndex =', currentImageIndex);
+              // No images available, generate new one
               showLoadingOverlay();
               statusEl.textContent = 'Generating new image...';
               
@@ -352,7 +343,7 @@
                 img.style.display = 'block';
                 placeholder.style.display = 'none';
                 hideLoadingOverlay();
-                currentImageIndex = 0;
+                clickCount = 0;
                 loadAllImages().then(() => {
                   btn.disabled = false;
                 });
