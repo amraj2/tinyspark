@@ -32,26 +32,26 @@
         <span id="status" class="status-text">Ready</span>
       </div>
 
-      <div id="promptBox" class="prompt-box" style="display:none;"></div>
-
       <div class="content-wrapper">
         <div class="image-container">
           <img id="image" alt="Story inspiration image" style="display:none;" />
           <p id="placeholder" class="placeholder-text">
-            Your generated image will appear here
+            <!-- Your generated image will appear here -->
           </p>
         </div>
 
-        <section class="tips-section">
-          <h3>Story Writing Guide</h3>
-          <ul>
-            <li>Who are the characters in your story?</li>
-            <li>Where does your story take place?</li>
-            <li>What problem or adventure do they face?</li>
-            <li>How do they solve it or what happens next?</li>
-          </ul>
-        </section>
+        <div id="promptBox" class="prompt-box"></div>
       </div>
+
+      <section class="tips-section">
+        <h3>Story Writing Guide</h3>
+        <ul>
+          <li>Who are the characters in your story?</li>
+          <li>Where does your story take place?</li>
+          <li>What problem or adventure do they face?</li>
+          <li>How do they solve it or what happens next?</li>
+        </ul>
+      </section>
       </div>
 
       <footer class="footer-section">
@@ -191,7 +191,7 @@
           img.classList.remove('roulette-spinning');
           img.style.display = 'block';
           placeholder.style.display = 'none';
-          promptBox.textContent = 'Story prompt: ' + targetImage.prompt;
+          promptBox.textContent = targetImage.prompt;
           promptBox.style.display = 'block';
           statusEl.textContent = '';
           btn.disabled = false;
@@ -226,7 +226,7 @@
           img.style.display = 'block';
           img.classList.add('roulette-spinning');
           placeholder.style.display = 'none';
-          promptBox.textContent = 'Story prompt: ' + currentImage.prompt;
+          promptBox.textContent = currentImage.prompt;
           promptBox.style.display = 'block';
 
           currentCycleIndex++;
@@ -292,7 +292,7 @@
             if (!res.ok) throw new Error('Request failed');
             
             const data = await res.json();
-            promptBox.textContent = 'Story prompt: ' + data.prompt;
+            promptBox.textContent = data.prompt;
             promptBox.style.display = 'block';
             
             img.src = data.image_url;
@@ -335,7 +335,7 @@
               if (!res.ok) throw new Error('Request failed');
               
               const data = await res.json();
-              promptBox.textContent = 'Story prompt: ' + data.prompt;
+              promptBox.textContent = data.prompt;
               promptBox.style.display = 'block';
               
               img.src = data.image_url;
