@@ -65,13 +65,14 @@ def create_app() -> Flask:
 
     from .apps.doodlequest import bp as doodlequest_bp
     from .apps.elevenplus import bp as elevenplus_bp
+    from .apps.littlesparks import bp as littlesparks_bp
     from .apps.rhymetime import bp as rhymetime_bp
     from .apps.typinghero import bp as typinghero_bp
     from .apps.wordwizard import bp as wordwizard_bp
 
     for blueprint in (
         elevenplus_bp, wordwizard_bp, doodlequest_bp, rhymetime_bp,
-        typinghero_bp,
+        typinghero_bp, littlesparks_bp,
     ):
         app.register_blueprint(blueprint)
 

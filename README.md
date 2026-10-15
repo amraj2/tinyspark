@@ -82,6 +82,37 @@ and `static/shared.js`.
   a rhyme finder, a "which word rhymes?" game and a poem maker with live
   rhyme checks. APIs: `/rhyme-time/api/rhymes`, `/api/check`, `/api/quiz`.
 
+## Little Sparks (ages 3-5)
+
+Seven play-to-learn games for pre-readers at `/little-sparks/`. They are
+games first: the learning comes from the mechanics, not quizzes.
+
+| Game | Mechanic (era-style) | Learning by play |
+| --- | --- | --- |
+| Roly Poly | Katamari-style roller | big/small, counting, cause and effect |
+| Bug Net | creature-catching hunt | counting aloud to 5, matching |
+| Rainbow Sorter | party mini-game | colours, shapes, sorting |
+| Little Diner | busy-restaurant game | counting objects, quantities |
+| Choo-Choo Express | track-switch puzzler | planning, cause and effect, left/right |
+| Beat Pals | call-and-response rhythm | listening, memory, patterns |
+| Sprout Garden | farm-life game | life cycle, sequencing, patience |
+
+On the main menu each game is its own channel (`/little-sparks/<game>`);
+`/little-sparks/` is a calm picker reachable from the end-of-game "more
+ games" button. Channels without cover art show an emoji tile; add
+`game-<id>.png` to the art folder to replace it.
+
+Design rules: a friendly spoken voice plus pictures (no reading), huge
+targets, no fail states or timers, a sticker book as the reward, and
+**no analytics or third-party requests** in this area. Progress is stored
+only on the device. A press-and-hold grown-ups panel explains what each game
+teaches and offers conversation starters.
+
+Art is a slot system: every picture falls back to emoji until an image with
+the matching name is dropped into `static/apps/littlesparks/art/` (see
+`ART.md` there). Content lives in `app/apps/littlesparks/data.py`; track
+levels are validated by tests (acyclic, solvable, friends collectable).
+
 ## Typing Hero
 
 A Guitar-Hero-style rhythm game that teaches touch typing (`/typing-hero/`).

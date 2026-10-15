@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Little Sparks - TinySpark</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='apps/littlesparks/littlesparks.css') }}" />
+  </head>
+  <body class="ls">
+    <!-- No analytics, no third-party requests: this area is for little ones. -->
+    <header class="ls-top">
+      <button id="lsHome" class="ls-round ls-home" type="button" aria-label="Back to the main menu" hidden>&#127968;</button>
+      <h1 class="ls-title" id="lsTitle">Little Sparks</h1>
+      <div class="ls-top-right">
+        <button id="lsPauseButton" class="ls-round" type="button" aria-label="Pause game" aria-pressed="false" hidden>Ⅱ</button>
+        <button id="lsBook" class="ls-pill" type="button" aria-label="My stickers">&#11088; <span id="lsStickerCount">0</span></button>
+        <button id="lsSound" class="ls-round" type="button" aria-label="Sound on or off" aria-pressed="false">&#128266;</button>
+        <button id="lsParent" class="ls-round ls-parent" type="button" aria-label="Grown-ups: hold to open">&#9881;&#65039;</button>
+      </div>
+    </header>
+
+    <main class="ls-main">
+      <section id="lsHub" class="ls-screen" aria-label="Choose a game">
+        <ul id="lsTiles" class="ls-tiles"></ul>
+      </section>
+
+      <section id="lsPlay" class="ls-screen" hidden aria-label="Game">
+        <div class="ls-canvas-wrap"><canvas id="lsCanvas" aria-label="Game board"></canvas></div>
+        <p id="lsCaption" class="ls-caption" role="status" aria-live="polite"></p>
+        <div id="lsPauseLayer" class="ls-overlay" hidden><div class="ls-card"><h2>Taking a little break</h2><div class="ls-card-buttons"><button id="lsResume" class="ls-link" type="button">▶ Keep playing</button><button id="lsRestart" class="ls-link" type="button">↻ Start again</button></div></div></div>
+        <div id="lsDone" class="ls-overlay" hidden>
+          <div class="ls-card">
+            <div id="lsDoneEmoji" class="ls-card-emoji"></div>
+            <h2 id="lsDoneTitle" aria-live="polite"></h2>
+            <div class="ls-card-buttons">
+              <button id="lsAgain" class="ls-big ls-green" type="button" aria-label="Play again">&#8635;</button>
+              <button id="lsMore" class="ls-big ls-pink" type="button" aria-label="More games">&#127918;</button>
+              <button id="lsDoneHome" class="ls-big ls-blue" type="button" aria-label="Main menu">&#127968;</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="lsBookScreen" class="ls-screen" hidden aria-label="My stickers">
+        <ul id="lsStickers" class="ls-stickers"></ul>
+      </section>
+    </main>
+
+    <div id="lsSticker" class="ls-sticker-pop" hidden role="status" aria-live="polite">
+      <div id="lsStickerEmoji" class="ls-card-emoji"></div>
+      <div id="lsStickerName"></div>
+    </div>
+
+    <dialog id="lsParentDialog" class="ls-dialog">
+      <h2>For grown-ups</h2>
+      <p class="ls-small">Little Sparks has no ads, no accounts and no tracking. Stickers and progress are saved only on this device. The games use a friendly voice and pictures, so no reading is needed.</p>
+      <label class="ls-check"><input id="optVoice" type="checkbox" /> Spoken instructions</label>
+      <label class="ls-check"><input id="optSound" type="checkbox" /> Sound effects</label>
+      <h3>What each game teaches</h3>
+      <ul id="lsLearns" class="ls-learns"></ul>
+      <div class="ls-dialog-buttons">
+        <a class="ls-link" href="{{ url_for('main.index') }}">&larr; Back to TinySpark</a>
+        <button id="lsReset" class="ls-link ls-danger" type="button">Reset stickers and progress</button>
+        <button id="lsParentClose" class="ls-link" type="button">Close</button>
+      </div>
+    </dialog>
+
+    <script type="application/json" id="ls-config">{{ config_json|tojson }}</script>
+    <script src="{{ url_for('static', filename='apps/littlesparks/core.js') }}"></script>
+    <script src="{{ url_for('static', filename='apps/littlesparks/roly.js') }}"></script>
+    <script src="{{ url_for('static', filename='apps/littlesparks/bugs.js') }}"></script>
+    <script src="{{ url_for('static', filename='apps/littlesparks/sorter.js') }}"></script>
+    <script src="{{ url_for('static', filename='apps/littlesparks/diner.js') }}"></script>
+    <script src="{{ url_for('static', filename='apps/littlesparks/choo.js') }}"></script>
+    <script src="{{ url_for('static', filename='apps/littlesparks/beats.js') }}"></script>
+    <script src="{{ url_for('static', filename='apps/littlesparks/garden.js') }}"></script>
+    <script src="{{ url_for('static', filename='apps/littlesparks/app.js') }}"></script>
+  </body>
+</html>
