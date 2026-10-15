@@ -39,6 +39,36 @@ _ip_limiter = RateLimiter(
 _daily_cap = DailyCap(int(os.environ.get("DAILY_GENERATION_CAP", "100")))
 
 
+def _little_sparks_channels() -> list[dict]:
+    """One hub channel per Little Sparks game (ages 3-5)."""
+    from .apps.littlesparks import data as ls_data
+
+    worlds = {"roly": "race", "bugs": "challenge", "sorter": "challenge",
+              "diner": "create", "choo": "challenge", "beats": "race",
+              "garden": "create"}
+    labels = {"roly": "ROLL AND GROW", "bugs": "CATCH THE BUGS",
+              "sorter": "SORT THE COLOURS", "diner": "SERVE THE FOOD",
+              "choo": "DRIVE THE TRAIN", "beats": "COPY THE BEAT",
+              "garden": "GROW A GARDEN"}
+    return [
+        {
+            "name": g["title"],
+            "tagline": f'{g["style"]}. {g["learns"]}',
+            "emoji": g["emoji"],
+            "tone": g["color"],
+            "ages": "Ages 3-5",
+            "min_age": 3,
+            "max_age": 5,
+            "endpoint": "littlesparks.game",
+            "url_args": {"game_id": g["id"]},
+            "art_key": f'game-{g["id"]}',
+            "world": worlds[g["id"]],
+            "menu_label": labels[g["id"]],
+        }
+        for g in ls_data.GAMES
+    ]
+
+
 # Sections and apps shown on the homepage. Add an app to a section's
 # "apps" list to launch it; entries without an endpoint render as
 # "Coming soon" cards.
@@ -138,6 +168,12 @@ SECTIONS = [
             },
         ],
     },
+    {
+        "id": "little",
+        "title": "For little ones",
+        "blurb": "Play-to-learn games for ages 3 to 5, no reading needed.",
+        "apps": _little_sparks_channels(),
+    },
 ]
 
 
@@ -167,6 +203,19 @@ def _theme_arg(raw):
     return raw if raw in THEME_IDS else None
 
 
+def _cover_image(app_entry: dict):
+    """Optional per-channel cover art (a Little Sparks art-slot file)."""
+    key = app_entry.get("art_key")
+    if not key:
+        return None
+    from .apps.littlesparks import ART_DIR, available_art
+
+    name = available_art().get(key)
+    if not name:
+        return None
+    return url_for("static", filename=f"apps/littlesparks/art/{name}")
+
+
 @bp.get("/")
 def index():
     sections = [
@@ -175,13 +224,23 @@ def index():
             "apps": [
                 {
                     **a,
-                    "url": url_for(a["endpoint"]) if a.get("endpoint") else None,
+                    "url": (
+                        url_for(a["endpoint"], **a.get("url_args", {}))
+                        if a.get("endpoint") else None
+                    ),
+                    "cover_img": _cover_image(a),
                 }
                 for a in sec["apps"]
             ],
         }
         for sec in SECTIONS
     ]
+    # Preserve the familiar order within each age band, with the youngest first.
+    for section in sections:
+        section["apps"].sort(key=lambda app: app.get("min_age", 99))
+    sections.sort(key=lambda section: min(
+        (app.get("min_age", 99) for app in section["apps"]), default=99
+    ))
     return render_template(
         "home.html",
         title="TinySpark",

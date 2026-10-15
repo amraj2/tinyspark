@@ -2,7 +2,6 @@
   const screen = document.querySelector('.game-screen');
   const options = [...document.querySelectorAll('.game-option')];
   function select(option) {
-    if (option.classList.contains('selected')) return;
     options.forEach(item => {item.classList.toggle('selected',item === option); item.removeAttribute('aria-describedby');});
     option.setAttribute('aria-describedby','mission-description');
     screen.dataset.world = option.dataset.world;
@@ -14,6 +13,7 @@
   }
   const visibleOptions = () => options.filter(option => !option.hidden);
   const ageFilter = document.querySelector('#age-filter');
+  if(options.length)select(options[0]);
   function filterByAge() {
     const age = ageFilter.value;
     options.forEach(option => {
@@ -25,10 +25,13 @@
     document.querySelector('#system-age').textContent = age === 'all' ? 'All ages' : 'Age '+age;
     document.querySelector('#age-results').textContent = `${visible.length} ${visible.length === 1 ? 'adventure' : 'adventures'} available${age === 'all' ? '' : ` for age ${age}`}`;
   }
-  ageFilter.addEventListener('change', filterByAge);
+  const ageButtons=[...document.querySelectorAll('[data-age-choice]')];
+  function syncAgeButtons(){ageButtons.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.ageChoice===ageFilter.value)));}
+  ageButtons.forEach(button=>button.addEventListener('click',()=>{ageFilter.value=button.dataset.ageChoice;filterByAge();syncAgeButtons();}));
+  ageFilter.addEventListener('change',()=>{filterByAge();syncAgeButtons();});
   // Reapply the filter when browser back navigation restores the form value.
-  window.addEventListener('pageshow', filterByAge);
-  filterByAge();
+  window.addEventListener('pageshow',()=>{filterByAge();syncAgeButtons();});
+  filterByAge();syncAgeButtons();
   options.forEach(option => {
     option.addEventListener('click',event => {
       if(event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;

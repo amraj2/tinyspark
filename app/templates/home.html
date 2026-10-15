@@ -5,10 +5,35 @@
 <title>TinySpark · Choose your adventure</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='adventure.css') }}">
 <script src="{{ url_for('static', filename='adventure.js') }}" defer></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='hub-more.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='media-boot.css') }}">
+<script src="{{ url_for('static', filename='media-boot.js') }}" defer></script>
 </head>
 <body>
+<section id="media-boot" class="media-boot" aria-labelledby="boot-title" hidden>
+  <header class="boot-heading"><span>TINYSPARK HOME ENTERTAINMENT</span><h1 id="boot-title">A little spark.<br>A whole world of play.</h1></header>
+  <button id="boot-load" class="boot-load" type="button" aria-describedby="boot-instruction">
+    <span class="boot-scene" aria-hidden="true">
+      <span class="boot-halo"></span>
+      <span class="boot-media"><span class="media-ridges"></span><span class="media-label"></span><span class="media-reels"><i></i><i></i></span><span class="media-hole"></span><span class="media-brand">TINYSPARK · PLAY SIDE A</span></span>
+      <span class="insert-guide">↓</span>
+      <span class="boot-player"><span class="player-top"></span><span class="player-slot"></span><span class="player-display">READY</span><span class="player-brand">tiny<span>spark</span></span><span class="player-buttons">● ▪ ▪ ▶</span><span class="player-light"></span><span class="tonearm"></span></span>
+      <span class="shelf-shadow"></span>
+    </span>
+    <span class="boot-prompt" id="boot-instruction">Load your adventure</span><span class="boot-action">CLICK · TAP · ENTER</span>
+  </button>
+  <p class="boot-status" id="boot-status" role="status" aria-live="polite">Your next adventure is ready.</p>
+  <span class="boot-corner" aria-hidden="true">✦ A LITTLE JOY BEFORE YOU PLAY</span>
+  <div class="crt-start" aria-hidden="true"></div>
+</section>
 <main class="game-screen" data-world="create">
-  <header class="system-status"><span>● TinySpark</span><span id="system-age">All ages</span><span>HOME MENU</span></header>
+  <header class="system-status"><span>● TinySpark</span><span id="system-age" hidden>All ages</span>    <div class="age-filter menu-age-filter">
+      <span class="age-picker-label" id="age-picker-label">Pick your age</span>
+      <select id="age-filter" aria-describedby="age-guidance" hidden><option value="all">All ages</option>{% for age in range(3, 12) %}<option value="{{ age }}">Age {{ age }}</option>{% endfor %}</select>
+      <div class="age-buttons" role="group" aria-labelledby="age-picker-label"><button type="button" data-age-choice="all" aria-pressed="true">All<span>ages</span></button>{% for age in range(3, 12) %}<button type="button" data-age-choice="{{ age }}" aria-pressed="false" aria-label="Age {{ age }}">{{ age }}</button>{% endfor %}</div>
+      <p id="age-guidance" class="age-guidance-hidden">For parents: choose an age to find a suitable adventure.</p>
+      <p id="age-results" role="status" aria-live="polite" aria-atomic="true"></p>
+    </div><span>HOME MENU</span></header>
   <section class="selection" aria-labelledby="selection-title">
     {% set live = [] %}{% for section in sections %}{% for app in section.apps if app.url %}{% set _ = live.append(app) %}{% endfor %}{% endfor %}
     <h2 id="selection-title">Choose your adventure</h2>
@@ -19,23 +44,23 @@
       {% set world = app.world or ('create' if section.id == 'story' else ('race' if 'stumble' in app.url else 'challenge')) %}
       {% set label = app.menu_label or ('MAKE A STORY' if world == 'create' else ('RACE FOR THE CROWN' if world == 'race' else 'CRACK A CHALLENGE')) %}
       <a class="game-option{% if ns.n == 1 %} selected{% endif %}" href="{{ app.url }}" aria-label="{{ app.name }} · {{ app.ages }}" data-world="{{ world }}" data-title="{{ app.name }}" data-description="{{ app.tagline }}" data-age="{{ app.ages }}" data-min-age="{{ app.min_age }}" data-max-age="{{ app.max_age }}" {% if ns.n == 1 %}aria-describedby="mission-description"{% endif %}>
-        <span class="channel-art cover-art" style="background-image:url('{{ url_for('static', filename='game-art/channel-covers.png') }}');background-size:400% 200%;background-position:{{ ((ns.n - 1) % 4) * 100 / 3 }}% {{ 0 if ns.n <= 4 else 100 }}%" aria-hidden="true"></span>
+        {% if app.tone %}
+        <span class="channel-art cover-art cover-fallback" style="{% if app.cover_img %}background-image:url('{{ app.cover_img }}');background-size:cover;background-position:center{% else %}background-image:linear-gradient(145deg,{{ app.tone }},#ffffff);background-size:cover;background-position:center{% endif %}" aria-hidden="true">{% if not app.cover_img %}<span class="cover-emoji">{{ app.emoji }}</span><span class="channel-action">{{ app.name }}</span>{% endif %}</span>
+        {% else %}
+        {% set cover_index = {'Story Starter':0,'Word Wizard':1,'Doodle Quest':2,'Rhyme Time':3,'Typing Hero':4,'11+ Examinator':5,'Spark Stumble Race':6}.get(app.name, 7) %}
+        <span class="channel-art cover-art" style="background-image:url('{{ url_for('static', filename='game-art/channel-covers.png') }}');background-size:400% 200%;background-position:{{ (cover_index % 4) * 100 / 3 }}% {{ 0 if cover_index < 4 else 100 }}%" aria-hidden="true"></span>
+        {% endif %}
         <span class="channel-caption"><span class="option-label">{{ app.name }}</span><small>{{ app.ages }}</small><span class="option-go" aria-hidden="true">▶</span></span>
       </a>
     {% endfor %}{% endfor %}
     </nav>
   </section>
   <div class="board-caption"><span id="board-selection">Story Starter</span><span class="page-dots" aria-hidden="true">●</span><span>Point to a channel · Press Enter to open</span></div>
-  <footer class="system-dock"><button id="help-open" class="dock-orb" type="button" aria-label="Parent settings and age filter">⚙<small>Parents</small></button><div class="dock-center"><span class="dock-brand">Tiny<span>Spark</span></span><time id="system-clock"></time><span class="dock-instruction">Pick a channel. Let's play.</span></div><button id="motion-toggle" class="dock-orb" type="button" aria-pressed="false">Motion: on</button></footer>
+  <footer class="system-dock"><button id="help-open" class="dock-orb" type="button" aria-label="Parent settings and help">⚙<small>Parents</small></button><div class="dock-center"><span class="dock-brand">Tiny<span>Spark</span></span><time id="system-clock"></time><span class="dock-instruction">Pick a channel. Let's play.</span></div><button id="motion-toggle" class="dock-orb" type="button" aria-pressed="false">Motion: on</button></footer>
 </main>
 <dialog id="launch-dialog" class="launch-dialog"><div id="launch-art" class="launch-art"><span id="launch-symbol" aria-hidden="true"></span><h2 id="mission-title">Story Starter</h2></div><div class="launch-details"><span id="mission-age">Ages 6–11</span><p id="mission-description">Spin up a picture and write a story about it.</p></div><div class="launch-actions"><button id="launch-back" type="button">← Channel menu</button><a id="launch-play" href="/story-starter">Start ▶</a></div></dialog>
 <dialog id="help-dialog"><button class="close-dialog" type="button" aria-label="Close parent settings">×</button><h2>Parent settings</h2>
-    <div class="age-filter">
-      <label for="age-filter">Playing age</label>
-      <select id="age-filter" aria-describedby="age-guidance"><option value="all">All ages</option>{% for age in range(6, 12) %}<option value="{{ age }}">Age {{ age }}</option>{% endfor %}</select>
-      <p id="age-guidance">For parents: choose an age to find a suitable adventure.</p>
-      <p id="age-results" role="status" aria-live="polite" aria-atomic="true"></p>
-    </div>
-<p>Use the arrow keys to choose a channel. Press Enter to open it, then Start to play. Press Escape to return to the menu.</p><p>All games allow another try. Choose an age above to show suitable channels.</p></dialog>
+
+<p>Use the arrow keys to choose a channel. Press Enter to open it, then Start to play. Press Escape to return to the menu.</p><p>All games allow another try. Use the age selector on the main menu to show suitable channels.</p></dialog>
 {% include '_analytics.html' %}
 </body></html>
