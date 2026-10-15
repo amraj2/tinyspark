@@ -1,0 +1,45 @@
+{% extends "app_base.html" %}
+{% block content %}
+<section class="story-toolbar" aria-label="Rhyme Time modes">
+  <div class="library-tabs" role="tablist" aria-label="Rhyme Time mode">
+    <button class="tab" role="tab" id="tabFind" aria-selected="true">Rhyme finder</button>
+    <button class="tab" role="tab" id="tabGame" aria-selected="false">Rhyme match</button>
+    <button class="tab" role="tab" id="tabPoem" aria-selected="false">Poem maker</button>
+    <button class="tab" role="tab" id="tabMine" aria-selected="false">My poems <span id="poemCount" class="tab-count">0</span></button>
+  </div>
+</section>
+
+<section id="panelFind" class="game-card">
+  <h2>What rhymes with&hellip;?</h2>
+  <form id="findForm" class="game-actions" autocomplete="off">
+    <label for="findInput" class="story-label" style="margin:0">Type a word</label>
+    <input id="findInput" class="field-input" type="text" maxlength="30" placeholder="cat" />
+    <button class="kid-button" type="submit">Find rhymes</button>
+  </form>
+  <p id="findMsg" class="game-sub" aria-live="polite"></p>
+  <div id="findResults" class="chips"></div>
+</section>
+
+<section id="panelGame" class="game-card" hidden></section>
+
+<section id="panelPoem" class="game-card" hidden>
+  <h2>Make a poem</h2>
+  <div class="story-field">
+    <span class="story-label" id="formLabel">Poem shape</span>
+    <div class="seg" id="formPicker" role="radiogroup" aria-labelledby="formLabel"></div>
+  </div>
+  <div id="poemLines"></div>
+  <p class="story-label" style="margin-top:0.75rem">Rhyming ideas (tap to add to the line you are writing)</p>
+  <div id="poemIdeas" class="chips"></div>
+  <div class="game-actions">
+    <input id="poemTitle" class="field-input" type="text" maxlength="60" placeholder="Poem title" aria-label="Poem title" />
+    <button id="poemSave" class="kid-button" type="button">Save my poem</button>
+    <button id="poemRead" class="ghost-btn" type="button">&#128266; Read it to me</button>
+  </div>
+</section>
+
+<section id="panelMine" hidden></section>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='apps/rhymetime.js') }}" defer></script>
+{% endblock %}

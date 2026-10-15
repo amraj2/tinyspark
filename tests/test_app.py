@@ -28,6 +28,9 @@ def test_home_lists_apps_and_links_to_story_starter(client):
     html = client.get("/").data.decode()
     assert "Story Starter" in html
     assert 'href="/story-starter"' in html
+    for href in ("/word-wizard/", "/doodle-quest/", "/rhyme-time/"):
+        assert f'href="{href}"' in html
+    assert "Coming soon" not in html
     # 11+ and the Stumble race are separate adventures
     assert 'href="/11plus/"' in html and 'href="/11plus/stumble"' in html
     assert 'data-title="Spark Stumble Race"' in html

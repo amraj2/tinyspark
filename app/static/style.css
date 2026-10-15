@@ -1197,3 +1197,281 @@ body.classroom .story-prompt {
 @media (max-width: 600px) {
   .app-section { padding: 1rem 1rem 0; }
 }
+
+/* ===== Shared mini-app (game) components ===== */
+.game-app {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem 5rem;
+}
+
+.game-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0 1rem;
+}
+
+.game-card {
+  background: white;
+  border: 2px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1.25rem;
+  margin-top: 1rem;
+}
+
+.game-card h2 {
+  color: var(--primary);
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.game-q {
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0.25rem 0 0.75rem;
+}
+
+.game-sub {
+  color: var(--text-secondary);
+}
+
+.progress-bar {
+  height: 10px;
+  background: var(--border-color);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar > span {
+  display: block;
+  height: 100%;
+  background: var(--ngk-green);
+  transition: width 0.25s ease;
+}
+
+.opt-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  margin-top: 0.75rem;
+}
+
+.opt-btn {
+  font: inherit;
+  font-size: 1.15rem;
+  font-weight: 700;
+  padding: 0.9rem 1rem;
+  background: white;
+  color: var(--text-primary);
+  border: 2px solid var(--primary);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.opt-btn:hover:not(:disabled) {
+  background: #eaf4f7;
+  transform: translateY(-1px);
+}
+
+.opt-btn.correct {
+  background: #e6f6dc;
+  border-color: var(--ngk-green);
+}
+
+.opt-btn.wrong {
+  background: #fde8e6;
+  border-color: #b3261e;
+}
+
+.opt-btn:disabled {
+  cursor: default;
+}
+
+.feedback {
+  margin-top: 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
+  background: #f0f7fa;
+  border-left: 4px solid var(--primary);
+}
+
+.feedback.good {
+  background: #e6f6dc;
+  border-left-color: var(--ngk-green);
+}
+
+.feedback.bad {
+  background: #fff4e0;
+  border-left-color: var(--accent-dark);
+}
+
+.round-end {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.round-stars {
+  font-size: 2.5rem;
+  color: var(--accent-dark);
+  letter-spacing: 0.2rem;
+}
+
+.pips {
+  display: inline-flex;
+  gap: 0.2rem;
+  color: var(--ngk-green);
+}
+
+.word-card {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.9rem;
+  border: 2px solid var(--border-color);
+  border-radius: 14px;
+  background: white;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+
+.word-card.learned {
+  border-color: var(--ngk-green);
+  background: #f4fbef;
+}
+
+.word-card strong {
+  font-size: 1.1rem;
+  color: var(--primary);
+}
+
+.word-card small {
+  color: var(--text-secondary);
+}
+
+.tiles,
+.slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.75rem 0;
+}
+
+.tile,
+.slot {
+  width: 3rem;
+  height: 3.2rem;
+  display: grid;
+  place-items: center;
+  font: inherit;
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  border-radius: 10px;
+}
+
+.tile {
+  background: var(--accent);
+  border: 2px solid var(--accent-dark);
+  cursor: pointer;
+}
+
+.tile:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.slot {
+  background: #f4f6f7;
+  border: 2px dashed var(--border-color);
+  color: var(--primary);
+  cursor: pointer;
+}
+
+.slot.filled {
+  border-style: solid;
+  border-color: var(--primary);
+  background: white;
+}
+
+.game-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+  margin-top: 0.9rem;
+}
+
+.game-actions .kid-button {
+  width: auto;
+}
+
+.field-input {
+  font: inherit;
+  font-size: 1.1rem;
+  padding: 0.6rem 0.8rem;
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  min-width: 0;
+}
+
+.field-input:focus {
+  border-color: var(--primary);
+}
+
+/* Doodle Quest */
+.dq-studio {
+  margin-top: 1rem;
+}
+
+.dq-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.dq-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.swatch {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  border: 3px solid var(--border-color);
+  cursor: pointer;
+}
+
+.swatch.on {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--accent);
+}
+
+.ghost-btn.on {
+  background: var(--primary);
+  color: white;
+}
+
+.dq-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: white;
+  border: 3px solid var(--primary);
+  border-radius: 14px;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.dq-timer {
+  font-size: 1.5rem;
+}

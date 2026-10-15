@@ -1,0 +1,20 @@
+{% extends "app_base.html" %}
+{% block content %}
+<section class="story-toolbar" aria-label="Word Wizard options">
+  <div class="story-field">
+    <span class="story-label" id="levelLabel">Spell level</span>
+    <div class="seg" id="levelPicker" role="radiogroup" aria-labelledby="levelLabel"></div>
+  </div>
+  <div class="library-tabs" role="tablist" aria-label="Game mode">
+    <button class="tab" role="tab" id="tabQuiz" aria-selected="true">Spell Quiz</button>
+    <button class="tab" role="tab" id="tabScramble" aria-selected="false">Letter Scramble</button>
+    <button class="tab" role="tab" id="tabBook" aria-selected="false">My Spellbook <span id="learnedCount" class="tab-count">0</span></button>
+  </div>
+</section>
+
+<section id="stage" class="game-card" aria-live="polite"></section>
+<section id="bookStage" hidden></section>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='apps/wordwizard.js') }}" defer></script>
+{% endblock %}

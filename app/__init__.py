@@ -56,11 +56,22 @@ def create_app() -> Flask:
     ]
     Compress(app)
 
+    @app.context_processor
+    def _inject_analytics():
+        return {"ga_id": app.config.get("GA_MEASUREMENT_ID", "")}
+
     from .routes import bp as main_bp
     app.register_blueprint(main_bp)
 
+    from .apps.doodlequest import bp as doodlequest_bp
     from .apps.elevenplus import bp as elevenplus_bp
-    app.register_blueprint(elevenplus_bp)
+    from .apps.rhymetime import bp as rhymetime_bp
+    from .apps.wordwizard import bp as wordwizard_bp
+
+    for blueprint in (
+        elevenplus_bp, wordwizard_bp, doodlequest_bp, rhymetime_bp
+    ):
+        app.register_blueprint(blueprint)
 
     @app.cli.command("seed")
     @click.option("--count", default=20, show_default=True, type=int)

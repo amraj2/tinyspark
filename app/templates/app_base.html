@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ app_name }} - TinySpark</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    {% block head_extra %}{% endblock %}
+  </head>
+  <body class="{% block body_class %}{% endblock %}">
+    <div class="header-section">
+      <div class="header-content">
+        <div>
+          <a class="back-link" href="{{ url_for('main.index') }}">&larr; All apps</a>
+          <h1 class="site-title">{{ app_name }}</h1>
+        </div>
+        <p class="header-subtitle" id="progressChip" aria-live="polite">{{ app_tagline }}</p>
+      </div>
+    </div>
+
+    <main class="container game-app">
+      {% block content %}{% endblock %}
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+    <a href="https://buymeacoffee.com/amraj" target="_blank" rel="noopener noreferrer" class="coffee-button">
+      <span class="coffee-icon" aria-hidden="true">&#9749;</span>
+     Give feedback
+    </a>
+
+    {% include '_analytics.html' %}
+
+    <script type="application/json" id="app-config">{{ config_json|tojson }}</script>
+    <script src="{{ url_for('static', filename='shared.js') }}" defer></script>
+    {% block scripts %}{% endblock %}
+  </body>
+</html>

@@ -65,6 +65,22 @@ made (moderated, stored in `enrichment.json`); otherwise a built-in set is
 used. Pictures are tagged by theme from keywords in their prompt
 (`app/services/themes.py`).
 
+## Mini-apps (Word Wizard, Doodle Quest, Rhyme Time)
+
+All three are free of third-party services and keep progress in the
+child's browser only (`localStorage`). They share `templates/app_base.html`
+and `static/shared.js`.
+
+- **Word Wizard:** 54 vocabulary words in three levels, a definition quiz
+  and a letter-scramble game, a spellbook with mastery pips and badges.
+  Words live in `app/apps/wordwizard/data.py`.
+- **Doodle Quest:** a daily drawing challenge (prompt + twist, chosen by
+  date), canvas with colours, sizes, eraser and undo, timer, and a
+  12-item on-device gallery. Prompts in `app/apps/doodlequest/data.py`.
+- **Rhyme Time:** curated rhyme families (`app/apps/rhymetime/data.py`),
+  a rhyme finder, a "which word rhymes?" game and a poem maker with live
+  rhyme checks. APIs: `/rhyme-time/api/rhymes`, `/api/check`, `/api/quiz`.
+
 ## API
 
 - `GET /api/existing-images?limit=24&theme=animals` → `{ images: [{url, prompt, themes, questions, words}], total }` (random sample, max 100)

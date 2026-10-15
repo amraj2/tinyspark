@@ -1,0 +1,44 @@
+{% extends "app_base.html" %}
+{% block body_class %}doodle-page{% endblock %}
+{% block content %}
+<section class="game-card dq-challenge" aria-labelledby="dqTitle">
+  <span class="story-label" id="dqTitle">Your challenge</span>
+  <p class="game-q" id="dqPrompt"></p>
+  <p class="game-sub" id="dqTwist"></p>
+  <div class="game-actions">
+    <button id="dqToday" class="ghost-btn" type="button">Today's challenge</button>
+    <button id="dqNew" class="ghost-btn" type="button">Surprise me</button>
+    <button id="dqTimerBtn" class="ghost-btn" type="button">&#9201; Start 5 min timer</button>
+    <span id="dqTimer" class="timer-text dq-timer" aria-live="off"></span>
+  </div>
+</section>
+
+<section class="dq-studio" aria-label="Drawing area">
+  <div class="dq-tools" role="toolbar" aria-label="Drawing tools">
+    <div class="dq-group" id="dqColors" role="radiogroup" aria-label="Colour"></div>
+    <div class="dq-group" id="dqSizes" role="radiogroup" aria-label="Brush size"></div>
+    <div class="dq-group">
+      <button id="dqEraser" class="ghost-btn" type="button" aria-pressed="false">Eraser</button>
+      <button id="dqUndo" class="ghost-btn" type="button">Undo</button>
+      <button id="dqClear" class="ghost-btn danger" type="button">Clear</button>
+    </div>
+  </div>
+  <canvas id="dqCanvas" class="dq-canvas" width="640" height="480" aria-label="Drawing canvas. Draw with a finger, mouse or pen."></canvas>
+  <div class="game-actions">
+    <input id="dqTitleInput" class="field-input" type="text" maxlength="60" placeholder="Name your doodle" aria-label="Doodle name" />
+    <button id="dqSave" class="kid-button" type="button">Save to my gallery</button>
+    <button id="dqDownload" class="ghost-btn" type="button">Download picture</button>
+  </div>
+</section>
+
+<section class="story-library" aria-label="My gallery">
+  <div class="library-tabs">
+    <span class="tab" aria-selected="true">My gallery <span id="dqCount" class="tab-count">0</span></span>
+  </div>
+  <ul id="dqGallery" class="shelf"></ul>
+  <p id="dqEmpty" class="empty">Your saved doodles will appear here.</p>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='apps/doodlequest.js') }}" defer></script>
+{% endblock %}
