@@ -1,3 +1,4 @@
+import base64
 import hashlib
 import json
 import logging
@@ -8,7 +9,7 @@ import tempfile
 import threading
 import urllib.request
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Union
 
 
 FALLBACK_URLS = [
@@ -97,19 +98,15 @@ def _record_prompt(filename: str, prompt: str) -> None:
         )
 
 
-def _download_and_save_image(url: str, prompt: str) -> Optional[str]:
-    """Download a PNG and save it atomically. Returns its static URL."""
+def _save_image_bytes(data: bytes, prompt: str) -> Optional[str]:
+    """Validate a PNG and save it atomically. Returns its static URL."""
     try:
-        GENERATED_IMAGES_DIR.mkdir(parents=True, exist_ok=True)
-        filename = _filename_for(prompt)
-
-        with urllib.request.urlopen(url, timeout=30) as resp:
-            data = resp.read(MAX_DOWNLOAD_BYTES + 1)
         if len(data) > MAX_DOWNLOAD_BYTES:
             raise ValueError("image too large")
         if not data.startswith(PNG_SIGNATURE):
-            raise ValueError("downloaded file is not a PNG")
-
+            raise ValueError("image is not a PNG")
+        GENERATED_IMAGES_DIR.mkdir(parents=True, exist_ok=True)
+        filename = _filename_for(prompt)
         _atomic_write(GENERATED_IMAGES_DIR / filename, data)
         _record_prompt(filename, prompt)
         return f"/static/generated/{filename}"
@@ -118,7 +115,27 @@ def _download_and_save_image(url: str, prompt: str) -> Optional[str]:
         return None
 
 
-def _openai_generate_image(prompt: str) -> Optional[str]:
+def _download_and_save_image(url: str, prompt: str) -> Optional[str]:
+    """Download a PNG from a URL and save it locally."""
+    try:
+        with urllib.request.urlopen(url, timeout=30) as resp:
+            data = resp.read(MAX_DOWNLOAD_BYTES + 1)
+    except Exception as e:
+        logger.warning("Failed to download image: %s", e)
+        return None
+    return _save_image_bytes(data, prompt)
+
+
+DEFAULT_IMAGE_MODEL = "gpt-image-1-mini"
+
+
+def _default_quality(model: str) -> str:
+    """dall-e-3 uses standard/hd; the gpt-image family uses low/medium/high."""
+    return "medium" if model.startswith(("gpt-image", "chatgpt-image")) else "standard"
+
+
+def _openai_generate_image(prompt: str) -> Optional[Union[str, bytes]]:
+    """Return a URL (dall-e) or raw PNG bytes (gpt-image) or None."""
     api_key = (os.environ.get("OPENAI_API_KEY") or "").strip()
     if not api_key.startswith("sk-"):
         logger.warning("No valid OPENAI_API_KEY; skipping generation")
@@ -127,17 +144,23 @@ def _openai_generate_image(prompt: str) -> Optional[str]:
     # DALL·E 3 can take 15-30+ seconds. Keep this below the gunicorn
     # worker timeout (see README).
     timeout_s = float(os.environ.get("OPENAI_IMAGE_TIMEOUT_SEC", "45"))
-    model = os.environ.get("OPENAI_IMAGE_MODEL", "dall-e-3")
+    model = os.environ.get("OPENAI_IMAGE_MODEL", DEFAULT_IMAGE_MODEL)
     size = os.environ.get("OPENAI_IMAGE_SIZE", "1024x1024")
+    quality = os.environ.get("OPENAI_IMAGE_QUALITY") or _default_quality(model)
 
     try:
         from openai import OpenAI
 
         client = OpenAI(api_key=api_key, timeout=timeout_s, max_retries=0)
         resp = client.images.generate(
-            model=model, prompt=prompt, size=size, quality="standard"
+            model=model, prompt=prompt, size=size, quality=quality
         )
-        return resp.data[0].url
+        item = resp.data[0]
+        if getattr(item, "url", None):
+            return item.url
+        if getattr(item, "b64_json", None):
+            return base64.b64decode(item.b64_json)
+        return None
     except Exception as e:
         logger.warning("OpenAI image generation error: %s", e)
         return None
@@ -165,10 +188,12 @@ def generate_image_url(prompt: str) -> Optional[str]:
 
     Returns the local static URL, or None if generation or saving failed.
     """
-    remote_url = _openai_generate_image(prompt)
-    if not remote_url:
+    result = _openai_generate_image(prompt)
+    if not result:
         return None
-    return _download_and_save_image(remote_url, prompt)
+    if isinstance(result, bytes):
+        return _save_image_bytes(result, prompt)
+    return _download_and_save_image(result, prompt)
 
 
 def random_fallback_url() -> str:

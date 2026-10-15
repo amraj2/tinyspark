@@ -43,7 +43,8 @@ cp .env.example .env   # then edit
 | `GENERATE_LIMIT_PER_HOUR` | 5 | Max new images per client IP per hour. |
 | `DAILY_GENERATION_CAP` | 100 | Max new images per UTC day (per worker process). |
 | `PROXY_HOPS` | 0 | Trusted reverse-proxy hops, so rate limiting sees the real client IP. |
-| `OPENAI_IMAGE_MODEL` | `dall-e-3` | Image model. |
+| `OPENAI_IMAGE_MODEL` | `gpt-image-1-mini` | Image model (`dall-e-3` was retired). |
+| `OPENAI_IMAGE_QUALITY` | model default | `low`/`medium`/`high` for gpt-image, `standard`/`hd` for dall-e. |
 | `OPENAI_IMAGE_SIZE` | `1024x1024` | Image size. |
 | `OPENAI_IMAGE_TIMEOUT_SEC` | 45 | Max wait for an image. Keep below the gunicorn timeout. |
 | `GA_MEASUREMENT_ID` | existing ID | Google Analytics, loaded only after the visitor accepts. Empty disables it. |

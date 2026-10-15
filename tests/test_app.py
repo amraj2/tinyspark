@@ -221,3 +221,23 @@ def test_genseed_non_ascii_token_is_403_not_500(client, monkeypatch):
     monkeypatch.setenv("ADMIN_TOKEN", "secret")
     r = client.post("/genseed", headers={"X-Admin-Token": "s\u00e9cret"})
     assert r.status_code == 403
+
+
+def test_generate_image_url_saves_base64_result(gen_dir, monkeypatch):
+    png = _png()
+    monkeypatch.setattr(image_service, "_openai_generate_image", lambda p: png)
+    url = image_service.generate_image_url("a friendly whale")
+    assert url and url.startswith("/static/generated/")
+    saved = list(gen_dir.glob("*.png"))
+    assert len(saved) == 1 and saved[0].read_bytes() == png
+
+
+def test_generate_image_url_rejects_non_png_bytes(gen_dir, monkeypatch):
+    monkeypatch.setattr(image_service, "_openai_generate_image", lambda p: b"nope")
+    assert image_service.generate_image_url("a friendly whale") is None
+    assert not list(gen_dir.glob("*.png"))
+
+
+def test_default_quality_matches_model_family():
+    assert image_service._default_quality("gpt-image-1-mini") == "medium"
+    assert image_service._default_quality("dall-e-3") == "standard"
