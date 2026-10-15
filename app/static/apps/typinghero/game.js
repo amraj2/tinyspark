@@ -198,6 +198,7 @@
     }
 
     burst(x, y, color, n = 10) {
+      if(this.settings.reducedMotion)return;
       for (let i = 0; i < n; i++) {
         const a = Math.random() * Math.PI * 2;
         const sp = 1 + Math.random() * 3.2;
@@ -435,7 +436,7 @@
     draw(t) {
       const g = this.ctx;
       g.clearRect(0, 0, W, H);
-      this.drawBackdrop(g);
+      this.drawBackdrop(g, t);
       if (this.chart.kind === 'notes') this.drawHighway(g, t);
       else if (this.chart.kind === 'words') this.drawWords(g, t);
       else this.drawSentences(g, t);
@@ -444,9 +445,14 @@
       this.drawCountIn(g, t);
     }
 
-    drawBackdrop(g) {
+    drawBackdrop(g, t) {
       const bg = this.art.get('stage');
-      if (bg) { g.drawImage(bg, 0, 0, W, H); return; }
+      if (bg) {
+        // The stage fills the viewport behind the transparent performance canvas.
+        const hero=this.art.get('hero');
+        if(hero){const bob=this.settings.reducedMotion?0:Math.sin(t/(this.chart.beatMs||600)*Math.PI*2)*3;const h=330;g.drawImage(hero,-48,185+bob,h*hero.width/hero.height,h);}
+        return;
+      }
       const grad = g.createLinearGradient(0, 0, 0, H);
       grad.addColorStop(0, this.sparkOn ? '#3b0f6e' : '#120b2e');
       grad.addColorStop(1, '#271657');
@@ -481,7 +487,9 @@
       g.closePath();
       g.clip();
       if (road) g.drawImage(road, 0, TOP_Y, W, STRIKE_Y + 30 - TOP_Y);
-      else { g.fillStyle = 'rgba(10,6,28,0.82)'; g.fillRect(0, 0, W, H); }
+      else {
+        const board=g.createLinearGradient(0,TOP_Y,0,STRIKE_Y+30);board.addColorStop(0,'#131321');board.addColorStop(.6,'#201d2a');board.addColorStop(1,this.sparkOn?'#153d53':'#302733');g.fillStyle=board;g.fillRect(0,0,W,H);
+      }
       // lane tints (only lanes in use are bright)
       const used = this.usedLanes();
       for (let l = 0; l < 9; l++) {
@@ -513,6 +521,9 @@
         g.stroke();
       }
       g.restore();
+      // Metal rails frame the fretboard and keep it readable against the band.
+      g.strokeStyle=this.sparkOn?'#70e9ff':'#b6a6ad';g.lineWidth=5;
+      for(const side of [-1,1]){g.beginPath();g.moveTo(CENTER+side*4.5*LANE_W*MIN_SCALE,TOP_Y);g.lineTo(CENTER+side*4.5*LANE_W,STRIKE_Y+30);g.stroke();}
       // lane dividers
       g.strokeStyle = 'rgba(255,255,255,0.12)';
       g.lineWidth = 1;
@@ -569,12 +580,11 @@
       if (sprite) {
         g.drawImage(sprite, x - size / 2, y - size / 2, size, size);
       } else {
-        g.fillStyle = FCOLOR[f];
-        g.strokeStyle = n.gold ? '#fff3bf' : 'rgba(0,0,0,0.45)';
-        g.lineWidth = n.gold ? 4 * sc : 3 * sc;
-        roundRect(g, x - size / 2, y - size / 2, size, size, 14 * sc);
-        g.fill();
-        g.stroke();
+        const fill=g.createLinearGradient(x,y-size/2,x,y+size/2);
+        fill.addColorStop(0,'#fff');fill.addColorStop(.2,FCOLOR[f]);fill.addColorStop(.72,FCOLOR[f]);fill.addColorStop(1,'#262033');
+        g.fillStyle=fill;g.strokeStyle=n.gold?'#fff3bf':'#18121e';g.lineWidth=3*sc;
+        g.beginPath();g.ellipse(x,y,size*.55,size*.42,0,0,Math.PI*2);g.fill();g.stroke();
+        g.strokeStyle=n.gold?'#fff5a0':'#ffffff88';g.lineWidth=2*sc;g.beginPath();g.ellipse(x,y-size*.06,size*.41,size*.23,0,Math.PI,Math.PI*2);g.stroke();
       }
       g.shadowBlur = 0;
       g.fillStyle = '#16122b';
@@ -592,7 +602,7 @@
     }
 
     drawPads(g, t) {
-      const y = this.chart.kind === 'notes' ? STRIKE_Y + 34 : 486;
+      const y = this.chart.kind === 'notes' ? STRIKE_Y : 486;
       const next = this.nextTarget(t);
       const used = this.usedLanes();
       for (let l = 0; l < 9; l++) {
@@ -607,14 +617,10 @@
         const w = f === 'th' ? 70 : 64;
         if (pad) g.drawImage(pad, x - w / 2, y - 18, w, 36);
         else {
-          g.fillStyle = FCOLOR[f];
-          g.globalAlpha *= lit ? 1 : 0.55;
-          roundRect(g, x - w / 2, y - 16, w, 32, 12);
-          g.fill();
-          g.globalAlpha = on ? 1 : 0.28;
-          g.strokeStyle = lit ? '#fff' : 'rgba(0,0,0,0.5)';
-          g.lineWidth = lit ? 3 : 2;
-          g.stroke();
+          g.fillStyle='#13121b';g.strokeStyle=FCOLOR[f];g.lineWidth=lit?4:2;
+          g.shadowColor=FCOLOR[f];g.shadowBlur=lit?12:0;
+          g.beginPath();g.ellipse(x,y,w/2,17,0,0,Math.PI*2);g.fill();g.stroke();g.shadowBlur=0;
+          g.globalAlpha=on?1:.28;g.fillStyle=FCOLOR[f];g.beginPath();g.ellipse(x,y,w/2-8,9,0,0,Math.PI*2);g.fill();
         }
         if (flash && t - flash.t0 < 220) {
           g.globalAlpha = 1 - (t - flash.t0) / 220;

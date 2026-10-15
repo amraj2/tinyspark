@@ -159,6 +159,7 @@
     if (id !== 'scPlay') stopGame();
     SCREENS.forEach((s) => { $(s).hidden = s !== id; });
     current = id;
+    document.body.dataset.screen = id;
     if (id === 'scMenu') renderMenu();
     if (id === 'scMap') renderMap();
     if (id === 'scSettings') renderSettings();
@@ -221,6 +222,16 @@
           h('span', { class: 'th-node-stars' }, '★'.repeat(r.stars) + '☆'.repeat(5 - r.stars)));
         })));
     }));
+    const cards=[...box.children],venues=h('nav',{class:'th-venues','aria-label':'Tour venues'});
+    let active=Number(box.dataset.world||nextUp().world);
+    function venue(id){
+      active=id;box.dataset.world=String(id);
+      cards.forEach((card,i)=>{card.hidden=CFG.worlds[i].id!==id;});
+      [...venues.children].forEach((button,i)=>button.setAttribute('aria-pressed',String(CFG.worlds[i].id===id)));
+    }
+    CFG.worlds.forEach(w=>venues.append(h('button',{type:'button','aria-pressed':String(w.id===active),onclick:()=>venue(w.id)},String(w.id).padStart(2,'0')+' / '+w.name)));
+    box.prepend(venues);venue(active);
+
   }
 
   // ---------- soundcheck / intro ----------
@@ -325,7 +336,7 @@
     say(level.tip || 'Eyes on the stage. Home row fingers ready!', 5000);
     game = new TH.Game({
       level, canvas: $('thCanvas'), art: TH.art,
-      settings: { rock: S.settings.rock, tempo: S.settings.tempo, music: S.settings.music },
+      settings: { rock: S.settings.rock, tempo: S.settings.tempo, music: S.settings.music, reducedMotion: S.settings.reduceMotion || matchMedia('(prefers-reduced-motion: reduce)').matches },
       hooks: {
         hud: onHud,
         correct: (ch) => kb.flash(ch, 'kb-ok'),
@@ -570,6 +581,12 @@
   // ---------- keyboard input ----------
   document.addEventListener('keydown', (ev) => {
     if (ev.isComposing || ev.ctrlKey || ev.metaKey || ev.altKey) return;
+    if(current === 'scMenu' && ['ArrowUp','ArrowDown'].includes(ev.key)){
+      const choices=[...document.querySelectorAll('.th-menu-buttons button:not(:disabled)')];
+      const at=choices.indexOf(document.activeElement);
+      const step=ev.key==='ArrowDown'?1:-1;
+      choices[(at<0?0:(at+step+choices.length)%choices.length)].focus();ev.preventDefault();return;
+    }
     if (current === 'scPlay' && game) {
       if (ev.key === 'Escape') { ev.preventDefault(); togglePause(); return; }
       if (game.paused) {

@@ -50,6 +50,8 @@
   }
 
   function tone(freq, when, dur, type, gainPeak, dest, endFreq) {
+    // exponential ramps throw on a target of 0; a silent note is a no-op
+    if (!(gainPeak > 0.0002)) return;
     const o = ctx.createOscillator();
     const g = ctx.createGain();
     o.type = type;
@@ -89,7 +91,8 @@
     if (!ensure()) return;
     const now = ctx.currentTime;
     const f = laneFreq(lane, world);
-    tone(f, now, 0.22, 'triangle', 0.4, sfx);
+    tone(f, now, 0.16, 'sawtooth', 0.13, sfx);
+    tone(f/2,now,.23,'triangle',.22,sfx);
     if (grade === 'perfect') tone(f * 2, now, 0.3, 'sine', 0.18, sfx);
   }
   function miss() {
@@ -151,6 +154,13 @@
       if (inBar === 0 || inBar === 4) {
         const semis = PROG[Math.floor(bar / 1) % PROG.length];
         tone(groove.root * Math.pow(2, semis / 12), t, groove.stepSec * 3.6, 'triangle', 0.3 * mul, music);
+      }
+      // Palm-muted power-chord riff follows the same audio clock as the drums.
+      if(mul){
+        const semis=PROG[bar%PROG.length],root=groove.root*Math.pow(2,semis/12);
+        const accent=[0,3,4,6].includes(inBar);
+        tone(root*2,t,groove.stepSec*(accent?.8:.35),'sawtooth',accent?.055:.028,music);
+        if(accent)tone(root*3,t,groove.stepSec*.7,'triangle',.06,music);
       }
       groove.next += groove.stepSec;
       groove.step += 1;

@@ -6,7 +6,7 @@
     <title>Typing Hero - TinySpark</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='apps/typinghero/typinghero.css') }}" />
   </head>
-  <body class="th">
+  <body class="th" data-screen="scMenu">
     <header class="th-top">
       <a class="th-back" href="{{ url_for('main.index') }}">&larr; All apps</a>
       <h1 class="th-logo"><span data-art="logo" class="th-logo-art"></span>TYPING <span>HERO</span></h1>
@@ -22,7 +22,7 @@
       <section id="scMenu" class="th-screen" aria-labelledby="menuTitle">
         <div class="th-menu">
           <h2 id="menuTitle" class="th-sr">Typing Hero menu</h2>
-          <p class="th-tagline">Rock the keyboard. Learn to type with every finger.</p>
+          <div class="th-title-art" aria-hidden="true"></div><div class="th-title-lockup" aria-hidden="true"><small>THE KEYBOARD IS YOUR STAGE</small><strong>TYPING<br><em>HERO</em></strong></div><p class="th-tagline">Find your rhythm. Own the stage.</p>
           <p id="menuKeyboardWarn" class="th-warn" hidden>This game needs a physical keyboard. On a tablet, connect one to play.</p>
           <div class="th-menu-buttons">
             <button id="btnPlay" class="th-btn th-btn-main" type="button">Play</button>
