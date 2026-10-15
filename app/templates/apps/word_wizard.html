@@ -1,20 +1,10 @@
-{% extends "app_base.html" %}
-{% block content %}
-<section class="story-toolbar" aria-label="Word Wizard options">
-  <div class="story-field">
-    <span class="story-label" id="levelLabel">Spell level</span>
-    <div class="seg" id="levelPicker" role="radiogroup" aria-labelledby="levelLabel"></div>
-  </div>
-  <div class="library-tabs" role="tablist" aria-label="Game mode">
-    <button class="tab" role="tab" id="tabQuiz" aria-selected="true">Spell Quiz</button>
-    <button class="tab" role="tab" id="tabScramble" aria-selected="false">Letter Scramble</button>
-    <button class="tab" role="tab" id="tabBook" aria-selected="false">My Spellbook <span id="learnedCount" class="tab-count">0</span></button>
-  </div>
-</section>
-
-<section id="stage" class="game-card" aria-live="polite"></section>
-<section id="bookStage" hidden></section>
-{% endblock %}
-{% block scripts %}
-<script src="{{ url_for('static', filename='apps/wordwizard.js') }}" defer></script>
-{% endblock %}
+{% extends 'console_base.html' %}{% block game_class %}battle-game{% endblock %}
+{% block game %}
+<section class="title-screen battle-title" aria-labelledby="gameTitle"><p class="title-overline">THE SPELLBOUND ISLES</p><h1 id="gameTitle" class="game-logo">Word<span>Wizard</span></h1><div class="title-commands"><button id="beginBattle" class="title-command" type="button">Begin adventure</button><button id="beginForge" class="title-command" type="button">Spell forge · letter weaving</button><button id="openSpellbook" class="title-command" type="button">Spellbook</button><button id="chooseRank" class="title-command" type="button">Choose spell level</button></div><p class="title-controls">A turn-based spell adventure · Choose commands with keys or taps</p></section>
+<div id="battleUI" class="play-ui" hidden>
+<div class="party-status"><strong>LYRA <span>Spell keeper</span></strong><div class="status-track"><span id="spellPower"></span></div><small id="battleProgress">SEALS 0 / 6</small></div>
+<div class="enemy-status"><span id="enemyName">THE LOST WISP</span><div class="status-track enemy-track"><span></span></div><small id="encounterName">Encounter 1 / 6</small></div>
+<p id="battleCallout" class="scene-callout">A lost wisp blocks the tower. Restore its name.</p>
+<div class="battle-bottom"><nav class="battle-commands" aria-label="Battle commands"><button id="castCommand" type="button" class="active">✧ Cast</button><button id="scanCommand" type="button">◇ Scan</button><button id="bookCommand" type="button">▤ Spellbook</button></nav><section class="battle-window" id="battleWindow" aria-labelledby="spellClue"><p class="hud-caption">CHOOSE AN INCANTATION</p><h2 id="spellClue"></h2><p id="spellExample" class="scan-text" hidden></p><div id="spellChoices" class="spell-choices"></div><p id="battleFeedback" role="status"></p><button id="nextEncounter" class="next-command" type="button" hidden>Continue →</button></section></div>
+</div>
+{% endblock %}{% block scripts %}<script src="{{ url_for('static', filename='console/battle.js') }}"></script>{% endblock %}

@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{{ app_name }} - TinySpark</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='game-worlds.css') }}">
     {% block head_extra %}{% endblock %}
   </head>
-  <body class="{% block body_class %}{% endblock %}">
+  <body class="game-world {% block body_class %}{% endblock %}">
     <div class="header-section">
       <div class="header-content">
         <div>
@@ -19,12 +20,18 @@
     </div>
 
     <main class="container game-app">
+
+<section class="world-intro" aria-labelledby="world-title">
+  <div class="world-copy"><p class="world-kicker">{{ world_kicker }}</p><h2 id="world-title">{{ world_title }}</h2><p>{{ world_blurb }}</p></div>
+  <div class="world-emblem" aria-hidden="true"><img src="{{ url_for('static', filename='game-art/' ~ world_art ~ '.svg') }}" alt=""><i>✦</i><b>{{ world_stamp }}</b></div>
+</section>
+
       {% block content %}{% endblock %}
     </main>
 
     <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 
-    <a href="https://buymeacoffee.com/amraj" target="_blank" rel="noopener noreferrer" class="coffee-button">
+    <a href="https://buymeacoffee.com/amraj" target="_blank" rel="noopener noreferrer" class="coffee-button world-feedback">
       <span class="coffee-icon" aria-hidden="true">&#9749;</span>
      Give feedback
     </a>

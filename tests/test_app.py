@@ -52,7 +52,8 @@ def test_home_links_to_elevenplus_and_it_is_isolated(client):
 def test_story_starter_renders(client):
     r = client.get("/story-starter")
     assert r.status_code == 200
-    assert b"sparkBtn" in r.data
+    assert b"Cloud Harbour" in r.data and b"Moonwood" in r.data
+    assert b"Tideglass Cove" in r.data and b"Your chapter" in r.data
 
 
 def test_genseed_forbidden_without_token(client, monkeypatch):
@@ -212,8 +213,8 @@ def test_themes_default_to_everyday():
 
 def test_story_page_ships_config_and_script(client):
     html = client.get("/story-starter").data.decode()
-    assert 'id="story-config"' in html and "story.js" in html
-    assert "/11plus/" in html  # link to 11+ practice
+    assert 'id="app-config"' in html and "/console/story.js" in html
+    assert 'href="/"' in html  # game exits back to the adventure hub
 
 
 def test_genseed_non_ascii_token_is_403_not_500(client, monkeypatch):

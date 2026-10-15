@@ -9,7 +9,7 @@
     { id: 'roses', name: 'Roses are red', hint: 'Lines 2 and 4 rhyme', lines: ['Roses are red,', '', 'Sugar is sweet,', ''], rhymePairs: [[1, 3]] },
   ];
 
-  const store = createStore('tinyspark-rhyme-v1', { poems: [], best: 0, rounds: 0, matched: 0 });
+  const store = createStore('tinyspark-rhyme-v1', { poems: [], best: 0, rounds: 0, matched: 0, draft: null });
   const S = store.data;
 
   const lastWord = (t) => {
@@ -30,7 +30,7 @@
     [['find', 'tabFind'], ['game', 'tabGame'], ['poem', 'tabPoem'], ['mine', 'tabMine']]
       .forEach(([k, id]) => $(id).setAttribute('aria-selected', String(k === name)));
     stopSpeaking();
-    if (name === 'game') startRound();
+    if (name === 'game' && (!game || game.done)) startRound();
     if (name === 'mine') renderMine();
   }
   [['tabFind', 'find'], ['tabGame', 'game'], ['tabPoem', 'poem'], ['tabMine', 'mine']]
@@ -70,20 +70,22 @@
   let game = null;
 
   async function startRound() {
-    game = { i: 0, correct: 0, q: null, done: false };
+    game = { i: 0, correct: 0, q: null, done: false, pairs: [] };
     await nextQuestion();
   }
 
   async function nextQuestion() {
     const box = $('panelGame');
+    box.replaceChildren(h('p', {class:'game-sub', role:'status'}, 'Tuning up your next rhyme…'));
     try {
       game.q = await api('/rhyme-time/api/quiz');
     } catch (e) {
-      box.replaceChildren(h('p', null, 'Could not load a question - please try again.'));
+      box.replaceChildren(h('p', null, 'Could not load a question.'), h('button', {class:'kid-button', type:'button', onclick:nextQuestion}, 'Try loading again'));
       return;
     }
     game.answered = false;
     renderQuestion();
+    if(game.i>0){box.setAttribute('tabindex','-1');box.focus();}
   }
 
   function renderQuestion() {
@@ -93,6 +95,7 @@
         h('span', { class: 'game-sub' }, `Question ${game.i + 1} of ${ROUND}`),
         h('div', { class: 'progress-bar', style: 'flex:1;min-width:120px' },
           h('span', { style: `width:${(game.i / ROUND) * 100}%` }))),
+      h('ol', {class:'spell-pips', 'aria-label':'Five rhyme round'}, Array.from({length:ROUND},(_,i) => h('li', {class:i < game.i ? 'done' : i === game.i ? 'current' : ''}, i < game.i ? '♫' : String(i+1)))),
       h('h2', null, 'Which word rhymes with…'),
       h('p', { class: 'game-q' }, q.target),
       h('div', { class: 'opt-grid' }, q.options.map((o) => h('button', {
@@ -107,6 +110,8 @@
     game.answered = true;
     const ok = word === game.q.answer;
     if (ok) { game.correct += 1; S.matched += 1; }
+    game.pairs.push([game.q.target, game.q.answer]);
+    renderChip();
     store.saveSoon();
     grid.querySelectorAll('button').forEach((b) => {
       b.disabled = true;
@@ -119,13 +124,17 @@
         h('strong', null, ok ? 'Yes! ' : 'Not quite. '),
         `${game.q.target} rhymes with ${game.q.answer}.`),
       h('div', { class: 'game-actions' },
-        h('button', { class: 'kid-button', type: 'button', onclick: () => {
+        h('button', { class: 'kid-button', type: 'button', onclick: (event) => {
+          event.currentTarget.disabled=true;
           game.i += 1;
           if (game.i >= ROUND) finishRound(); else nextQuestion();
         } }, last ? 'See my result' : 'Next word')));
+    $('gameFb').querySelector('.kid-button')?.focus();
   }
 
   function finishRound() {
+    if (game.done) return;
+    game.done = true;
     S.rounds += 1;
     S.best = Math.max(S.best, game.correct);
     store.save();
@@ -136,13 +145,16 @@
       h('p', { class: 'game-q' }, `${game.correct} of ${ROUND} rhymes found`),
       h('div', { class: 'game-actions', style: 'justify-content:center' },
         h('button', { class: 'kid-button', type: 'button', onclick: startRound }, 'Play again'),
-        h('button', { class: 'ghost-btn', type: 'button', onclick: () => show('poem') }, 'Make a poem'))));
+        h('button', { class: 'ghost-btn', type: 'button', onclick: () => { const pair = game.pairs[0]; $('poemMission').textContent = `Encore mission: make two silly lines ending with “${pair[0]}” and “${pair[1]}”.`; show('poem'); $('poemLine0').focus(); } }, 'Turn my rhymes into a poem'))));
     renderChip();
   }
 
   // ----- poem maker -----
-  let form = FORMS[0];
-  let lines = form.lines.slice();
+  let form = FORMS.find(f => f.id === S.draft?.form) || FORMS[0];
+  let lines = S.draft?.lines?.length === form.lines.length ? S.draft.lines.slice() : form.lines.slice();
+  if (S.draft?.title) $('poemTitle').value = S.draft.title;
+  function saveDraft() { S.draft = {form:form.id, lines:lines.slice(), title:$('poemTitle').value}; store.saveSoon(); }
+  $('poemTitle').addEventListener('input',saveDraft);
   let focusIdx = 0;
   let checkTimer = null;
 
@@ -150,7 +162,7 @@
     $('formPicker').replaceChildren(...FORMS.map((f) => h('button', {
       type: 'button', role: 'radio', 'aria-checked': String(f.id === form.id),
       class: 'seg-btn' + (f.id === form.id ? ' on' : ''),
-      onclick: () => { form = f; lines = f.lines.slice(); focusIdx = 0; renderForms(); renderLines(); refreshIdeas(); },
+      onclick: () => { form = f; lines = f.lines.slice(); focusIdx = 0; saveDraft(); renderForms(); renderLines(); refreshIdeas(); },
     }, h('strong', null, f.name), h('small', null, f.hint))));
   }
 
@@ -165,6 +177,7 @@
       input.addEventListener('focus', () => { focusIdx = i; refreshIdeas(); });
       input.addEventListener('input', () => {
         lines[i] = input.value;
+        saveDraft();
         clearTimeout(checkTimer);
         checkTimer = setTimeout(() => { updateStatus(); refreshIdeas(); }, 400);
       });
@@ -213,6 +226,7 @@
     const v = input.value.replace(/\s+$/, '').replace(/[.,!?]+$/, '');
     input.value = (v ? v + ' ' : '') + w;
     lines[focusIdx] = input.value;
+    saveDraft();
     input.focus();
     updateStatus();
   }
@@ -233,7 +247,7 @@
       form: form.id, lines: body, at: Date.now(),
     });
     store.save();
-    $('poemTitle').value = '';
+    saveDraft();
     renderChip();
     toast('Poem saved to "My poems"!');
   });
@@ -261,6 +275,9 @@
   function renderChip() {
     $('poemCount').textContent = String(S.poems.length);
     const n = S.poems.length;
+    const target = [5,15,30,60].find(t => t > S.matched);
+    $('rhymeGoal').textContent = target ? `${S.matched} / ${target} rhymes · ${target === 5 ? 'Sound Scout' : target === 15 ? 'Rhyme Explorer' : target === 30 ? 'Verse Voyager' : 'Rhyme Master'}` : `${S.matched} rhymes collected · Rhyme Master`;
+    $('rhymeQuest').textContent = `${S.rounds} ${S.rounds === 1 ? 'round' : 'rounds'} played · ${n} poems in your collection`;
     $('progressChip').textContent = n || S.matched
       ? `🎵 ${n} ${n === 1 ? 'poem' : 'poems'} · ${S.matched} rhymes matched`
       : 'Find rhymes and make silly poems';
@@ -270,4 +287,5 @@
   renderLines();
   refreshIdeas();
   renderChip();
+  show('game');
 })();

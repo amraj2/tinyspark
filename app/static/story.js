@@ -6,6 +6,13 @@
   const CFG = JSON.parse(document.getElementById('story-config').textContent);
   const $ = (id) => document.getElementById(id);
   const KEY = 'tinyspark-story-v1';
+  const STARTER_WORLD = {
+    url: document.getElementById('storyApp').dataset.starterUrl,
+    prompt:'A mysterious glowing portal has appeared on a floating island. Where does it lead?',
+    themes:['magic'],
+    questions:['Who found the portal first?','What could be waiting on the other side?','What would you bring on this adventure?'],
+    words:[{word:'glimmer',meaning:'a small, soft light'},{word:'mysterious',meaning:'strange and full of secrets'},{word:'courage',meaning:'being brave when something feels difficult'}]
+  };
   const NEW_EVERY = 4;            // every Nth spark also makes a brand-new picture
   const SPIN_MS = 2200;
   const TIMER_SECS = 300;
@@ -343,6 +350,7 @@
     const words = countWords(rawTexts().map((x) => x.text).join(' '));
     $('wordCount').textContent = words === 1 ? '1 word' : words + ' words';
     renderWords();
+    renderQuest();
   }
 
   function renderWords() {
@@ -461,6 +469,7 @@
     $('savedPanel').hidden = false;
     renderLibrary();
     renderProgress();
+    renderQuest();
     if (fresh.length) toast('Badge unlocked: ' + fresh[0].name + '!');
   }
 
@@ -521,7 +530,20 @@
       })));
   }
 
+  function renderQuest() {
+    const picked = !!state.current;
+    const d = picked ? draft() : null;
+    const written = picked && rawTexts().some(part => part.text.length > 0);
+    const record = d && store.stories.find(story => story.id === d.savedId);
+    const saved = !!record && JSON.stringify(record.text) === JSON.stringify(d.text);
+    [['storyPickStep', picked], ['storyWriteStep', written], ['storySaveStep', saved]].forEach(([id, done]) => {$(id)?.classList.toggle('done', done);$(id)?.setAttribute('aria-label',$(id).textContent+(done?' · complete':' · not complete'));});
+    const n = store.stories.length;
+    const target = [1,3,10].find(target => target > n);
+    $('storyQuestGoal').textContent = saved ? 'Adventure kept! Revisit it in your story atlas below.' : target ? `${n} / ${target} stories · ${target === 1 ? 'Bring home your first story' : target === 3 ? 'Become a Story Maker' : 'Become a Story Master'}` : `${n} stories in your atlas · Which world will you explore next?`;
+  }
+
   function renderProgress() {
+    renderQuest();
     const n = store.stories.length;
     $('progressChip').textContent = n
       ? `✍️ ${n} ${n === 1 ? 'story' : 'stories'} · ${totalWords(store)} words written`
@@ -689,6 +711,7 @@
     else $('readBtn').hidden = false;
     $('timerText').textContent = fmt(TIMER_SECS);
 
+    $('starterBtn').addEventListener('click', () => {setCurrent(STARTER_WORLD);$('steps').querySelector('textarea')?.focus();});
     $('sparkBtn').addEventListener('click', spark);
     $('pick3Btn').addEventListener('click', choose3);
     $('dailyBtn').addEventListener('click', () => daily(false));
@@ -725,7 +748,7 @@
     }
     loadPool().then(async () => {
       if (hasDraft) return;
-      if (!(await daily(true)) && state.pool.length) setCurrent(pick(state.pool));
+      if (!(await daily(true))) setCurrent(state.pool.length ? pick(state.pool) : STARTER_WORLD);
     });
   }
 

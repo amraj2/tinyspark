@@ -81,6 +81,26 @@ and `static/shared.js`.
   a rhyme finder, a "which word rhymes?" game and a poem maker with live
   rhyme checks. APIs: `/rhyme-time/api/rhymes`, `/api/check`, `/api/quiz`.
 
+## Typing Hero
+
+A Guitar-Hero-style rhythm game that teaches touch typing (`/typing-hero/`).
+
+- **Play model:** letters fall down nine finger lanes (colour = finger) onto
+  pads; press the matching key as it lands. Streak multipliers, a crowd meter
+  and a Spark power (Enter) borrow from rhythm games. Wrong keys break the
+  streak, so accuracy comes first.
+- **Curriculum** (`app/apps/typinghero/data.py`): home row, index reach,
+  top row, bottom row, capitals/punctuation, numbers (optional), then falling
+  words and karaoke sentences. 50 levels, unlocked at 2 stars (75% accuracy).
+- **Teaching aids:** a soundcheck screen with new-key warm-up, a lane legend,
+  an on-screen keyboard that fades as you progress, per-key stats, a
+  "trouble spots" practice song and a grown-ups page.
+- **Charts** are generated deterministically from level data in
+  `static/apps/typinghero/core.js`; audio is a built-in WebAudio synth.
+- **Art:** every visual has a fallback; drop images in
+  `static/apps/typinghero/art/` (see `ART.md` there for sizes and prompts).
+- **Self-test:** open `/typing-hero/?selftest=1` to run the in-browser checks.
+
 ## API
 
 - `GET /api/existing-images?limit=24&theme=animals` → `{ images: [{url, prompt, themes, questions, words}], total }` (random sample, max 100)

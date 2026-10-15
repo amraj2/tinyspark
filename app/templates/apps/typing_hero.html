@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Typing Hero - TinySpark</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='apps/typinghero/typinghero.css') }}" />
+  </head>
+  <body class="th">
+    <header class="th-top">
+      <a class="th-back" href="{{ url_for('main.index') }}">&larr; All apps</a>
+      <h1 class="th-logo"><span data-art="logo" class="th-logo-art"></span>TYPING <span>HERO</span></h1>
+      <div class="th-top-right">
+        <span id="thRank" class="th-rank" aria-live="polite"></span>
+        <button id="thMute" class="th-icon" type="button" aria-pressed="false" aria-label="Mute sound">&#128266;</button>
+        <button id="thSettingsBtn" class="th-icon" type="button" aria-label="Settings">&#9881;</button>
+      </div>
+    </header>
+
+    <main id="thRoot" class="th-main">
+      <!-- MENU -->
+      <section id="scMenu" class="th-screen" aria-labelledby="menuTitle">
+        <div class="th-menu">
+          <h2 id="menuTitle" class="th-sr">Typing Hero menu</h2>
+          <p class="th-tagline">Rock the keyboard. Learn to type with every finger.</p>
+          <p id="menuKeyboardWarn" class="th-warn" hidden>This game needs a physical keyboard. On a tablet, connect one to play.</p>
+          <div class="th-menu-buttons">
+            <button id="btnPlay" class="th-btn th-btn-main" type="button">Play</button>
+            <button id="btnMap" class="th-btn" type="button">Tour map</button>
+            <button id="btnTrouble" class="th-btn" type="button">Trouble spots</button>
+            <button id="btnHow" class="th-btn th-btn-ghost" type="button">How to play</button>
+            <button id="btnGrown" class="th-btn th-btn-ghost" type="button">Grown-ups</button>
+          </div>
+          <p id="menuNext" class="th-next"></p>
+          <div id="menuStats" class="th-menustats"></div>
+        </div>
+      </section>
+
+      <!-- HOW TO PLAY -->
+      <section id="scHow" class="th-screen" hidden>
+        <div class="th-panel">
+          <h2>How to play</h2>
+          <ol class="th-how">
+            <li><strong>Letters fall</strong> down the stage toward the glowing pads.</li>
+            <li><strong>Each lane is a finger.</strong> The colour and the label under each pad tell you which finger to use.</li>
+            <li><strong>Press the matching key</strong> as the letter reaches the pad. Right key, right moment = a hit!</li>
+            <li><strong>Build a streak</strong> to raise your multiplier. A wrong key breaks it, so accuracy comes first.</li>
+            <li><strong>Gold letters</strong> fill the Spark meter. Press <kbd>Enter</kbd> when it is half full for double points.</li>
+            <li>Keep the <strong>crowd meter</strong> up. Press <kbd>Esc</kbd> to pause any time.</li>
+          </ol>
+          <h3>Typing tips</h3>
+          <ul class="th-how">
+            <li>Rest your fingers on <kbd>A S D F</kbd> and <kbd>J K L ;</kbd>. Feel the bumps on <kbd>F</kbd> and <kbd>J</kbd>.</li>
+            <li>After every key, bring the finger back home.</li>
+            <li>Look at the screen, not your hands. Slow and correct beats fast and messy.</li>
+          </ul>
+          <button class="th-btn th-btn-main" type="button" data-go="scMenu">Got it</button>
+        </div>
+      </section>
+
+      <!-- MAP -->
+      <section id="scMap" class="th-screen" hidden>
+        <div class="th-bar">
+          <button class="th-btn th-btn-ghost" type="button" data-go="scMenu">&larr; Menu</button>
+          <h2>Tour map</h2>
+        </div>
+        <div id="mapWorlds" class="th-worlds"></div>
+      </section>
+
+      <!-- INTRO / SOUNDCHECK -->
+      <section id="scIntro" class="th-screen" hidden>
+        <div class="th-bar">
+          <button class="th-btn th-btn-ghost" type="button" data-go="scMap">&larr; Tour map</button>
+          <h2 id="introTitle">Soundcheck</h2>
+        </div>
+        <div class="th-panel">
+          <p id="introBlurb" class="th-lead"></p>
+          <p id="introTip" class="th-tip"></p>
+          <div id="introFocus" class="th-focus"></div>
+          <div id="introWarm" class="th-warm"></div>
+          <div id="introLanes" class="th-lanes"></div>
+          <div id="introKeyboard" class="th-keyboard th-keyboard-intro"></div>
+          <div class="th-opts">
+            <div class="th-opt"><span class="th-opt-label">Speed</span><div id="optTempo" class="th-seg" role="radiogroup" aria-label="Speed"></div></div>
+            <div class="th-opt"><span class="th-opt-label">Crowd</span><div id="optRock" class="th-seg" role="radiogroup" aria-label="Crowd mood"></div></div>
+          </div>
+          <div class="th-actions">
+            <button id="introStart" class="th-btn th-btn-main" type="button">Start song <small>(Enter)</small></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- PLAY -->
+      <section id="scPlay" class="th-screen" hidden>
+        <div class="th-hud" aria-label="Game status">
+          <div class="th-hud-block"><span class="th-hud-label">Score</span><strong id="hudScore">0</strong></div>
+          <div class="th-hud-block"><span class="th-hud-label">Streak</span><strong id="hudCombo">0</strong><span id="hudMult" class="th-mult">x1</span></div>
+          <div class="th-hud-block th-hud-grow"><span id="hudLevel" class="th-hud-label"></span>
+            <div class="th-prog"><span id="hudProgress"></span></div></div>
+          <div class="th-hud-block"><span class="th-hud-label">Accuracy</span><strong id="hudAcc">100%</strong></div>
+          <div class="th-hud-block"><span id="hudSpeedLabel" class="th-hud-label">Speed</span><strong id="hudSpeed">0</strong></div>
+          <button id="hudPause" class="th-icon" type="button" aria-label="Pause">&#10074;&#10074;</button>
+        </div>
+        <div id="thStage" class="th-stage" data-mood="ok">
+          <div class="th-side th-hero" aria-hidden="true"><span data-art="hero" class="th-art"></span><span class="th-fallback">&#127928;</span></div>
+          <div class="th-canvas-wrap">
+            <canvas id="thCanvas" aria-label="Typing Hero stage"></canvas>
+            <div id="thPause" class="th-pause" hidden role="dialog" aria-label="Paused">
+              <h2>Paused</h2>
+              <button id="pauseResume" class="th-btn th-btn-main" type="button">Resume</button>
+              <button id="pauseRestart" class="th-btn" type="button">Restart</button>
+              <button id="pauseQuit" class="th-btn th-btn-ghost" type="button">Quit to map</button>
+            </div>
+          </div>
+          <div class="th-side th-meters">
+            <div class="th-meter-col"><span class="th-hud-label">Crowd</span>
+              <div class="th-meter"><span id="hudMeter"></span></div></div>
+            <div class="th-meter-col"><span class="th-hud-label">Spark</span>
+              <div class="th-meter th-spark"><span id="hudSpark"></span></div>
+              <small id="hudSparkHint">Enter</small></div>
+          </div>
+        </div>
+        <p id="thCoach" class="th-coach" aria-live="polite"></p>
+        <div id="thKeyboard" class="th-keyboard"></div>
+      </section>
+
+      <!-- RESULTS -->
+      <section id="scResults" class="th-screen" hidden>
+        <div class="th-panel th-results">
+          <h2 id="resTitle"></h2>
+          <div id="resStars" class="th-stars" aria-live="polite"></div>
+          <p id="resVerdict" class="th-lead"></p>
+          <div id="resNumbers" class="th-numbers"></div>
+          <p id="resUnlock" class="th-unlock" hidden></p>
+          <div id="resCoach" class="th-coachbox"></div>
+          <div id="resHeat" class="th-keyboard th-keyboard-heat"></div>
+          <div class="th-actions">
+            <button id="resNext" class="th-btn th-btn-main" type="button">Next song</button>
+            <button id="resRetry" class="th-btn" type="button">Play again</button>
+            <button id="resTrouble" class="th-btn" type="button" hidden>Practise trouble spots</button>
+            <button id="resMap" class="th-btn th-btn-ghost" type="button">Tour map</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SETTINGS -->
+      <section id="scSettings" class="th-screen" hidden>
+        <div class="th-bar">
+          <button class="th-btn th-btn-ghost" type="button" data-go="back">&larr; Back</button>
+          <h2>Settings</h2>
+        </div>
+        <div class="th-panel th-settings" id="settingsBody"></div>
+      </section>
+
+      <!-- GROWN-UPS -->
+      <section id="scGrown" class="th-screen" hidden>
+        <div class="th-bar">
+          <button class="th-btn th-btn-ghost" type="button" data-go="scMenu">&larr; Menu</button>
+          <h2>For grown-ups</h2>
+        </div>
+        <div class="th-panel" id="grownBody"></div>
+      </section>
+    </main>
+
+    <div id="thToast" class="th-toast" role="status" aria-live="polite" hidden></div>
+
+    <script type="application/json" id="th-config">{{ config_json|tojson }}</script>
+    <script src="{{ url_for('static', filename='apps/typinghero/core.js') }}"></script>
+    <script src="{{ url_for('static', filename='apps/typinghero/audio.js') }}"></script>
+    <script src="{{ url_for('static', filename='apps/typinghero/art.js') }}"></script>
+    <script src="{{ url_for('static', filename='apps/typinghero/game.js') }}"></script>
+    <script src="{{ url_for('static', filename='apps/typinghero/ui.js') }}"></script>
+    {% if selftest %}<script src="{{ url_for('static', filename='apps/typinghero/selftest.js') }}"></script>{% endif %}
+    {% include '_analytics.html' %}
+  </body>
+</html>

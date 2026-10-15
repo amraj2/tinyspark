@@ -1,30 +1,6 @@
-<!doctype html>
-<html lang="en-GB">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#102f45">
-  <meta name="description" content="Short, friendly 11+ practice in English, maths, verbal and non-verbal reasoning.">
-  <title>Tiny Spark - 11+ Examinator</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23102f45'/%3E%3Cpath d='M14 42h12l8-20 8 20h8M19 34h29' fill='none' stroke='%23fbc451' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
-  <link rel="manifest" href="{{ url_for('elevenplus.manifest') }}">
-  <link rel="apple-touch-icon" href="{{ url_for('elevenplus.static', filename='icons/apple-touch-icon.png') }}">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Tiny Spark">
-  <link rel="stylesheet" href="{{ static_v('style.css') }}">
-</head>
-<body>
-  <header class="top"><div class="shell"><div class="brand"><span class="mark">T</span> Tiny Spark <small style="font-weight:600">- 11+ Examinator</small></div><a href="{{ url_for('main.index') }}" style="color:#fff;font-weight:700">&larr; All Tiny Spark apps</a></div></header>
-  <main class="shell">
-    <div class="intro"><div><div class="eyebrow">11+ practice</div><h1>Ready for a quick challenge?</h1><p>Choose a subject, answer five questions, and see how you did. Take your time — you can try again whenever you like.</p></div><div class="stat"><strong id="total">0</strong><span>questions answered</span></div></div>
-    <a href="{{ url_for('elevenplus.stumble') }}" style="display:block;margin:0 0 22px;padding:18px 22px;border-radius:20px;background:linear-gradient(135deg,#5b2bd6,#ff6bd6);color:#fff;text-decoration:none;font-weight:850;font-size:1.2rem">🏁 New: Spark Stumble — race 31 other players by answering questions! <span style="float:right">Play &rarr;</span></a>
-    <h2 class="section-title">Choose a subject</h2>
-    <div class="subjects" id="subjects"></div>
-    <div class="practice"><section class="card" id="practice" aria-live="polite"></section><aside class="side"><h2>Your practice so far</h2><p>Each question you answer helps you learn. Your scores stay on this device.</p><div id="history"></div><p class="hint">These are sample questions for practice, not an official exam paper.</p></aside></div>
-  </main><footer class="shell footer">Tiny Spark - 11+ Examinator · Practise at your own pace. · <a href="{{ url_for('main.index') }}">All apps</a> · <a href="{{ url_for('elevenplus.privacy') }}">Privacy</a></footer>
-  <script src="{{ url_for('elevenplus.questions_js', v=bank_version) }}"></script>
-  <script src="{{ static_v('practice.js') }}" defer></script>
-  <script src="{{ static_v('pwa.js') }}" defer></script>
-</body>
-</html>
+{% extends 'console_base.html' %}{% set app_name = '11+ Examinator' %}{% block game_class %}ruins-game{% endblock %}
+{% block head %}<script src="{{ url_for('elevenplus.questions_js', v=bank_version) }}"></script>{% endblock %}
+{% block game %}
+<section class="title-screen ruins-title" aria-labelledby="gameTitle"><p class="title-overline">11+ EXAMINATOR</p><h1 id="gameTitle" class="game-logo">The<span>Sun Gate</span></h1><p class="title-story">Five lost power cells. One ancient machine.<br>Choose a realm and bring it back to life.</p><nav class="title-commands" id="realmChoices" aria-label="Choose your realm"></nav><button id="openPassport" class="title-command" type="button">Explorer’s passport</button></section>
+<div id="ruinsUI" class="play-ui" hidden><div class="energy-hud"><span class="energy-orb" aria-hidden="true">◈</span><strong id="energyCount">0 / 5</strong><small>POWER CELLS · <span id="looseOrbCount">0 AMBER ORBS</span></small></div><div class="realm-hud"><strong id="realmName"></strong><span id="realmSubject"></span></div><div id="gateHotspots" class="gate-hotspots"></div><button id="sunPortal" class="sun-portal" type="button" hidden>◉ Enter the Sun Gate</button><div class="explorer-hints"><p id="explorerCue">Approach the first rune gate.</p><span>← ↑ ↓ → / WASD · Move &nbsp; Space · Jump &nbsp; E · Explore &nbsp; Or tap a gate</span><button id="jumpButton" class="jump-button" type="button">Jump</button><div class="move-pad" aria-label="Move explorer"><button type="button" data-move="ArrowLeft" aria-label="Move left">←</button><button type="button" data-move="ArrowUp" aria-label="Move up">↑</button><button type="button" data-move="ArrowDown" aria-label="Move down">↓</button><button type="button" data-move="ArrowRight" aria-label="Move right">→</button></div></div></div>
+{% endblock %}{% block scripts %}<script src="{{ url_for('static', filename='console/ruins.js') }}"></script>{% endblock %}

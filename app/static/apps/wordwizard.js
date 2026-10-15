@@ -61,6 +61,15 @@
     const r = rank();
     $('progressChip').textContent = `${r.emoji} ${r.name} · ${learned(S)} words learned`;
     $('learnedCount').textContent = String(learned(S));
+    const n = learned(S);
+    const next = RANKS.find(rank => rank.min > n);
+    $('wizardGoal').textContent = next ? `Discover ${next.min - n} more ${next.min - n === 1 ? 'word' : 'words'} to become a ${next.name}` : 'Archmage reached · Keep exploring your spellbook';
+    const target = next ? next.min : Math.max(40, n);
+    const meter = $('wizardMeter');
+    meter.setAttribute('aria-valuemax', String(target));
+    meter.setAttribute('aria-valuenow', String(n));
+    meter.firstElementChild.style.width = `${Math.min(100, n / target * 100)}%`;
+    $('wizardMeterText').textContent = `${n} / ${target} words discovered`;
     $('levelPicker').replaceChildren(...[1, 2, 3].map((n) => h('button', {
       type: 'button', role: 'radio', 'aria-checked': String(S.level === n),
       class: 'seg-btn' + (S.level === n ? ' on' : ''),
@@ -103,7 +112,7 @@
     const last = round.i === round.items.length - 1;
     return h('div', { class: 'game-actions' },
       canSpeak ? h('button', { class: 'ghost-btn', type: 'button', onclick: () => speak(round.items[round.i].word + '. ' + round.items[round.i].meaning) }, '🔊 Hear it') : null,
-      h('button', { class: 'kid-button', type: 'button', onclick: () => { round.i += 1; round.answered = false; round.hinted = false; round.built = []; round.options = null; round.tiles = null; renderStage(); } },
+      h('button', { class: 'kid-button', type: 'button', onclick: () => { round.i += 1; round.answered = false; round.hinted = false; round.built = []; round.options = null; round.tiles = null; renderStage(); $('stage').setAttribute('tabindex','-1'); $('stage').focus(); } },
         last ? 'See my result' : 'Next spell'));
   }
 
@@ -123,6 +132,7 @@
       h('p', { class: 'game-q' }, item.meaning[0].toUpperCase() + item.meaning.slice(1) + '.'),
       h('p', { class: 'game-sub' }, '“' + blanked(item) + '”'),
       h('div', { class: 'opt-grid' }, opts),
+      h('ol', { class: 'spell-pips', 'aria-label': 'Spell tower progress' }, round.items.map((_,i) => h('li', {class: i < round.i ? 'done' : i === round.i ? 'current' : '', 'aria-label': `Spell ${i+1}${i < round.i ? ' complete' : i === round.i ? ' current' : ''}`}, i < round.i ? '✦' : String(i+1)))),
       h('div', { id: 'fb' }));
   }
 
@@ -139,6 +149,7 @@
     });
     $('fb').replaceChildren(feedbackBox(item, ok), nextButton());
     renderChrome();
+    $('fb').querySelector('.kid-button')?.focus();
   }
 
   function renderScramble() {
@@ -187,6 +198,7 @@
           if (t) { t.used = true; round.built.push(t); draw(); if (round.built.length === item.word.length) finishScramble(item); }
         } }, '💡 Hint (next letter)'),
         h('button', { class: 'ghost-btn', type: 'button', onclick: () => { round.tiles.forEach((t) => { t.used = false; }); round.built = []; draw(); } }, 'Start again')),
+      h('ol', { class: 'spell-pips', 'aria-label': 'Spell tower progress' }, round.items.map((_,i) => h('li', {class: i < round.i ? 'done' : i === round.i ? 'current' : '', 'aria-label': `Spell ${i+1}${i < round.i ? ' complete' : i === round.i ? ' current' : ''}`}, i < round.i ? '✦' : String(i+1)))),
       h('div', { id: 'fb' }));
     draw();
   }
@@ -205,9 +217,12 @@
     $('fb').replaceChildren(feedbackBox(item, true, round.hinted ? h('p', { class: 'game-sub' }, 'You used a hint, so this one counts as practice.') : null), nextButton());
     renderChrome();
     document.querySelectorAll('#scrambleBox button').forEach((b) => { b.disabled = true; });
+    $('fb').querySelector('.kid-button')?.focus();
   }
 
   function renderEnd() {
+    if (round.recorded) return;
+    round.recorded = true;
     S.rounds += 1;
     const total = round.items.length;
     const starCount = round.correct >= total ? 3 : round.correct >= total - 2 ? 2 : round.correct >= 1 ? 1 : 0;
@@ -220,6 +235,7 @@
       h('div', { class: 'round-stars', 'aria-label': `${starCount} out of 3 stars` }, stars(starCount, 3)),
       h('h2', null, round.correct === total ? 'A perfect cast!' : 'Round complete!'),
       h('p', { class: 'game-q' }, `${round.correct} of ${total} spells cast without help`),
+      h('p', {class:'game-sub'}, `${total} words explored. Your next adventure will revisit words you are still learning.`),
       fresh.length ? h('p', null, '🏅 New badge: ' + fresh.map((b) => b.name).join(', ')) : null,
       h('div', { class: 'game-actions', style: 'justify-content:center' },
         h('button', { class: 'kid-button', type: 'button', onclick: newRound }, 'Cast another round'),

@@ -109,3 +109,10 @@ def test_music_tracks_are_playable_and_available_offline(client):
         assert partial.status_code == 206
         assert partial.data == whole.data[:1024]
         assert partial.headers['Content-Range'] == f'bytes 0-1023/{len(whole.data)}'
+
+
+def test_stumble_is_separate_from_practice_and_goes_home(client):
+    practice = client.get(f"{P}/").get_data(as_text=True)
+    assert f"{P}/stumble" not in practice          # no Stumble promo in the 11+ app
+    stumble = client.get(f"{P}/stumble").get_data(as_text=True)
+    assert 'class="back" href="/"' in stumble       # back goes to the TinySpark home

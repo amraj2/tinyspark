@@ -93,6 +93,25 @@ SECTIONS = [
         ],
     },
     {
+        "id": "skills",
+        "title": "Skills",
+        "blurb": "Level up a real-life skill, one song at a time.",
+        "apps": [
+            {
+                "name": "Typing Hero",
+                "tagline": "Rock the keyboard and learn to touch type, "
+                           "finger by finger.",
+                "emoji": "\U0001F3B8",
+                "ages": "Ages 7-11",
+                "min_age": 7,
+                "max_age": 11,
+                "endpoint": "typinghero.index",
+                "world": "race",
+                "menu_label": "ROCK THE KEYS",
+            },
+        ],
+    },
+    {
         "id": "11-plus",
         "title": "11 Plus",
         "blurb": "Friendly exam practice, plus a game that makes it fun.",
