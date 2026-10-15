@@ -112,7 +112,9 @@ def generate_new_prompt(
         return None
 
 
-def get_unused_prompt(used_prompts: Set[str]) -> str:
+def get_unused_prompt(
+    used_prompts: Set[str], theme: Optional[str] = None
+) -> str:
     """Return a prompt that is not in used_prompts (lowercased).
 
     Prefers the built-in themes, then asks OpenAI, and finally repeats a
@@ -121,6 +123,11 @@ def get_unused_prompt(used_prompts: Set[str]) -> str:
     available = [
         p for p in KID_SAFE_THEMES if p.lower() not in used_prompts
     ]
+    if theme:
+        from .themes import themes_for
+
+        themed = [p for p in available if theme in themes_for(p)]
+        available = themed or available
     if available:
         return random.choice(available)
 

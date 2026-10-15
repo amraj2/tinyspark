@@ -51,10 +51,25 @@ cp .env.example .env   # then edit
 
 When a limit is hit, the app serves an existing image instead of failing.
 
+## Story Starter features
+
+Pick a picture (spark a random one, choose from 3, or open Today's Spark),
+then write guided by the story spine at one of three levels. Includes
+per-picture questions and power words, a writer's checklist, read-aloud,
+plot-twist cards, print, classroom timer mode, "My stories", favourite
+pictures and light badges. Everything a child writes stays in their
+browser (`localStorage`, key `tinyspark-story-v1`); there are no accounts.
+
+Per-picture questions/words are generated with OpenAI when a picture is
+made (moderated, stored in `enrichment.json`); otherwise a built-in set is
+used. Pictures are tagged by theme from keywords in their prompt
+(`app/services/themes.py`).
+
 ## API
 
-- `GET /api/existing-images?limit=24` → `{ images: [{url, prompt}], total }` (random sample, max 100)
-- `POST /api/random-image` with `{ "generate_new": true }` → `{ prompt, image_url, generated }`
+- `GET /api/existing-images?limit=24&theme=animals` → `{ images: [{url, prompt, themes, questions, words}], total }` (random sample, max 100)
+- `GET /api/daily` → the same picture for everyone each UTC day
+- `POST /api/random-image` with `{ "generate_new": true, "theme": "space" }` → image object plus `generated`
 - `POST /genseed` (admin) with `{ "count": 20 }` → generation summary
 - `GET /` (app hub), `GET /story-starter` (Story Starter app), `GET /healthz`
 

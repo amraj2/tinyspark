@@ -1,3 +1,4 @@
+import json
 import struct
 import zlib
 
@@ -45,7 +46,7 @@ def test_home_links_to_elevenplus_and_it_is_isolated(client):
 def test_story_starter_renders(client):
     r = client.get("/story-starter")
     assert r.status_code == 200
-    assert b"generateBtn" in r.data
+    assert b"sparkBtn" in r.data
 
 
 def test_genseed_forbidden_without_token(client, monkeypatch):
@@ -147,3 +148,64 @@ def test_moderation_fails_closed():
                 raise RuntimeError("down")
 
     assert prompts.is_prompt_safe(Boom, "hello") is False
+
+
+def _seed_image(gen_dir, prompt):
+    name = image_service._filename_for(prompt)
+    (gen_dir / name).write_bytes(_png())
+    image_service._record_prompt(name, prompt)
+    return f"/static/generated/{name}"
+
+
+def test_images_include_themes_questions_and_words(client, gen_dir):
+    _seed_image(gen_dir, "a shy fox finding a tiny door at the bottom of a tree")
+    img = client.get("/api/existing-images").get_json()["images"][0]
+    assert "animals" in img["themes"]
+    assert len(img["questions"]) == 3
+    assert len(img["words"]) == 4 and {"word", "meaning"} <= set(img["words"][0])
+
+
+def test_theme_filter(client, gen_dir):
+    _seed_image(gen_dir, "a shy fox finding a tiny door at the bottom of a tree")
+    _seed_image(gen_dir, "a small robot discovering a glowing flower")
+    r = client.get("/api/existing-images?theme=space").get_json()
+    assert [i["prompt"] for i in r["images"]] == [
+        "a small robot discovering a glowing flower"
+    ]
+    # unknown themes are ignored rather than erroring
+    assert client.get("/api/existing-images?theme=nope").get_json()["total"] == 2
+
+
+def test_daily_is_stable_and_404_when_empty(client, gen_dir):
+    assert client.get("/api/daily").status_code == 404
+    for p in ("one old story", "two old story", "three old story"):
+        _seed_image(gen_dir, p)
+    a = client.get("/api/daily").get_json()
+    b = client.get("/api/daily").get_json()
+    assert a["url"] == b["url"] and a["date"]
+
+
+def test_stored_enrichment_is_used_and_bad_data_falls_back(gen_dir):
+    from app.services import enrichment
+
+    url = _seed_image(gen_dir, "a dragon baking bread")
+    name = url.rsplit("/", 1)[-1]
+    good = {"questions": ["Q1?"], "words": [{"word": "toasty", "meaning": "warm"}]}
+    (gen_dir / enrichment.ENRICHMENT_NAME).write_text(json.dumps({name: good}))
+    assert enrichment.details_for(url, "a dragon baking bread") == good
+    (gen_dir / enrichment.ENRICHMENT_NAME).write_text(json.dumps({name: {"x": 1}}))
+    assert enrichment.details_for(url, "a dragon baking bread")["questions"]
+
+
+def test_themes_default_to_everyday():
+    from app.services.themes import themes_for
+
+    assert themes_for("xyzzy") == ["everyday"]
+    assert "space" in themes_for("A ROBOT in a rocket")
+
+
+def test_story_page_ships_config_and_script(client):
+    html = client.get("/story-starter").data.decode()
+    assert 'id="story-config"' in html and "story.js" in html
+    assert "/11plus/" in html  # link to 11+ practice
+

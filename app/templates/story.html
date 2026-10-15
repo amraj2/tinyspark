@@ -3,218 +3,128 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{{ title or "TinySpark" }}</title>
+    <title>{{ title or "TinySpark" }} - Story Starter</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
   </head>
   <body>
     <div class="header-section">
       <div class="header-content">
-        <div><a class="back-link" href="{{ url_for('main.index') }}">&larr; All apps</a>
-          <h1 class="site-title">TinySpark Story Starter</h1></div>
-        <p class="header-subtitle">Generate creative images to inspire young writers aged 6-11</p>
+        <div>
+          <a class="back-link" href="{{ url_for('main.index') }}">&larr; All apps</a>
+          <h1 class="site-title">TinySpark Story Starter</h1>
+        </div>
+        <p class="header-subtitle" id="progressChip" aria-live="polite">Pick a picture, then write your story</p>
       </div>
     </div>
-    <main class="container">
-      <div class="main-content">
 
-      <div class="button-container">
-        <button id="generateBtn" class="kid-button">Generate Story</button>
-        <span id="status" class="status-text" role="status" aria-live="polite">Ready</span>
+    <main class="container story-app" id="storyApp">
+
+      <!-- Controls -->
+      <section class="story-toolbar" aria-label="Story options">
+        <div class="story-field">
+          <span class="story-label" id="levelLabel">How much will you write?</span>
+          <div class="seg" id="levelPicker" role="radiogroup" aria-labelledby="levelLabel"></div>
+        </div>
+        <div class="story-field">
+          <span class="story-label" id="themeLabel">What kind of picture?</span>
+          <div class="chips" id="themeChips" role="radiogroup" aria-labelledby="themeLabel"></div>
+        </div>
+        <div class="story-actions">
+          <button id="sparkBtn" class="kid-button story-spark">Spark a new picture</button>
+          <button id="pick3Btn" class="ghost-btn" type="button">Choose from 3</button>
+          <button id="dailyBtn" class="ghost-btn" type="button">Today's Spark</button>
+          <button id="classroomBtn" class="ghost-btn" type="button" aria-pressed="false">Classroom mode</button>
+          <span id="status" class="status-text" role="status" aria-live="polite"></span>
+        </div>
+      </section>
+
+      <div id="newReady" class="story-banner" hidden>
+        <span>&#10024; A brand-new picture is ready!</span>
+        <button id="seeNewBtn" class="ghost-btn" type="button">See it</button>
       </div>
 
-      <div class="content-wrapper">
-        <div class="image-container">
-          <img id="image" alt="" hidden />
-          <p id="placeholder" class="placeholder-text"></p>
+      <section id="pick3" class="story-pick" hidden aria-label="Choose a picture">
+        <h2>Pick the picture you like best</h2>
+        <div class="pick-grid" id="pick3Grid"></div>
+      </section>
+
+      <!-- Picture + writing -->
+      <section class="story-stage">
+        <div class="picture-card">
+          <div class="picture-frame">
+            <img id="image" alt="" hidden />
+            <p id="placeholder" class="placeholder-text">Press &ldquo;Spark a new picture&rdquo; to begin.</p>
+            <span id="dailyBadge" class="daily-badge" hidden>&#11088; Today's Spark</span>
+            <button id="favBtn" class="fav-btn" type="button" aria-pressed="false" aria-label="Save this picture to favourites" hidden>&#9825;</button>
+          </div>
+          <p id="promptBox" class="prompt-box story-prompt" aria-live="polite"></p>
+          <div id="classTimer" class="class-timer" hidden>
+            <span id="timerText" class="timer-text" aria-live="off">5:00</span>
+            <button id="timerToggle" class="ghost-btn" type="button">Start</button>
+            <button id="timerReset" class="ghost-btn" type="button">Reset</button>
+          </div>
         </div>
 
-        <div id="promptBox" class="prompt-box" aria-live="polite"></div>
-      </div>
+        <div class="write-card" id="writeCard" hidden>
+          <details class="ideas" open>
+            <summary>Ideas to think about</summary>
+            <ul id="ideas"></ul>
+          </details>
 
-      <section class="tips-section">
-        <h3>Story Writing Guide</h3>
-        <ul>
-          <li>Who are the characters in your story?</li>
-          <li>Where does your story take place?</li>
-          <li>What problem or adventure do they face?</li>
-          <li>How do they solve it or what happens next?</li>
-        </ul>
+          <div class="power-words">
+            <span class="story-label">Power words (tap to use)</span>
+            <div id="words" class="chips"></div>
+          </div>
+
+          <div id="steps"></div>
+
+          <p class="count-line"><span id="wordCount">0 words</span> <span id="draftNote" class="draft-note"></span></p>
+
+          <div class="write-actions">
+            <button id="twistBtn" class="ghost-btn" type="button">&#127922; Add a plot twist</button>
+            <button id="readBtn" class="ghost-btn" type="button" hidden>&#128266; Read it to me</button>
+            <button id="checkBtn" class="ghost-btn" type="button">&#9989; Check my writing</button>
+            <button id="printBtn" class="ghost-btn" type="button">&#128424; Print</button>
+            <button id="saveBtn" class="kid-button save-btn" type="button">Save my story</button>
+          </div>
+
+          <div id="checkPanel" class="check-panel" hidden>
+            <h3>Writer's checklist</h3>
+            <ul id="checkList"></ul>
+          </div>
+
+          <div id="savedPanel" class="saved-panel" hidden>
+            <h3>&#127881; Story saved!</h3>
+            <p id="savedMsg"></p>
+            <a id="elevenplusLink" class="ghost-btn" href="#">Practise 11+ English next</a>
+          </div>
+        </div>
       </section>
-      </div>
+
+      <!-- Library -->
+      <section class="story-library" aria-label="My stories">
+        <div class="library-tabs" role="tablist">
+          <button class="tab" role="tab" id="tabStories" aria-selected="true" aria-controls="panelStories">My stories <span id="storyCount" class="tab-count">0</span></button>
+          <button class="tab" role="tab" id="tabFavs" aria-selected="false" aria-controls="panelFavs">Favourite pictures <span id="favCount" class="tab-count">0</span></button>
+          <button class="tab" role="tab" id="tabBadges" aria-selected="false" aria-controls="panelBadges">Badges</button>
+        </div>
+        <div id="panelStories" role="tabpanel" aria-labelledby="tabStories"></div>
+        <div id="panelFavs" role="tabpanel" aria-labelledby="tabFavs" hidden></div>
+        <div id="panelBadges" role="tabpanel" aria-labelledby="tabBadges" hidden></div>
+      </section>
     </main>
+
+    <div id="printSheet" class="print-sheet" aria-hidden="true"></div>
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 
     <a href="https://buymeacoffee.com/amraj" target="_blank" rel="noopener noreferrer" class="coffee-button">
       <span class="coffee-icon" aria-hidden="true">☕</span>
      Give feedback
     </a>
 
-    <!-- Loading overlay for new image generation -->
-    <div id="loadingOverlay" class="loading-overlay" role="status" aria-live="polite">
-      <div class="loading-content">
-        <h2 class="loading-title">Creating Your Story Image!</h2>
-        <div class="loading-spinner" aria-hidden="true">
-          <div class="spinner-ring"></div>
-          <div class="spinner-ring"></div>
-          <div class="spinner-ring"></div>
-        </div>
-        <p class="loading-message">
-          <span class="loading-emoji" aria-hidden="true">🎨</span>
-          Our artists are working hard!
-          <span class="loading-emoji" aria-hidden="true">✨</span>
-        </p>
-        <p class="loading-subtitle" id="loadingSubtitle">
-          This might take a moment...
-        </p>
-      </div>
-    </div>
-
     {% include '_analytics.html' %}
 
-    <script>
-      // ---- App ----
-      const GENERATE_EVERY = 4;          // every Nth click makes a brand-new image
-      const SPIN_MS = 3000;              // roulette duration
-      const GENERATE_TIMEOUT_MS = 70000; // give up on generation after this
-      const funMessages = [
-        'Mixing colors and magic...',
-        'Drawing your amazing story...',
-        'Almost there, just a bit more...',
-        'Creating something special...',
-        'Your story is coming to life!',
-        'Adding the finishing touches...',
-      ];
-
-      const btn = document.getElementById('generateBtn');
-      const img = document.getElementById('image');
-      const statusEl = document.getElementById('status');
-      const promptBox = document.getElementById('promptBox');
-      const placeholder = document.getElementById('placeholder');
-      const loadingOverlay = document.getElementById('loadingOverlay');
-      const loadingSubtitle = document.getElementById('loadingSubtitle');
-      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      let images = [];
-      let clickCount = 0;
-      let subtitleInterval = null;
-      let spinTimeout = null;
-
-      function showLoadingOverlay() {
-        loadingOverlay.classList.add('active');
-        let i = 0;
-        subtitleInterval = setInterval(() => {
-          loadingSubtitle.textContent = funMessages[i];
-          i = (i + 1) % funMessages.length;
-        }, 4000);
-      }
-
-      function hideLoadingOverlay() {
-        loadingOverlay.classList.remove('active');
-        clearInterval(subtitleInterval);
-        subtitleInterval = null;
-      }
-
-      function render(item, spinning) {
-        img.src = item.url;
-        img.alt = item.prompt;
-        img.hidden = false;
-        img.classList.toggle('roulette-spinning', spinning);
-        placeholder.style.display = 'none';
-        promptBox.textContent = item.prompt;
-        promptBox.style.display = 'block';
-      }
-
-      function preload(url) {
-        return new Promise((resolve, reject) => {
-          const probe = new Image();
-          probe.onload = () => resolve();
-          probe.onerror = () => reject(new Error('Image failed to load'));
-          probe.src = url;
-        });
-      }
-
-      async function loadImages() {
-        try {
-          const res = await fetch('/api/existing-images?limit=24');
-          if (!res.ok) return;
-          const data = await res.json();
-          images = data.images || [];
-          images.forEach((item) => { new Image().src = item.url; });
-        } catch (e) {
-          console.error('Failed to load images:', e);
-        }
-      }
-
-      function spinTo(target) {
-        return new Promise((resolve) => {
-          if (reducedMotion || images.length < 2) {
-            render(target, false);
-            resolve();
-            return;
-          }
-          const start = Date.now();
-          let delay = 50;
-          statusEl.textContent = 'Spinning...';
-          const step = () => {
-            if (Date.now() - start >= SPIN_MS) {
-              render(target, false);
-              resolve();
-              return;
-            }
-            render(images[Math.floor(Math.random() * images.length)], true);
-            delay = Math.min(delay + 15, 300);
-            spinTimeout = setTimeout(step, delay);
-          };
-          step();
-        });
-      }
-
-      async function generateNew() {
-        showLoadingOverlay();
-        statusEl.textContent = 'Generating new image...';
-        const controller = new AbortController();
-        const timer = setTimeout(() => controller.abort(), GENERATE_TIMEOUT_MS);
-        try {
-          const res = await fetch('/api/random-image', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ generate_new: true }),
-            signal: controller.signal,
-          });
-          if (!res.ok) throw new Error('Request failed');
-          const data = await res.json();
-          await preload(data.image_url);
-          render({ url: data.image_url, prompt: data.prompt }, false);
-          clickCount = 0;
-          await loadImages();
-        } finally {
-          clearTimeout(timer);
-          hideLoadingOverlay();
-        }
-      }
-
-      async function onGenerateClick() {
-        clearTimeout(spinTimeout);
-        btn.disabled = true;
-        clickCount++;
-        try {
-          if (images.length === 0) await loadImages();
-          if (clickCount >= GENERATE_EVERY || images.length === 0) {
-            await generateNew();
-          } else {
-            const target = images[Math.floor(Math.random() * images.length)];
-            await spinTo(target);
-          }
-          statusEl.textContent = '';
-        } catch (e) {
-          console.error(e);
-          statusEl.textContent = 'Something went wrong - please try again';
-        } finally {
-          btn.disabled = false;
-        }
-      }
-
-      loadImages();
-      btn.addEventListener('click', onGenerateClick);
-    </script>
+    <script type="application/json" id="story-config">{{ story_config|tojson }}</script>
+    <script src="{{ url_for('static', filename='story.js') }}" defer></script>
   </body>
 </html>

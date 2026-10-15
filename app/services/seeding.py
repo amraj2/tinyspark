@@ -1,5 +1,6 @@
 import logging
 
+from . import enrichment
 from .image_service import generate_image_url, get_all_existing_images
 from .prompts import generate_new_prompt, get_unused_prompt
 
@@ -27,7 +28,9 @@ def seed_images(count: int) -> dict:
             errors.append(f"No unused prompt available at step {i + 1}")
             break
 
-        if generate_image_url(prompt):
+        url = generate_image_url(prompt)
+        if url:
+            enrichment.generate_and_store(url, prompt)
             used.add(prompt.lower())
             generated += 1
             failures = 0

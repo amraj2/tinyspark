@@ -11,6 +11,11 @@ from flask import (
     url_for,
 )
 
+import hashlib
+from datetime import datetime, timezone
+
+from .services import enrichment
+from .services.themes import THEME_IDS, public_themes, themes_for
 from .services.image_service import (
     generate_image_url,
     get_all_existing_images,
@@ -72,15 +77,30 @@ APPS = [
 ]
 
 
+def _payload(url: str, prompt: str, store=None) -> dict:
+    """An image plus its themes and writing help."""
+    details = enrichment.details_for(url, prompt, store)
+    return {
+        "url": url,
+        "image_url": url,
+        "prompt": prompt,
+        "themes": themes_for(prompt),
+        "questions": details["questions"],
+        "words": details["words"],
+    }
+
+
 def _image_json(url: str, prompt: str, generated: bool):
-    return jsonify(
-        {"prompt": prompt, "image_url": url, "generated": generated}
-    )
+    return jsonify({**_payload(url, prompt), "generated": generated})
 
 
 def _random_existing(existing):
     url, prompt = random.choice(existing)
     return _image_json(url, prompt, generated=False)
+
+
+def _theme_arg(raw):
+    return raw if raw in THEME_IDS else None
 
 
 @bp.get("/")
@@ -103,6 +123,10 @@ def story_starter():
         "story.html",
         title="TinySpark",
         ga_id=current_app.config.get("GA_MEASUREMENT_ID", ""),
+        story_config={
+            "themes": public_themes(),
+            "elevenplusUrl": url_for("elevenplus.index"),
+        },
     )
 
 
@@ -113,45 +137,70 @@ def healthz():
 
 @bp.get("/api/existing-images")
 def api_existing_images():
-    """Return a random sample of existing images (default 24, max 100)."""
+    """Return a random sample of images (default 24, max 100).
+
+    Optional `theme` filters to one theme id (see services/themes.py).
+    """
     limit = request.args.get("limit", DEFAULT_IMAGE_LIMIT, type=int)
     limit = max(1, min(limit, MAX_IMAGE_LIMIT))
+    theme = _theme_arg(request.args.get("theme"))
 
     images = get_all_existing_images()
+    if theme:
+        images = [i for i in images if theme in themes_for(i[1])]
     random.shuffle(images)
+    store = enrichment.load_store()
     return jsonify({
-        "images": [
-            {"url": url, "prompt": prompt} for url, prompt in images[:limit]
-        ],
+        "images": [_payload(u, p, store) for u, p in images[:limit]],
         "total": len(images),
     })
+
+
+@bp.get("/api/daily")
+def api_daily():
+    """The same picture for everyone on a given UTC day."""
+    images = get_all_existing_images()
+    if not images:
+        return jsonify({"error": "no images yet"}), 404
+    today = datetime.now(timezone.utc).date().isoformat()
+    url, prompt = min(
+        images,
+        key=lambda i: hashlib.sha1(f"{today}:{i[0]}".encode()).hexdigest(),
+    )
+    return jsonify({**_payload(url, prompt), "date": today})
 
 
 @bp.post("/api/random-image")
 def api_random_image():
     body = request.get_json(silent=True)
-    want_new = isinstance(body, dict) and body.get("generate_new") is True
+    body = body if isinstance(body, dict) else {}
+    want_new = body.get("generate_new") is True
+    theme = _theme_arg(body.get("theme"))
 
     existing = get_all_existing_images()
-    if existing and not want_new:
-        return _random_existing(existing)
+    pool = existing
+    if theme:
+        pool = [i for i in existing if theme in themes_for(i[1])] or existing
+    if pool and not want_new:
+        return _random_existing(pool)
 
     # Generating costs money: enforce per-client and daily limits, and
     # degrade to an existing image rather than failing the kid's click.
     client = request.remote_addr or "unknown"
     if not (_ip_limiter.allow(client) and _daily_cap.acquire()):
-        if existing:
-            return _random_existing(existing)
+        if pool:
+            return _random_existing(pool)
         return jsonify({"error": "Please try again later"}), 429
 
     used = {prompt.lower() for _, prompt in existing}
-    prompt = get_unused_prompt(used)
+    prompt = get_unused_prompt(used, theme=theme)
     image_url = generate_image_url(prompt)
     if image_url:
+        enrichment.generate_and_store(image_url, prompt)
         return _image_json(image_url, prompt, generated=True)
 
-    if existing:
-        return _random_existing(existing)
+    if pool:
+        return _random_existing(pool)
     return _image_json(random_fallback_url(), prompt, generated=False)
 
 
