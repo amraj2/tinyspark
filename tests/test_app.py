@@ -241,3 +241,13 @@ def test_generate_image_url_rejects_non_png_bytes(gen_dir, monkeypatch):
 def test_default_quality_matches_model_family():
     assert image_service._default_quality("gpt-image-1-mini") == "medium"
     assert image_service._default_quality("dall-e-3") == "standard"
+
+
+def test_saved_files_are_world_readable(gen_dir):
+    import stat
+
+    name = image_service._filename_for("a readable whale")
+    image_service._save_image_bytes(_png(), "a readable whale")
+    mode = stat.S_IMODE((gen_dir / name).stat().st_mode)
+    assert mode == 0o644
+    assert stat.S_IMODE((gen_dir / "index.json").stat().st_mode) == 0o644

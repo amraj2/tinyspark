@@ -79,6 +79,9 @@ def _atomic_write(path: Path, data: bytes) -> None:
     try:
         with os.fdopen(fd, "wb") as f:
             f.write(data)
+        # mkstemp creates 0600; make generated files readable so a reverse
+        # proxy or backup job can serve/copy them.
+        os.chmod(tmp, 0o644)
         os.replace(tmp, path)
     except BaseException:
         try:
