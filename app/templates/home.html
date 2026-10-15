@@ -8,49 +8,34 @@
 </head>
 <body>
 <main class="game-screen" data-world="create">
-  <div class="speed-lines" aria-hidden="true"></div>
-  <header class="game-brand"><span class="brand-mark" aria-hidden="true">✦</span><h1>TINY<span>SPARK</span></h1><span class="edition">THE ADVENTURE STARTS HERE</span></header>
-  <div class="chapter" aria-hidden="true"><span>LET YOUR</span><strong>IMAGINATION<br>RUN WILD.</strong></div>
+  <header class="system-status"><span>● TinySpark</span><span id="system-age">All ages</span><span>HOME MENU</span></header>
   <section class="selection" aria-labelledby="selection-title">
     {% set live = [] %}{% for section in sections %}{% for app in section.apps if app.url %}{% set _ = live.append(app) %}{% endfor %}{% endfor %}
-    <h2 id="selection-title">CHOOSE YOUR ADVENTURE</h2>
-    <div class="age-filter">
-      <label for="age-filter">FOR PARENTS · FILTER BY AGE</label>
-      <select id="age-filter" aria-describedby="age-guidance"><option value="all">All ages</option>{% for age in range(6, 12) %}<option value="{{ age }}">Age {{ age }}</option>{% endfor %}</select>
-      <p id="age-guidance">Word, doodle and story play: 6–11 · 11+ practice: 9–11</p>
-      <p id="age-results" role="status" aria-live="polite" aria-atomic="true"></p>
-    </div>
+    <h2 id="selection-title">Choose your adventure</h2>
     {% set ns = namespace(n=0) %}
     <nav class="game-menu{% if live|length > 4 %} dense{% endif %}" aria-label="Adventures">
     {% for section in sections %}{% for app in section.apps if app.url %}
       {% set ns.n = ns.n + 1 %}
       {% set world = app.world or ('create' if section.id == 'story' else ('race' if 'stumble' in app.url else 'challenge')) %}
       {% set label = app.menu_label or ('MAKE A STORY' if world == 'create' else ('RACE FOR THE CROWN' if world == 'race' else 'CRACK A CHALLENGE')) %}
-      <a class="game-option{% if ns.n == 1 %} selected{% endif %}" href="{{ app.url }}" data-world="{{ world }}" data-title="{{ app.name }}" data-description="{{ app.tagline }}" data-age="{{ app.ages }}" data-min-age="{{ app.min_age }}" data-max-age="{{ app.max_age }}" {% if ns.n == 1 %}aria-describedby="mission-description"{% endif %}>
-        <span class="option-number" aria-hidden="true">{{ '%02d'|format(ns.n) }}</span>
-        <span class="option-label">{{ label }}<small>{{ app.name }}</small></span><span class="option-go" aria-hidden="true">↗</span>
+      <a class="game-option{% if ns.n == 1 %} selected{% endif %}" href="{{ app.url }}" aria-label="{{ app.name }} · {{ app.ages }}" data-world="{{ world }}" data-title="{{ app.name }}" data-description="{{ app.tagline }}" data-age="{{ app.ages }}" data-min-age="{{ app.min_age }}" data-max-age="{{ app.max_age }}" {% if ns.n == 1 %}aria-describedby="mission-description"{% endif %}>
+        <span class="channel-art cover-art" style="background-image:url('{{ url_for('static', filename='game-art/channel-covers.png') }}');background-size:400% 200%;background-position:{{ ((ns.n - 1) % 4) * 100 / 3 }}% {{ 0 if ns.n <= 4 else 100 }}%" aria-hidden="true"></span>
+        <span class="channel-caption"><span class="option-label">{{ app.name }}</span><small>{{ app.ages }}</small><span class="option-go" aria-hidden="true">▶</span></span>
       </a>
     {% endfor %}{% endfor %}
     </nav>
-    <p class="menu-hint">Pick one to jump in <span aria-hidden="true">↗</span></p>
   </section>
-  <div class="world-stage" aria-hidden="true">
-    <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
-    <span class="stage-word">CREATE!</span>
-    <svg class="spark-character" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path class="character-shadow" d="M260 50 300 173 444 147 364 268 459 360 314 355 265 474 209 360 70 405 125 277 35 174 187 180Z" fill="#161619" stroke="#161619" stroke-width="18" stroke-linejoin="round" transform="translate(12 16)"/>
-      <path d="M260 50 300 173 444 147 364 268 459 360 314 355 265 474 209 360 70 405 125 277 35 174 187 180Z" fill="#ffe46a" stroke="#161619" stroke-width="9" stroke-linejoin="round"/>
-      <path d="m149 223 84-15 11 62-83 14Z" fill="#161619"/><path d="m273 199 83-12 10 62-83 13Z" fill="#161619"/>
-      <path d="m186 224 19-3 5 28-19 3Zm125-19 19-3 5 28-19 3Z" fill="#fffdf5"/>
-      <path d="M222 309q43 33 82-12" stroke="#161619" stroke-width="12" stroke-linecap="round"/>
-      <path d="m100 311-54 22m342-43 56 9" stroke="#161619" stroke-width="14" stroke-linecap="round"/>
-    </svg>
-    <span class="stage-doodle doodle-one">✦</span><span class="stage-doodle doodle-two">✧</span><span class="stage-doodle doodle-three">+</span>
-    <span class="stage-stamp">IDEAS<br>HAVE SUPERPOWERS.</span>
-  </div>
-  <section class="mission-brief" aria-labelledby="mission-title"><div class="brief-label"><span>YOUR MISSION</span><span id="mission-age">Ages 6-11</span></div><h2 id="mission-title">Story Starter</h2><p id="mission-description">Spin up a picture and write a story about it.</p></section>
-  <footer class="game-controls"><p><kbd>↑</kbd><kbd>↓</kbd> Choose <kbd>Enter</kbd> Play <span class="tap-hint">/ or tap an adventure</span></p><button id="motion-toggle" type="button" aria-pressed="false">Motion: on</button><button id="help-open" type="button">Grown-ups / help</button></footer>
+  <div class="board-caption"><span id="board-selection">Story Starter</span><span class="page-dots" aria-hidden="true">●</span><span>Point to a channel · Press Enter to open</span></div>
+  <footer class="system-dock"><button id="help-open" class="dock-orb" type="button" aria-label="Parent settings and age filter">⚙<small>Parents</small></button><div class="dock-center"><span class="dock-brand">Tiny<span>Spark</span></span><time id="system-clock"></time><span class="dock-instruction">Pick a channel. Let's play.</span></div><button id="motion-toggle" class="dock-orb" type="button" aria-pressed="false">Motion: on</button></footer>
 </main>
-<dialog id="help-dialog"><button class="close-dialog" type="button" aria-label="Close help">×</button><h2>A little help</h2><p>Choose an adventure with a tap or click. On a keyboard, use ↑ and ↓ to choose, then Enter to play.</p><p>Story Starter is for curious minds aged 6–11. Challenges and races offer 11+ practice. You can always try again.</p><h3>More to explore</h3><p>Word Wizard builds vocabulary, Doodle Quest sets a drawing challenge, and Rhyme Time is for rhymes and silly poems.</p></dialog>
+<dialog id="launch-dialog" class="launch-dialog"><div id="launch-art" class="launch-art"><span id="launch-symbol" aria-hidden="true"></span><h2 id="mission-title">Story Starter</h2></div><div class="launch-details"><span id="mission-age">Ages 6–11</span><p id="mission-description">Spin up a picture and write a story about it.</p></div><div class="launch-actions"><button id="launch-back" type="button">← Channel menu</button><a id="launch-play" href="/story-starter">Start ▶</a></div></dialog>
+<dialog id="help-dialog"><button class="close-dialog" type="button" aria-label="Close parent settings">×</button><h2>Parent settings</h2>
+    <div class="age-filter">
+      <label for="age-filter">Playing age</label>
+      <select id="age-filter" aria-describedby="age-guidance"><option value="all">All ages</option>{% for age in range(6, 12) %}<option value="{{ age }}">Age {{ age }}</option>{% endfor %}</select>
+      <p id="age-guidance">For parents: choose an age to find a suitable adventure.</p>
+      <p id="age-results" role="status" aria-live="polite" aria-atomic="true"></p>
+    </div>
+<p>Use the arrow keys to choose a channel. Press Enter to open it, then Start to play. Press Escape to return to the menu.</p><p>All games allow another try. Choose an age above to show suitable channels.</p></dialog>
 {% include '_analytics.html' %}
 </body></html>
