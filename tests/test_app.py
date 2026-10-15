@@ -23,8 +23,17 @@ def test_health(client):
     assert client.get("/healthz").get_json() == {"status": "ok"}
 
 
-def test_index_renders(client):
-    assert b"TinySpark" in client.get("/").data
+def test_home_lists_apps_and_links_to_story_starter(client):
+    html = client.get("/").data.decode()
+    assert "Story Starter" in html
+    assert 'href="/story-starter"' in html
+    assert "Coming soon" in html
+
+
+def test_story_starter_renders(client):
+    r = client.get("/story-starter")
+    assert r.status_code == 200
+    assert b"generateBtn" in r.data
 
 
 def test_genseed_forbidden_without_token(client, monkeypatch):

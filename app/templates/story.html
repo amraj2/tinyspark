@@ -9,7 +9,8 @@
   <body>
     <div class="header-section">
       <div class="header-content">
-        <h1 class="site-title">TinySpark Story Starter</h1>
+        <div><a class="back-link" href="{{ url_for('main.index') }}">&larr; All apps</a>
+          <h1 class="site-title">TinySpark Story Starter</h1></div>
         <p class="header-subtitle">Generate creative images to inspire young writers aged 6-11</p>
       </div>
     </div>
@@ -67,59 +68,9 @@
       </div>
     </div>
 
-    {% if ga_id %}
-    <div id="consentBanner" class="consent-banner" role="region" aria-label="Analytics choice" hidden>
-      <p>May we use analytics cookies to learn how TinySpark is used? Grown-ups, please choose.</p>
-      <div class="consent-actions">
-        <button id="consentAccept" class="consent-btn consent-accept">Accept</button>
-        <button id="consentDecline" class="consent-btn">No thanks</button>
-      </div>
-    </div>
-    {% endif %}
+    {% include '_analytics.html' %}
 
     <script>
-      const GA_ID = {{ (ga_id or '')|tojson }};
-      const CONSENT_KEY = 'tinyspark-analytics-consent';
-
-      // ---- Analytics (only after consent) ----
-      function loadAnalytics() {
-        if (!GA_ID || window.gtag) return;
-        window.dataLayer = window.dataLayer || [];
-        window.gtag = function () { dataLayer.push(arguments); };
-        const s = document.createElement('script');
-        s.async = true;
-        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(GA_ID);
-        document.head.appendChild(s);
-        gtag('js', new Date());
-        gtag('config', GA_ID);
-      }
-
-      function readConsent() {
-        try { return localStorage.getItem(CONSENT_KEY); } catch (e) { return null; }
-      }
-
-      function writeConsent(value) {
-        try { localStorage.setItem(CONSENT_KEY, value); } catch (e) { /* ignore */ }
-      }
-
-      (function initConsent() {
-        const banner = document.getElementById('consentBanner');
-        if (!GA_ID || !banner) return;
-        const stored = readConsent();
-        if (stored === 'granted') { loadAnalytics(); return; }
-        if (stored === 'denied') return;
-        banner.hidden = false;
-        document.getElementById('consentAccept').addEventListener('click', () => {
-          writeConsent('granted');
-          banner.hidden = true;
-          loadAnalytics();
-        });
-        document.getElementById('consentDecline').addEventListener('click', () => {
-          writeConsent('denied');
-          banner.hidden = true;
-        });
-      })();
-
       // ---- App ----
       const GENERATE_EVERY = 4;          // every Nth click makes a brand-new image
       const SPIN_MS = 3000;              // roulette duration

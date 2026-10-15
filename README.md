@@ -27,7 +27,7 @@ FLASK_APP=app:create_app flask run --debug
 
 Open `http://127.0.0.1:5001/` in your browser.
 
-Health check: `GET /healthz` returns `{ "status": "ok" }`.
+Health check: `GET /` (app hub), `GET /story-starter` (Story Starter app), `GET /healthz` returns `{ "status": "ok" }`.
 
 ## Environment Variables
 
@@ -56,7 +56,7 @@ When a limit is hit, the app serves an existing image instead of failing.
 - `GET /api/existing-images?limit=24` → `{ images: [{url, prompt}], total }` (random sample, max 100)
 - `POST /api/random-image` with `{ "generate_new": true }` → `{ prompt, image_url, generated }`
 - `POST /genseed` (admin) with `{ "count": 20 }` → generation summary
-- `GET /healthz`
+- `GET /` (app hub), `GET /story-starter` (Story Starter app), `GET /healthz`
 
 Generated prompts are checked with OpenAI moderation before an image is made
 (fails closed). Prompts are stored in `app/static/generated/index.json`
@@ -75,6 +75,17 @@ pip install -r requirements-dev.txt
 pytest
 ```
 
+## Apps
+
+The homepage (`/`) is a grid of apps defined in `APPS` in `app/routes.py`.
+
+| App | URL | Code |
+| --- | --- | --- |
+| Story Starter | `/story-starter` | `app/routes.py`, `app/templates/story.html` |
+
+To add an app: create a blueprint under `app/apps/<name>/`, register it in
+`create_app`, and add a card to `APPS`.
+
 ## Project Structure
 
 ```
@@ -88,7 +99,9 @@ tinyspark/
       limits.py           # rate limiter + daily cap
       seeding.py          # batch generation (CLI + /genseed)
     templates/
-      index.html
+      home.html           # app hub grid (add apps in routes.APPS)
+      story.html          # Story Starter
+      _analytics.html     # shared consent + analytics
     static/
       style.css
   app.py

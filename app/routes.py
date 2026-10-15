@@ -2,7 +2,14 @@ import hmac
 import os
 import random
 
-from flask import Blueprint, current_app, jsonify, render_template, request
+from flask import (
+    Blueprint,
+    current_app,
+    jsonify,
+    render_template,
+    request,
+    url_for,
+)
 
 from .services.image_service import (
     generate_image_url,
@@ -27,6 +34,37 @@ _ip_limiter = RateLimiter(
 _daily_cap = DailyCap(int(os.environ.get("DAILY_GENERATION_CAP", "100")))
 
 
+# Apps shown on the homepage grid. Add an entry to launch a new app;
+# entries without an endpoint render as "Coming soon" cards.
+APPS = [
+    {
+        "name": "Story Starter",
+        "tagline": "Spin up a picture and write a story about it.",
+        "emoji": "\U0001F4D6",
+        "ages": "Ages 6-11",
+        "endpoint": "main.story_starter",
+    },
+    {
+        "name": "Word Wizard",
+        "tagline": "Build spells out of new and exciting words.",
+        "emoji": "\U0001FA84",
+        "ages": "Ages 6-11",
+    },
+    {
+        "name": "Doodle Quest",
+        "tagline": "Draw along with a daily creative challenge.",
+        "emoji": "\U0001F58D\uFE0F",
+        "ages": "Ages 6-11",
+    },
+    {
+        "name": "Rhyme Time",
+        "tagline": "Find rhymes and make silly poems.",
+        "emoji": "\U0001F3B5",
+        "ages": "Ages 6-11",
+    },
+]
+
+
 def _image_json(url: str, prompt: str, generated: bool):
     return jsonify(
         {"prompt": prompt, "image_url": url, "generated": generated}
@@ -40,8 +78,22 @@ def _random_existing(existing):
 
 @bp.get("/")
 def index():
+    apps = [
+        {**a, "url": url_for(a["endpoint"]) if a.get("endpoint") else None}
+        for a in APPS
+    ]
     return render_template(
-        "index.html",
+        "home.html",
+        title="TinySpark",
+        apps=apps,
+        ga_id=current_app.config.get("GA_MEASUREMENT_ID", ""),
+    )
+
+
+@bp.get("/story-starter")
+def story_starter():
+    return render_template(
+        "story.html",
         title="TinySpark",
         ga_id=current_app.config.get("GA_MEASUREMENT_ID", ""),
     )
