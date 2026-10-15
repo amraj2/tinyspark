@@ -29,6 +29,10 @@ def test_home_lists_apps_and_links_to_story_starter(client):
     assert "Story Starter" in html
     assert 'href="/story-starter"' in html
     assert "Coming soon" in html
+    # 11+ and the Stumble race are separate cards in their own section
+    assert 'id="11-plus"' in html
+    assert 'href="/11plus/"' in html and 'href="/11plus/stumble"' in html
+    assert "Spark Stumble Race" in html and "11+ Examinator" in html
 
 
 def test_home_links_to_elevenplus_and_it_is_isolated(client):
@@ -209,3 +213,8 @@ def test_story_page_ships_config_and_script(client):
     assert 'id="story-config"' in html and "story.js" in html
     assert "/11plus/" in html  # link to 11+ practice
 
+
+def test_genseed_non_ascii_token_is_403_not_500(client, monkeypatch):
+    monkeypatch.setenv("ADMIN_TOKEN", "secret")
+    r = client.post("/genseed", headers={"X-Admin-Token": "s\u00e9cret"})
+    assert r.status_code == 403

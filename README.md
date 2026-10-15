@@ -92,12 +92,12 @@ pytest
 
 ## Apps
 
-The homepage (`/`) is a grid of apps defined in `APPS` in `app/routes.py`.
+The homepage (`/`) is a grid of apps defined in `SECTIONS` in `app/routes.py`.
 
 | App | URL | Code |
 | --- | --- | --- |
 | Story Starter | `/story-starter` | `app/routes.py`, `app/templates/story.html` |
-| 11+ Examinator + Spark Stumble | `/11plus/` | `app/apps/elevenplus/` (blueprint, own static/templates/tests) |
+| 11+ Examinator, Spark Stumble Race | `/11plus/`, `/11plus/stumble` | `app/apps/elevenplus/` (blueprint, own static/templates/tests) |
 
 To add an app: create a blueprint under `app/apps/<name>/`, register it in
 `create_app`, and add a card to `APPS`.
@@ -115,7 +115,7 @@ tinyspark/
       limits.py           # rate limiter + daily cap
       seeding.py          # batch generation (CLI + /genseed)
     templates/
-      home.html           # app hub grid (add apps in routes.APPS)
+      home.html           # app hub grid (add apps in routes.SECTIONS)
       story.html          # Story Starter
       _analytics.html     # shared consent + analytics
     static/

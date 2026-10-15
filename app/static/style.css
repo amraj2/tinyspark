@@ -1168,3 +1168,32 @@ body.classroom .story-prompt {
     color: #555;
   }
 }
+
+/* Homepage sections */
+.app-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 2rem 0;
+}
+
+.app-section-head h2 {
+  font-size: 1.5rem;
+  color: var(--primary);
+}
+
+.app-section-head p {
+  color: var(--text-secondary);
+}
+
+.app-section .app-grid {
+  padding: 1rem 0 1.5rem;
+}
+
+.hero-title {
+  font-size: 2rem;
+  color: var(--primary);
+}
+
+@media (max-width: 600px) {
+  .app-section { padding: 1rem 1rem 0; }
+}

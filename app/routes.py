@@ -39,40 +39,64 @@ _ip_limiter = RateLimiter(
 _daily_cap = DailyCap(int(os.environ.get("DAILY_GENERATION_CAP", "100")))
 
 
-# Apps shown on the homepage grid. Add an entry to launch a new app;
-# entries without an endpoint render as "Coming soon" cards.
-APPS = [
+# Sections and apps shown on the homepage. Add an app to a section's
+# "apps" list to launch it; entries without an endpoint render as
+# "Coming soon" cards.
+SECTIONS = [
     {
-        "name": "Story Starter",
-        "tagline": "Spin up a picture and write a story about it.",
-        "emoji": "\U0001F4D6",
-        "ages": "Ages 6-11",
-        "endpoint": "main.story_starter",
+        "id": "story",
+        "title": "Stories & creativity",
+        "blurb": "Spark ideas and get writing.",
+        "apps": [
+            {
+                "name": "Story Starter",
+                "tagline": "Spin up a picture and write a story about it.",
+                "emoji": "\U0001F4D6",
+                "ages": "Ages 6-11",
+                "endpoint": "main.story_starter",
+            },
+            {
+                "name": "Word Wizard",
+                "tagline": "Build spells out of new and exciting words.",
+                "emoji": "\U0001FA84",
+                "ages": "Ages 6-11",
+            },
+            {
+                "name": "Doodle Quest",
+                "tagline": "Draw along with a daily creative challenge.",
+                "emoji": "\U0001F58D\uFE0F",
+                "ages": "Ages 6-11",
+            },
+            {
+                "name": "Rhyme Time",
+                "tagline": "Find rhymes and make silly poems.",
+                "emoji": "\U0001F3B5",
+                "ages": "Ages 6-11",
+            },
+        ],
     },
     {
-        "name": "11+ Examinator",
-        "tagline": "Friendly 11+ practice, plus the Spark Stumble race game.",
-        "emoji": "\U0001F3C1",
-        "ages": "11+ prep",
-        "endpoint": "elevenplus.index",
-    },
-    {
-        "name": "Word Wizard",
-        "tagline": "Build spells out of new and exciting words.",
-        "emoji": "\U0001FA84",
-        "ages": "Ages 6-11",
-    },
-    {
-        "name": "Doodle Quest",
-        "tagline": "Draw along with a daily creative challenge.",
-        "emoji": "\U0001F58D\uFE0F",
-        "ages": "Ages 6-11",
-    },
-    {
-        "name": "Rhyme Time",
-        "tagline": "Find rhymes and make silly poems.",
-        "emoji": "\U0001F3B5",
-        "ages": "Ages 6-11",
+        "id": "11-plus",
+        "title": "11 Plus",
+        "blurb": "Friendly exam practice, plus a game that makes it fun.",
+        "apps": [
+            {
+                "name": "11+ Examinator",
+                "tagline": "Short practice rounds in maths, English and "
+                           "reasoning, with instant explanations.",
+                "emoji": "\U0001F4DD",
+                "ages": "11+ prep",
+                "endpoint": "elevenplus.index",
+            },
+            {
+                "name": "Spark Stumble Race",
+                "tagline": "Race 31 players by answering questions. "
+                           "Win the crown!",
+                "emoji": "\U0001F3C1",
+                "ages": "11+ prep",
+                "endpoint": "elevenplus.stumble",
+            },
+        ],
     },
 ]
 
@@ -105,14 +129,23 @@ def _theme_arg(raw):
 
 @bp.get("/")
 def index():
-    apps = [
-        {**a, "url": url_for(a["endpoint"]) if a.get("endpoint") else None}
-        for a in APPS
+    sections = [
+        {
+            **sec,
+            "apps": [
+                {
+                    **a,
+                    "url": url_for(a["endpoint"]) if a.get("endpoint") else None,
+                }
+                for a in sec["apps"]
+            ],
+        }
+        for sec in SECTIONS
     ]
     return render_template(
         "home.html",
         title="TinySpark",
-        apps=apps,
+        sections=sections,
         ga_id=current_app.config.get("GA_MEASUREMENT_ID", ""),
     )
 
@@ -211,8 +244,9 @@ def generate_seed():
     Requires ADMIN_TOKEN to be configured and sent as `X-Admin-Token`.
     For large batches prefer the CLI: `flask --app app:create_app seed`.
     """
-    expected = os.environ.get("ADMIN_TOKEN", "")
-    provided = request.headers.get("X-Admin-Token", "")
+    expected = os.environ.get("ADMIN_TOKEN", "").encode("utf-8")
+    provided = request.headers.get("X-Admin-Token", "").encode("utf-8")
+    # Compare bytes: str comparison raises TypeError on non-ASCII input.
     if not expected or not hmac.compare_digest(provided, expected):
         return jsonify({"error": "forbidden"}), 403
 

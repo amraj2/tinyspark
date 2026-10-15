@@ -17,33 +17,41 @@
     <main class="container">
       <div class="main-content">
         <section class="hero">
-          <h2>Pick an adventure</h2>
+          <h1 class="hero-title">Pick an adventure</h1>
           <p>Little apps to get kids aged 6&ndash;11 reading, writing and imagining.</p>
         </section>
 
-        <ul class="app-grid">
-          {% for app in apps %}
-          <li>
-            {% if app.url %}
-            <a class="app-card" href="{{ app.url }}">
-              <span class="app-emoji" aria-hidden="true">{{ app.emoji }}</span>
-              <span class="app-name">{{ app.name }}</span>
-              <span class="app-tagline">{{ app.tagline }}</span>
-              <span class="app-meta">{{ app.ages }}</span>
-              <span class="app-cta">Play now &rarr;</span>
-            </a>
-            {% else %}
-            <div class="app-card app-card-soon" aria-disabled="true">
-              <span class="app-emoji" aria-hidden="true">{{ app.emoji }}</span>
-              <span class="app-name">{{ app.name }}</span>
-              <span class="app-tagline">{{ app.tagline }}</span>
-              <span class="app-meta">{{ app.ages }}</span>
-              <span class="app-badge">Coming soon</span>
-            </div>
-            {% endif %}
-          </li>
-          {% endfor %}
-        </ul>
+        {% for section in sections %}
+        <section class="app-section" id="{{ section.id }}" aria-labelledby="{{ section.id }}-title">
+          <div class="app-section-head">
+            <h2 id="{{ section.id }}-title">{{ section.title }}</h2>
+            <p>{{ section.blurb }}</p>
+          </div>
+          <ul class="app-grid">
+            {% for app in section.apps %}
+            <li>
+              {% if app.url %}
+              <a class="app-card" href="{{ app.url }}">
+                <span class="app-emoji" aria-hidden="true">{{ app.emoji }}</span>
+                <span class="app-name">{{ app.name }}</span>
+                <span class="app-tagline">{{ app.tagline }}</span>
+                <span class="app-meta">{{ app.ages }}</span>
+                <span class="app-cta">Play now &rarr;</span>
+              </a>
+              {% else %}
+              <div class="app-card app-card-soon" aria-disabled="true">
+                <span class="app-emoji" aria-hidden="true">{{ app.emoji }}</span>
+                <span class="app-name">{{ app.name }}</span>
+                <span class="app-tagline">{{ app.tagline }}</span>
+                <span class="app-meta">{{ app.ages }}</span>
+                <span class="app-badge">Coming soon</span>
+              </div>
+              {% endif %}
+            </li>
+            {% endfor %}
+          </ul>
+        </section>
+        {% endfor %}
       </div>
     </main>
 
