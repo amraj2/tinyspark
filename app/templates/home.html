@@ -1,60 +1,56 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{{ title or "TinySpark" }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-  </head>
-  <body>
-    <div class="header-section">
-      <div class="header-content">
-        <h1 class="site-title">TinySpark</h1>
-        <p class="header-subtitle">Playful tools that spark creativity in young minds</p>
-      </div>
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TinySpark · Choose your adventure</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='adventure.css') }}">
+<script src="{{ url_for('static', filename='adventure.js') }}" defer></script>
+</head>
+<body>
+<main class="game-screen" data-world="create">
+  <div class="speed-lines" aria-hidden="true"></div>
+  <header class="game-brand"><span class="brand-mark" aria-hidden="true">✦</span><h1>TINY<span>SPARK</span></h1><span class="edition">THE ADVENTURE STARTS HERE</span></header>
+  <div class="chapter" aria-hidden="true"><span>LET YOUR</span><strong>IMAGINATION<br>RUN WILD.</strong></div>
+  <section class="selection" aria-labelledby="selection-title">
+    {% set live = [] %}{% for section in sections %}{% for app in section.apps if app.url %}{% set _ = live.append(app) %}{% endfor %}{% endfor %}
+    <h2 id="selection-title">CHOOSE YOUR ADVENTURE</h2>
+    <div class="age-filter">
+      <label for="age-filter">FOR PARENTS · FILTER BY AGE</label>
+      <select id="age-filter" aria-describedby="age-guidance"><option value="all">All ages</option>{% for age in range(6, 12) %}<option value="{{ age }}">Age {{ age }}</option>{% endfor %}</select>
+      <p id="age-guidance">Story play: 6–11 · 11+ practice: 9–11</p>
+      <p id="age-results" role="status" aria-live="polite" aria-atomic="true"></p>
     </div>
-
-    <main class="container">
-      <div class="main-content">
-        <section class="hero">
-          <h1 class="hero-title">Pick an adventure</h1>
-          <p>Little apps to get kids aged 6&ndash;11 reading, writing and imagining.</p>
-        </section>
-
-        {% for section in sections %}
-        <section class="app-section" id="{{ section.id }}" aria-labelledby="{{ section.id }}-title">
-          <div class="app-section-head">
-            <h2 id="{{ section.id }}-title">{{ section.title }}</h2>
-            <p>{{ section.blurb }}</p>
-          </div>
-          <ul class="app-grid">
-            {% for app in section.apps %}
-            <li>
-              {% if app.url %}
-              <a class="app-card" href="{{ app.url }}">
-                <span class="app-emoji" aria-hidden="true">{{ app.emoji }}</span>
-                <span class="app-name">{{ app.name }}</span>
-                <span class="app-tagline">{{ app.tagline }}</span>
-                <span class="app-meta">{{ app.ages }}</span>
-                <span class="app-cta">Play now &rarr;</span>
-              </a>
-              {% else %}
-              <div class="app-card app-card-soon" aria-disabled="true">
-                <span class="app-emoji" aria-hidden="true">{{ app.emoji }}</span>
-                <span class="app-name">{{ app.name }}</span>
-                <span class="app-tagline">{{ app.tagline }}</span>
-                <span class="app-meta">{{ app.ages }}</span>
-                <span class="app-badge">Coming soon</span>
-              </div>
-              {% endif %}
-            </li>
-            {% endfor %}
-          </ul>
-        </section>
-        {% endfor %}
-      </div>
-    </main>
-
-    {% include '_analytics.html' %}
-  </body>
-</html>
+    {% set ns = namespace(n=0) %}
+    <nav class="game-menu{% if live|length > 4 %} dense{% endif %}" aria-label="Adventures">
+    {% for section in sections %}{% for app in section.apps if app.url %}
+      {% set ns.n = ns.n + 1 %}
+      {% set world = app.world or ('create' if section.id == 'story' else ('race' if 'stumble' in app.url else 'challenge')) %}
+      {% set label = app.menu_label or ('MAKE A STORY' if world == 'create' else ('RACE FOR THE CROWN' if world == 'race' else 'CRACK A CHALLENGE')) %}
+      <a class="game-option{% if ns.n == 1 %} selected{% endif %}" href="{{ app.url }}" data-world="{{ world }}" data-title="{{ app.name }}" data-description="{{ app.tagline }}" data-age="{{ app.ages }}" data-min-age="{{ app.min_age }}" data-max-age="{{ app.max_age }}" {% if ns.n == 1 %}aria-describedby="mission-description"{% endif %}>
+        <span class="option-number" aria-hidden="true">{{ '%02d'|format(ns.n) }}</span>
+        <span class="option-label">{{ label }}<small>{{ app.name }}</small></span><span class="option-go" aria-hidden="true">↗</span>
+      </a>
+    {% endfor %}{% endfor %}
+    </nav>
+    <p class="menu-hint">Pick one to jump in <span aria-hidden="true">↗</span></p>
+  </section>
+  <div class="world-stage" aria-hidden="true">
+    <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+    <span class="stage-word">CREATE!</span>
+    <svg class="spark-character" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="character-shadow" d="M260 50 300 173 444 147 364 268 459 360 314 355 265 474 209 360 70 405 125 277 35 174 187 180Z" fill="#161619" stroke="#161619" stroke-width="18" stroke-linejoin="round" transform="translate(12 16)"/>
+      <path d="M260 50 300 173 444 147 364 268 459 360 314 355 265 474 209 360 70 405 125 277 35 174 187 180Z" fill="#ffe46a" stroke="#161619" stroke-width="9" stroke-linejoin="round"/>
+      <path d="m149 223 84-15 11 62-83 14Z" fill="#161619"/><path d="m273 199 83-12 10 62-83 13Z" fill="#161619"/>
+      <path d="m186 224 19-3 5 28-19 3Zm125-19 19-3 5 28-19 3Z" fill="#fffdf5"/>
+      <path d="M222 309q43 33 82-12" stroke="#161619" stroke-width="12" stroke-linecap="round"/>
+      <path d="m100 311-54 22m342-43 56 9" stroke="#161619" stroke-width="14" stroke-linecap="round"/>
+    </svg>
+    <span class="stage-doodle doodle-one">✦</span><span class="stage-doodle doodle-two">✧</span><span class="stage-doodle doodle-three">+</span>
+    <span class="stage-stamp">IDEAS<br>HAVE SUPERPOWERS.</span>
+  </div>
+  <section class="mission-brief" aria-labelledby="mission-title"><div class="brief-label"><span>YOUR MISSION</span><span id="mission-age">Ages 6-11</span></div><h2 id="mission-title">Story Starter</h2><p id="mission-description">Spin up a picture and write a story about it.</p></section>
+  <footer class="game-controls"><p><kbd>↑</kbd><kbd>↓</kbd> Choose <kbd>Enter</kbd> Play <span class="tap-hint">/ or tap an adventure</span></p><button id="motion-toggle" type="button" aria-pressed="false">Motion: on</button><button id="help-open" type="button">Grown-ups / help</button></footer>
+</main>
+<dialog id="help-dialog"><button class="close-dialog" type="button" aria-label="Close help">×</button><h2>A little help</h2><p>Choose an adventure with a tap or click. On a keyboard, use ↑ and ↓ to choose, then Enter to play.</p><p>Story Starter is for curious minds aged 6–11. Challenges and races offer 11+ practice. You can always try again.</p><h3>Still in the making</h3><p>Word Wizard, Doodle Quest, and Rhyme Time are coming soon.</p></dialog>
+{% include '_analytics.html' %}
+</body></html>

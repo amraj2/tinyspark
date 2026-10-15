@@ -28,11 +28,10 @@ def test_home_lists_apps_and_links_to_story_starter(client):
     html = client.get("/").data.decode()
     assert "Story Starter" in html
     assert 'href="/story-starter"' in html
-    assert "Coming soon" in html
-    # 11+ and the Stumble race are separate cards in their own section
-    assert 'id="11-plus"' in html
+    # 11+ and the Stumble race are separate adventures
     assert 'href="/11plus/"' in html and 'href="/11plus/stumble"' in html
-    assert "Spark Stumble Race" in html and "11+ Examinator" in html
+    assert 'data-title="Spark Stumble Race"' in html
+    assert 'data-title="11+ Examinator"' in html
 
 
 def test_home_links_to_elevenplus_and_it_is_isolated(client):
