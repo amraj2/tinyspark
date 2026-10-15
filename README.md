@@ -82,6 +82,7 @@ The homepage (`/`) is a grid of apps defined in `APPS` in `app/routes.py`.
 | App | URL | Code |
 | --- | --- | --- |
 | Story Starter | `/story-starter` | `app/routes.py`, `app/templates/story.html` |
+| 11+ Examinator + Spark Stumble | `/11plus/` | `app/apps/elevenplus/` (blueprint, own static/templates/tests) |
 
 To add an app: create a blueprint under `app/apps/<name>/`, register it in
 `create_app`, and add a card to `APPS`.

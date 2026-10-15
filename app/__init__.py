@@ -47,8 +47,20 @@ def create_app() -> Flask:
 
         app.wsgi_app = ProxyFix(app.wsgi_app, x_for=hops)
 
+    from flask_compress import Compress
+
+    app.config["COMPRESS_MIMETYPES"] = [
+        "text/html", "text/css", "text/javascript",
+        "application/javascript", "application/json",
+        "application/manifest+json", "image/svg+xml",
+    ]
+    Compress(app)
+
     from .routes import bp as main_bp
     app.register_blueprint(main_bp)
+
+    from .apps.elevenplus import bp as elevenplus_bp
+    app.register_blueprint(elevenplus_bp)
 
     @app.cli.command("seed")
     @click.option("--count", default=20, show_default=True, type=int)

@@ -1,0 +1,242 @@
+{
+  "Maths": {
+    "icon": "＋",
+    "questions": [
+      [
+        "What is ¾ of 48?",
+        [
+          "12",
+          "24",
+          "36",
+          "40"
+        ],
+        2,
+        "Divide 48 by 4 to get 12, then multiply by 3."
+      ],
+      [
+        "A train leaves at 09:35 and arrives at 11:10. How long is the journey?",
+        [
+          "1 hour 25 minutes",
+          "1 hour 35 minutes",
+          "1 hour 45 minutes",
+          "2 hours 35 minutes"
+        ],
+        1,
+        "From 09:35 to 10:35 is one hour; another 35 minutes takes you to 11:10."
+      ],
+      [
+        "Which number is a multiple of both 6 and 8?",
+        [
+          "18",
+          "32",
+          "42",
+          "48"
+        ],
+        3,
+        "48 ÷ 6 = 8 and 48 ÷ 8 = 6."
+      ],
+      [
+        "A rectangle is 9 cm long and 4 cm wide. What is its perimeter?",
+        [
+          "13 cm",
+          "26 cm",
+          "36 cm",
+          "40 cm"
+        ],
+        1,
+        "Add all four sides: 9 + 4 + 9 + 4 = 26 cm."
+      ],
+      [
+        "What is 15% of 200?",
+        [
+          "15",
+          "20",
+          "30",
+          "35"
+        ],
+        2,
+        "10% of 200 is 20 and 5% is 10, so 15% is 30."
+      ]
+    ]
+  },
+  "English": {
+    "icon": "Aa",
+    "questions": [
+      [
+        "Which word is closest in meaning to “reluctant”?",
+        [
+          "Eager",
+          "Unwilling",
+          "Careless",
+          "Certain"
+        ],
+        1,
+        "Reluctant means hesitant or unwilling to do something."
+      ],
+      [
+        "Choose the sentence with the correct apostrophe.",
+        [
+          "The childrens books were new.",
+          "The children’s books were new.",
+          "The childrens’ books were new.",
+          "The childrens book’s were new."
+        ],
+        1,
+        "Children is already plural, so add ’s to show possession."
+      ],
+      [
+        "Which word is an adverb in “Mia quietly closed the door”?",
+        [
+          "Mia",
+          "quietly",
+          "closed",
+          "door"
+        ],
+        1,
+        "Quietly describes how Mia closed the door."
+      ],
+      [
+        "Which is the opposite of “scarce”?",
+        [
+          "Rare",
+          "Plentiful",
+          "Hidden",
+          "Small"
+        ],
+        1,
+        "Scarce means in short supply; plentiful means there is a lot."
+      ],
+      [
+        "Choose the correctly punctuated sentence.",
+        [
+          "“Wait!” shouted Sam.",
+          "“Wait”! shouted Sam.",
+          "“Wait!” Shouted Sam.",
+          "Wait! shouted Sam."
+        ],
+        0,
+        "The exclamation mark belongs inside the speech marks, and “shouted” stays lowercase."
+      ]
+    ]
+  },
+  "Verbal reasoning": {
+    "icon": "◇",
+    "questions": [
+      [
+        "Which word does not belong?",
+        [
+          "Oak",
+          "Elm",
+          "Rose",
+          "Ash"
+        ],
+        2,
+        "Oak, elm and ash are trees; rose is a flowering shrub."
+      ],
+      [
+        "Complete the sequence: AB, CD, EF, …",
+        [
+          "FG",
+          "GH",
+          "HI",
+          "IJ"
+        ],
+        1,
+        "Each pair uses the next two letters of the alphabet."
+      ],
+      [
+        "If CAT becomes DBU, what does DOG become?",
+        [
+          "EPH",
+          "EOG",
+          "FPH",
+          "CNE"
+        ],
+        0,
+        "Move each letter forward by one: D→E, O→P, G→H."
+      ],
+      [
+        "Book is to read as song is to …",
+        [
+          "Write",
+          "Hear",
+          "Draw",
+          "Fold"
+        ],
+        1,
+        "You read a book and hear a song."
+      ],
+      [
+        "Which two words are closest in meaning?",
+        [
+          "Swift and rapid",
+          "Swift and heavy",
+          "Rapid and quiet",
+          "Heavy and quiet"
+        ],
+        0,
+        "Swift and rapid both mean fast."
+      ]
+    ]
+  },
+  "Non-verbal reasoning": {
+    "icon": "▦",
+    "questions": [
+      [
+        "What comes next? ▲ ● ▲ ● ▲ …",
+        [
+          "▲",
+          "●",
+          "■",
+          "◆"
+        ],
+        1,
+        "The shapes alternate between triangle and circle."
+      ],
+      [
+        "Which shape has the most sides?",
+        [
+          "Triangle",
+          "Square",
+          "Pentagon",
+          "Hexagon"
+        ],
+        3,
+        "A hexagon has six sides."
+      ],
+      [
+        "A square turns a quarter-turn clockwise. What shape is it now?",
+        [
+          "Triangle",
+          "Square",
+          "Rectangle",
+          "Circle"
+        ],
+        1,
+        "Rotating a square does not change its shape."
+      ],
+      [
+        "Complete the pattern: ■, □, ■, □, …",
+        [
+          "■",
+          "□",
+          "●",
+          "△"
+        ],
+        0,
+        "Filled and empty squares alternate."
+      ],
+      [
+        "Which shape is different from the others?",
+        [
+          "△",
+          "▽",
+          "▷",
+          "□"
+        ],
+        3,
+        "The first three are triangles; the last is a square."
+      ]
+    ]
+  }
+}

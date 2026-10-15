@@ -1,0 +1,203 @@
+{
+  "mode": "built-in image_gen",
+  "basePrompt": "Use case: stylized-concept. Asset: transparent pixel art game animation sheet. Create CHARACTER, an original charming child-friendly racer with a distinctive silhouette and species/theme clearly recognizable. Polished 32-bit platformer pixel art, crisp square clusters, dark navy outlines, rich shaded materials, expressive face, chunky racing shoes and small rocket backpack where anatomy permits. Face RIGHT, three-quarter side view. EXACT 4 columns x 2 rows equal cells, landscape 2:1 canvas. Eight isolated full-body sprites of SAME character. Top row: 4 successive running poses. Bottom row: idle, thinking, dizzy stumble, joyful raised-arm celebration. Consistent scale and alignment; within EACH cell body centered x=50%, feet baseline y=88%, top y=18%; all appendages inside x=10..90%, y=10..92%. Actual transparent background and gutters, no ground, shadows, text, labels, borders, extraneous objects. Keep strong individual identity across eight poses.",
+  "novaPrompt": "Use case: stylized-concept. Asset: transparent pixel art game animation sheet. Create Nova, a star scout with a coral astronaut suit, star-shaped hair clips and a clear round helmet, an original charming child-friendly racer with a distinctive silhouette and species/theme clearly recognizable. Polished 32-bit platformer pixel art, crisp square clusters, dark navy outlines, rich shaded materials, expressive face, chunky racing shoes and small rocket backpack where anatomy permits. Face RIGHT, three-quarter side view. EXACT 4 columns x 2 rows equal cells, landscape 2:1 canvas. Eight isolated full-body sprites of SAME character. Top row: 4 successive running poses. Bottom row: idle, thinking, dizzy stumble, joyful raised-arm celebration. Consistent scale and alignment; within EACH cell body centered x=50%, feet baseline y=88%, top y=18%; all appendages inside x=10..90%, y=10..92%. Actual transparent background and gutters, no ground, shadows, text, labels, borders, extraneous objects. Keep strong individual identity across eight poses.",
+  "characters": [
+    [
+      "Nova",
+      "star scout"
+    ],
+    [
+      "Bixby",
+      "robot buddy"
+    ],
+    [
+      "Zog",
+      "friendly alien"
+    ],
+    [
+      "Waffles",
+      "breakfast bandit"
+    ],
+    [
+      "Mochi",
+      "squishy sprinter"
+    ],
+    [
+      "Ziggy",
+      "lightning lizard"
+    ],
+    [
+      "Juno",
+      "moon cadet"
+    ],
+    [
+      "Fizz",
+      "fizzy fox"
+    ],
+    [
+      "Tango",
+      "dancing dino"
+    ],
+    [
+      "Biscuit",
+      "crumb captain"
+    ],
+    [
+      "Pogo",
+      "bouncy bunny"
+    ],
+    [
+      "Nimbus",
+      "cloud surfer"
+    ],
+    [
+      "Quill",
+      "speedy hedgehog"
+    ],
+    [
+      "Rusty",
+      "rocket raccoon"
+    ],
+    [
+      "Sprocket",
+      "clockwork cat"
+    ],
+    [
+      "Truffle",
+      "sniffing pig"
+    ],
+    [
+      "Wiggles",
+      "wavy worm"
+    ],
+    [
+      "Blip",
+      "pixel ghost"
+    ],
+    [
+      "Clover",
+      "lucky lamb"
+    ],
+    [
+      "Domino",
+      "panda pilot"
+    ],
+    [
+      "Ember",
+      "baby dragon"
+    ],
+    [
+      "Fudge",
+      "chocolate bear"
+    ],
+    [
+      "Gadget",
+      "inventor mouse"
+    ],
+    [
+      "Hazel",
+      "acorn acrobat"
+    ],
+    [
+      "Kiwi",
+      "flightless flyer"
+    ],
+    [
+      "Lumi",
+      "glow-worm"
+    ],
+    [
+      "Maple",
+      "forest fawn"
+    ],
+    [
+      "Nugget",
+      "golden chick"
+    ],
+    [
+      "Olive",
+      "owl navigator"
+    ],
+    [
+      "Pepper",
+      "spicy penguin"
+    ],
+    [
+      "Rocco",
+      "rock troll"
+    ],
+    [
+      "Sunny",
+      "sunbeam sprite"
+    ],
+    [
+      "Taffy",
+      "stretchy giraffe"
+    ],
+    [
+      "Orion",
+      "hunter of the stars"
+    ],
+    [
+      "Comet",
+      "tail-blazing terrier"
+    ],
+    [
+      "Luna",
+      "moonlit wolf"
+    ],
+    [
+      "Atlas",
+      "planet-carrying giant"
+    ],
+    [
+      "Vega",
+      "star-bright swan"
+    ],
+    [
+      "Cosmo",
+      "galaxy gorilla"
+    ],
+    [
+      "Astra",
+      "orbit owl"
+    ],
+    [
+      "Zenith",
+      "sky-high stag"
+    ],
+    [
+      "Polaris",
+      "north-star narwhal"
+    ],
+    [
+      "Pulsar",
+      "beat-box beetle"
+    ],
+    [
+      "Regal",
+      "lion king"
+    ],
+    [
+      "Phoenix",
+      "firebird"
+    ],
+    [
+      "Kraken",
+      "deep-sea racer"
+    ],
+    [
+      "Sabre",
+      "tiger champion"
+    ],
+    [
+      "Aurora",
+      "northern-lights fox"
+    ],
+    [
+      "Apex",
+      "legend of legends"
+    ]
+  ]
+}

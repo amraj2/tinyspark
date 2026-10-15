@@ -1,0 +1,4190 @@
+{
+ "Maths": [
+  [
+   "What is 37 + 29?",
+   [
+    "56",
+    "66",
+    "67",
+    "76"
+   ],
+   1,
+   "Add the tens and ones: 37 + 29 = 66."
+  ],
+  [
+   "What is 40 + 31?",
+   [
+    "81",
+    "61",
+    "72",
+    "71"
+   ],
+   3,
+   "Add the tens and ones: 40 + 31 = 71."
+  ],
+  [
+   "What is 43 + 33?",
+   [
+    "76",
+    "66",
+    "77",
+    "86"
+   ],
+   0,
+   "Add the tens and ones: 43 + 33 = 76."
+  ],
+  [
+   "What is 46 + 35?",
+   [
+    "81",
+    "71",
+    "91",
+    "82"
+   ],
+   0,
+   "Add the tens and ones: 46 + 35 = 81."
+  ],
+  [
+   "What is 49 + 37?",
+   [
+    "96",
+    "86",
+    "87",
+    "76"
+   ],
+   1,
+   "Add the tens and ones: 49 + 37 = 86."
+  ],
+  [
+   "What is 52 + 39?",
+   [
+    "81",
+    "101",
+    "92",
+    "91"
+   ],
+   3,
+   "Add the tens and ones: 52 + 39 = 91."
+  ],
+  [
+   "What is 55 + 41?",
+   [
+    "86",
+    "97",
+    "96",
+    "106"
+   ],
+   2,
+   "Add the tens and ones: 55 + 41 = 96."
+  ],
+  [
+   "What is 58 + 43?",
+   [
+    "91",
+    "102",
+    "111",
+    "101"
+   ],
+   3,
+   "Add the tens and ones: 58 + 43 = 101."
+  ],
+  [
+   "What is 61 + 45?",
+   [
+    "116",
+    "107",
+    "96",
+    "106"
+   ],
+   3,
+   "Add the tens and ones: 61 + 45 = 106."
+  ],
+  [
+   "What is 64 + 47?",
+   [
+    "112",
+    "101",
+    "111",
+    "121"
+   ],
+   2,
+   "Add the tens and ones: 64 + 47 = 111."
+  ],
+  [
+   "What is 67 + 49?",
+   [
+    "126",
+    "116",
+    "106",
+    "117"
+   ],
+   1,
+   "Add the tens and ones: 67 + 49 = 116."
+  ],
+  [
+   "What is 70 + 51?",
+   [
+    "111",
+    "131",
+    "121",
+    "122"
+   ],
+   2,
+   "Add the tens and ones: 70 + 51 = 121."
+  ],
+  [
+   "What is 73 + 53?",
+   [
+    "136",
+    "126",
+    "116",
+    "127"
+   ],
+   1,
+   "Add the tens and ones: 73 + 53 = 126."
+  ],
+  [
+   "What is 76 + 55?",
+   [
+    "132",
+    "131",
+    "121",
+    "141"
+   ],
+   1,
+   "Add the tens and ones: 76 + 55 = 131."
+  ],
+  [
+   "What is 79 + 57?",
+   [
+    "136",
+    "146",
+    "126",
+    "137"
+   ],
+   0,
+   "Add the tens and ones: 79 + 57 = 136."
+  ],
+  [
+   "What is 82 + 59?",
+   [
+    "142",
+    "141",
+    "151",
+    "131"
+   ],
+   1,
+   "Add the tens and ones: 82 + 59 = 141."
+  ],
+  [
+   "What is 85 + 61?",
+   [
+    "156",
+    "136",
+    "147",
+    "146"
+   ],
+   3,
+   "Add the tens and ones: 85 + 61 = 146."
+  ],
+  [
+   "What is 88 + 63?",
+   [
+    "151",
+    "152",
+    "141",
+    "161"
+   ],
+   0,
+   "Add the tens and ones: 88 + 63 = 151."
+  ],
+  [
+   "What is 91 + 65?",
+   [
+    "156",
+    "146",
+    "157",
+    "166"
+   ],
+   0,
+   "Add the tens and ones: 91 + 65 = 156."
+  ],
+  [
+   "What is 94 + 67?",
+   [
+    "161",
+    "162",
+    "151",
+    "171"
+   ],
+   0,
+   "Add the tens and ones: 94 + 67 = 161."
+  ],
+  [
+   "A rectangle is 12 cm long and 7 cm wide. What is its perimeter?",
+   [
+    "84 cm",
+    "38 cm",
+    "19 cm",
+    "42 cm"
+   ],
+   1,
+   "Perimeter is twice the length plus twice the width: 2 × (12 + 7) = 38 cm."
+  ],
+  [
+   "A rectangle is 13 cm long and 8 cm wide. What is its perimeter?",
+   [
+    "104 cm",
+    "46 cm",
+    "42 cm",
+    "21 cm"
+   ],
+   2,
+   "Perimeter is twice the length plus twice the width: 2 × (13 + 8) = 42 cm."
+  ],
+  [
+   "A rectangle is 14 cm long and 9 cm wide. What is its perimeter?",
+   [
+    "50 cm",
+    "23 cm",
+    "126 cm",
+    "46 cm"
+   ],
+   3,
+   "Perimeter is twice the length plus twice the width: 2 × (14 + 9) = 46 cm."
+  ],
+  [
+   "A rectangle is 15 cm long and 10 cm wide. What is its perimeter?",
+   [
+    "54 cm",
+    "50 cm",
+    "150 cm",
+    "25 cm"
+   ],
+   1,
+   "Perimeter is twice the length plus twice the width: 2 × (15 + 10) = 50 cm."
+  ],
+  [
+   "A rectangle is 16 cm long and 11 cm wide. What is its perimeter?",
+   [
+    "27 cm",
+    "54 cm",
+    "58 cm",
+    "176 cm"
+   ],
+   1,
+   "Perimeter is twice the length plus twice the width: 2 × (16 + 11) = 54 cm."
+  ],
+  [
+   "A rectangle is 17 cm long and 12 cm wide. What is its perimeter?",
+   [
+    "29 cm",
+    "62 cm",
+    "58 cm",
+    "204 cm"
+   ],
+   2,
+   "Perimeter is twice the length plus twice the width: 2 × (17 + 12) = 58 cm."
+  ],
+  [
+   "A rectangle is 18 cm long and 13 cm wide. What is its perimeter?",
+   [
+    "62 cm",
+    "66 cm",
+    "31 cm",
+    "234 cm"
+   ],
+   0,
+   "Perimeter is twice the length plus twice the width: 2 × (18 + 13) = 62 cm."
+  ],
+  [
+   "A rectangle is 19 cm long and 14 cm wide. What is its perimeter?",
+   [
+    "70 cm",
+    "33 cm",
+    "266 cm",
+    "66 cm"
+   ],
+   3,
+   "Perimeter is twice the length plus twice the width: 2 × (19 + 14) = 66 cm."
+  ],
+  [
+   "A rectangle is 20 cm long and 15 cm wide. What is its perimeter?",
+   [
+    "70 cm",
+    "35 cm",
+    "74 cm",
+    "300 cm"
+   ],
+   0,
+   "Perimeter is twice the length plus twice the width: 2 × (20 + 15) = 70 cm."
+  ],
+  [
+   "A rectangle is 21 cm long and 16 cm wide. What is its perimeter?",
+   [
+    "37 cm",
+    "78 cm",
+    "336 cm",
+    "74 cm"
+   ],
+   3,
+   "Perimeter is twice the length plus twice the width: 2 × (21 + 16) = 74 cm."
+  ],
+  [
+   "A rectangle is 22 cm long and 17 cm wide. What is its perimeter?",
+   [
+    "39 cm",
+    "78 cm",
+    "374 cm",
+    "82 cm"
+   ],
+   1,
+   "Perimeter is twice the length plus twice the width: 2 × (22 + 17) = 78 cm."
+  ],
+  [
+   "A rectangle is 23 cm long and 18 cm wide. What is its perimeter?",
+   [
+    "82 cm",
+    "41 cm",
+    "86 cm",
+    "414 cm"
+   ],
+   0,
+   "Perimeter is twice the length plus twice the width: 2 × (23 + 18) = 82 cm."
+  ],
+  [
+   "A rectangle is 24 cm long and 19 cm wide. What is its perimeter?",
+   [
+    "43 cm",
+    "86 cm",
+    "90 cm",
+    "456 cm"
+   ],
+   1,
+   "Perimeter is twice the length plus twice the width: 2 × (24 + 19) = 86 cm."
+  ],
+  [
+   "A rectangle is 25 cm long and 20 cm wide. What is its perimeter?",
+   [
+    "90 cm",
+    "94 cm",
+    "500 cm",
+    "45 cm"
+   ],
+   0,
+   "Perimeter is twice the length plus twice the width: 2 × (25 + 20) = 90 cm."
+  ],
+  [
+   "A rectangle is 26 cm long and 21 cm wide. What is its perimeter?",
+   [
+    "546 cm",
+    "94 cm",
+    "47 cm",
+    "98 cm"
+   ],
+   1,
+   "Perimeter is twice the length plus twice the width: 2 × (26 + 21) = 94 cm."
+  ],
+  [
+   "A rectangle is 27 cm long and 22 cm wide. What is its perimeter?",
+   [
+    "102 cm",
+    "49 cm",
+    "594 cm",
+    "98 cm"
+   ],
+   3,
+   "Perimeter is twice the length plus twice the width: 2 × (27 + 22) = 98 cm."
+  ],
+  [
+   "A rectangle is 28 cm long and 23 cm wide. What is its perimeter?",
+   [
+    "51 cm",
+    "102 cm",
+    "644 cm",
+    "106 cm"
+   ],
+   1,
+   "Perimeter is twice the length plus twice the width: 2 × (28 + 23) = 102 cm."
+  ],
+  [
+   "A rectangle is 29 cm long and 24 cm wide. What is its perimeter?",
+   [
+    "53 cm",
+    "696 cm",
+    "106 cm",
+    "110 cm"
+   ],
+   2,
+   "Perimeter is twice the length plus twice the width: 2 × (29 + 24) = 106 cm."
+  ],
+  [
+   "A rectangle is 30 cm long and 25 cm wide. What is its perimeter?",
+   [
+    "750 cm",
+    "114 cm",
+    "55 cm",
+    "110 cm"
+   ],
+   3,
+   "Perimeter is twice the length plus twice the width: 2 × (30 + 25) = 110 cm."
+  ],
+  [
+   "A rectangle is 31 cm long and 26 cm wide. What is its perimeter?",
+   [
+    "114 cm",
+    "118 cm",
+    "57 cm",
+    "806 cm"
+   ],
+   0,
+   "Perimeter is twice the length plus twice the width: 2 × (31 + 26) = 114 cm."
+  ],
+  [
+   "What is 5/8 of 80?",
+   [
+    "10",
+    "60",
+    "50",
+    "30"
+   ],
+   2,
+   "One eighth of 80 is 10; multiply by 5 to get 50."
+  ],
+  [
+   "What is 7/8 of 88?",
+   [
+    "77",
+    "11",
+    "99",
+    "88"
+   ],
+   0,
+   "One eighth of 88 is 11; multiply by 7 to get 77."
+  ],
+  [
+   "What is 3/8 of 96?",
+   [
+    "12",
+    "60",
+    "48",
+    "36"
+   ],
+   3,
+   "One eighth of 96 is 12; multiply by 3 to get 36."
+  ],
+  [
+   "What is 5/8 of 104?",
+   [
+    "78",
+    "39",
+    "65",
+    "13"
+   ],
+   2,
+   "One eighth of 104 is 13; multiply by 5 to get 65."
+  ],
+  [
+   "What is 7/8 of 112?",
+   [
+    "98",
+    "112",
+    "126",
+    "14"
+   ],
+   0,
+   "One eighth of 112 is 14; multiply by 7 to get 98."
+  ],
+  [
+   "What is 3/8 of 120?",
+   [
+    "60",
+    "75",
+    "45",
+    "15"
+   ],
+   2,
+   "One eighth of 120 is 15; multiply by 3 to get 45."
+  ],
+  [
+   "What is 5/8 of 128?",
+   [
+    "96",
+    "16",
+    "48",
+    "80"
+   ],
+   3,
+   "One eighth of 128 is 16; multiply by 5 to get 80."
+  ],
+  [
+   "What is 7/8 of 136?",
+   [
+    "136",
+    "17",
+    "119",
+    "153"
+   ],
+   2,
+   "One eighth of 136 is 17; multiply by 7 to get 119."
+  ],
+  [
+   "What is 3/8 of 144?",
+   [
+    "72",
+    "90",
+    "54",
+    "18"
+   ],
+   2,
+   "One eighth of 144 is 18; multiply by 3 to get 54."
+  ],
+  [
+   "What is 5/8 of 152?",
+   [
+    "19",
+    "57",
+    "114",
+    "95"
+   ],
+   3,
+   "One eighth of 152 is 19; multiply by 5 to get 95."
+  ],
+  [
+   "What is 7/8 of 160?",
+   [
+    "160",
+    "180",
+    "140",
+    "20"
+   ],
+   2,
+   "One eighth of 160 is 20; multiply by 7 to get 140."
+  ],
+  [
+   "What is 3/8 of 168?",
+   [
+    "21",
+    "63",
+    "84",
+    "105"
+   ],
+   1,
+   "One eighth of 168 is 21; multiply by 3 to get 63."
+  ],
+  [
+   "What is 5/8 of 176?",
+   [
+    "132",
+    "66",
+    "110",
+    "22"
+   ],
+   2,
+   "One eighth of 176 is 22; multiply by 5 to get 110."
+  ],
+  [
+   "What is 7/8 of 184?",
+   [
+    "161",
+    "207",
+    "184",
+    "23"
+   ],
+   0,
+   "One eighth of 184 is 23; multiply by 7 to get 161."
+  ],
+  [
+   "What is 3/8 of 192?",
+   [
+    "96",
+    "24",
+    "120",
+    "72"
+   ],
+   3,
+   "One eighth of 192 is 24; multiply by 3 to get 72."
+  ],
+  [
+   "What is 5/8 of 200?",
+   [
+    "75",
+    "25",
+    "150",
+    "125"
+   ],
+   3,
+   "One eighth of 200 is 25; multiply by 5 to get 125."
+  ],
+  [
+   "What is 7/8 of 208?",
+   [
+    "182",
+    "26",
+    "234",
+    "208"
+   ],
+   0,
+   "One eighth of 208 is 26; multiply by 7 to get 182."
+  ],
+  [
+   "What is 3/8 of 216?",
+   [
+    "81",
+    "108",
+    "27",
+    "135"
+   ],
+   0,
+   "One eighth of 216 is 27; multiply by 3 to get 81."
+  ],
+  [
+   "What is 5/8 of 224?",
+   [
+    "84",
+    "28",
+    "168",
+    "140"
+   ],
+   3,
+   "One eighth of 224 is 28; multiply by 5 to get 140."
+  ],
+  [
+   "What is 7/8 of 232?",
+   [
+    "261",
+    "232",
+    "29",
+    "203"
+   ],
+   3,
+   "One eighth of 232 is 29; multiply by 7 to get 203."
+  ],
+  [
+   "What is 25% of 200?",
+   [
+    "60",
+    "50",
+    "40",
+    "20"
+   ],
+   1,
+   "25% of 200 = 25/100 × 200 = 50."
+  ],
+  [
+   "What is 35% of 220?",
+   [
+    "88",
+    "77",
+    "66",
+    "22"
+   ],
+   1,
+   "35% of 220 = 35/100 × 220 = 77."
+  ],
+  [
+   "What is 5% of 240?",
+   [
+    "0",
+    "24",
+    "12",
+    "36"
+   ],
+   2,
+   "5% of 240 = 5/100 × 240 = 12."
+  ],
+  [
+   "What is 15% of 260?",
+   [
+    "65",
+    "26",
+    "52",
+    "39"
+   ],
+   3,
+   "15% of 260 = 15/100 × 260 = 39."
+  ],
+  [
+   "What is 25% of 280?",
+   [
+    "70",
+    "84",
+    "28",
+    "56"
+   ],
+   0,
+   "25% of 280 = 25/100 × 280 = 70."
+  ],
+  [
+   "What is 35% of 300?",
+   [
+    "120",
+    "105",
+    "90",
+    "30"
+   ],
+   1,
+   "35% of 300 = 35/100 × 300 = 105."
+  ],
+  [
+   "What is 5% of 320?",
+   [
+    "48",
+    "0",
+    "16",
+    "32"
+   ],
+   2,
+   "5% of 320 = 5/100 × 320 = 16."
+  ],
+  [
+   "What is 15% of 340?",
+   [
+    "34",
+    "51",
+    "85",
+    "68"
+   ],
+   1,
+   "15% of 340 = 15/100 × 340 = 51."
+  ],
+  [
+   "What is 25% of 360?",
+   [
+    "72",
+    "90",
+    "36",
+    "108"
+   ],
+   1,
+   "25% of 360 = 25/100 × 360 = 90."
+  ],
+  [
+   "What is 35% of 380?",
+   [
+    "152",
+    "38",
+    "133",
+    "114"
+   ],
+   2,
+   "35% of 380 = 35/100 × 380 = 133."
+  ],
+  [
+   "What is 5% of 400?",
+   [
+    "40",
+    "0",
+    "20",
+    "60"
+   ],
+   2,
+   "5% of 400 = 5/100 × 400 = 20."
+  ],
+  [
+   "What is 15% of 420?",
+   [
+    "84",
+    "105",
+    "63",
+    "42"
+   ],
+   2,
+   "15% of 420 = 15/100 × 420 = 63."
+  ],
+  [
+   "What is 25% of 440?",
+   [
+    "110",
+    "88",
+    "44",
+    "132"
+   ],
+   0,
+   "25% of 440 = 25/100 × 440 = 110."
+  ],
+  [
+   "What is 35% of 460?",
+   [
+    "184",
+    "161",
+    "138",
+    "46"
+   ],
+   1,
+   "35% of 460 = 35/100 × 460 = 161."
+  ],
+  [
+   "What is 5% of 480?",
+   [
+    "72",
+    "24",
+    "48",
+    "0"
+   ],
+   1,
+   "5% of 480 = 5/100 × 480 = 24."
+  ],
+  [
+   "What is 15% of 500?",
+   [
+    "100",
+    "50",
+    "125",
+    "75"
+   ],
+   3,
+   "15% of 500 = 15/100 × 500 = 75."
+  ],
+  [
+   "What is 25% of 520?",
+   [
+    "52",
+    "104",
+    "130",
+    "156"
+   ],
+   2,
+   "25% of 520 = 25/100 × 520 = 130."
+  ],
+  [
+   "What is 35% of 540?",
+   [
+    "189",
+    "216",
+    "162",
+    "54"
+   ],
+   0,
+   "35% of 540 = 35/100 × 540 = 189."
+  ],
+  [
+   "What is 5% of 560?",
+   [
+    "56",
+    "28",
+    "84",
+    "0"
+   ],
+   1,
+   "5% of 560 = 5/100 × 560 = 28."
+  ],
+  [
+   "What is 15% of 580?",
+   [
+    "116",
+    "87",
+    "145",
+    "58"
+   ],
+   1,
+   "15% of 580 = 15/100 × 580 = 87."
+  ],
+  [
+   "A journey starts at 11:50 and ends at 12:55. How long does it take?",
+   [
+    "1 hour 5 minutes",
+    "55 minutes",
+    "2 hours 5 minutes",
+    "1 hour 15 minutes"
+   ],
+   0,
+   "Count forward from 11:50 to 12:55: 1 hour 5 minutes."
+  ],
+  [
+   "A journey starts at 12:55 and ends at 14:03. How long does it take?",
+   [
+    "1 hour 18 minutes",
+    "2 hours 8 minutes",
+    "1 hour 8 minutes",
+    "58 minutes"
+   ],
+   2,
+   "Count forward from 12:55 to 14:03: 1 hour 8 minutes."
+  ],
+  [
+   "A journey starts at 13:00 and ends at 14:11. How long does it take?",
+   [
+    "1 hour 1 minutes",
+    "1 hour 21 minutes",
+    "1 hour 11 minutes",
+    "2 hours 11 minutes"
+   ],
+   2,
+   "Count forward from 13:00 to 14:11: 1 hour 11 minutes."
+  ],
+  [
+   "A journey starts at 14:05 and ends at 15:19. How long does it take?",
+   [
+    "1 hour 4 minutes",
+    "2 hours 14 minutes",
+    "1 hour 14 minutes",
+    "1 hour 24 minutes"
+   ],
+   2,
+   "Count forward from 14:05 to 15:19: 1 hour 14 minutes."
+  ],
+  [
+   "A journey starts at 08:10 and ends at 09:27. How long does it take?",
+   [
+    "2 hours 17 minutes",
+    "1 hour 17 minutes",
+    "1 hour 7 minutes",
+    "1 hour 27 minutes"
+   ],
+   1,
+   "Count forward from 08:10 to 09:27: 1 hour 17 minutes."
+  ],
+  [
+   "A journey starts at 09:15 and ends at 10:35. How long does it take?",
+   [
+    "1 hour 10 minutes",
+    "2 hours 20 minutes",
+    "1 hour 20 minutes",
+    "1 hour 30 minutes"
+   ],
+   2,
+   "Count forward from 09:15 to 10:35: 1 hour 20 minutes."
+  ],
+  [
+   "A journey starts at 10:20 and ends at 11:43. How long does it take?",
+   [
+    "1 hour 13 minutes",
+    "2 hours 23 minutes",
+    "1 hour 33 minutes",
+    "1 hour 23 minutes"
+   ],
+   3,
+   "Count forward from 10:20 to 11:43: 1 hour 23 minutes."
+  ],
+  [
+   "A journey starts at 11:25 and ends at 12:51. How long does it take?",
+   [
+    "1 hour 36 minutes",
+    "1 hour 26 minutes",
+    "2 hours 26 minutes",
+    "1 hour 16 minutes"
+   ],
+   1,
+   "Count forward from 11:25 to 12:51: 1 hour 26 minutes."
+  ],
+  [
+   "A journey starts at 12:30 and ends at 13:59. How long does it take?",
+   [
+    "1 hour 19 minutes",
+    "1 hour 39 minutes",
+    "1 hour 29 minutes",
+    "2 hours 29 minutes"
+   ],
+   2,
+   "Count forward from 12:30 to 13:59: 1 hour 29 minutes."
+  ],
+  [
+   "A journey starts at 13:35 and ends at 15:07. How long does it take?",
+   [
+    "2 hours 32 minutes",
+    "1 hour 32 minutes",
+    "1 hour 42 minutes",
+    "1 hour 22 minutes"
+   ],
+   1,
+   "Count forward from 13:35 to 15:07: 1 hour 32 minutes."
+  ],
+  [
+   "A journey starts at 14:40 and ends at 16:15. How long does it take?",
+   [
+    "1 hour 25 minutes",
+    "1 hour 35 minutes",
+    "2 hours 35 minutes",
+    "1 hour 45 minutes"
+   ],
+   1,
+   "Count forward from 14:40 to 16:15: 1 hour 35 minutes."
+  ],
+  [
+   "A journey starts at 08:45 and ends at 10:23. How long does it take?",
+   [
+    "1 hour 38 minutes",
+    "1 hour 28 minutes",
+    "1 hour 48 minutes",
+    "2 hours 38 minutes"
+   ],
+   0,
+   "Count forward from 08:45 to 10:23: 1 hour 38 minutes."
+  ],
+  [
+   "A journey starts at 09:50 and ends at 11:31. How long does it take?",
+   [
+    "1 hour 51 minutes",
+    "1 hour 41 minutes",
+    "1 hour 31 minutes",
+    "2 hours 41 minutes"
+   ],
+   1,
+   "Count forward from 09:50 to 11:31: 1 hour 41 minutes."
+  ],
+  [
+   "A journey starts at 10:55 and ends at 12:39. How long does it take?",
+   [
+    "1 hour 44 minutes",
+    "1 hour 54 minutes",
+    "1 hour 34 minutes",
+    "2 hours 44 minutes"
+   ],
+   0,
+   "Count forward from 10:55 to 12:39: 1 hour 44 minutes."
+  ],
+  [
+   "A journey starts at 11:00 and ends at 12:47. How long does it take?",
+   [
+    "1 hour 37 minutes",
+    "1 hour 47 minutes",
+    "2 hours 47 minutes",
+    "1 hour 57 minutes"
+   ],
+   1,
+   "Count forward from 11:00 to 12:47: 1 hour 47 minutes."
+  ]
+ ],
+ "English": [
+  [
+   "Which is closest in meaning to “abundant”?",
+   [
+    "scarce",
+    "plentiful",
+    "silent",
+    "fragile"
+   ],
+   1,
+   "“Abundant” means plentiful."
+  ],
+  [
+   "Which is closest in meaning to “cautious”?",
+   [
+    "careful",
+    "swift",
+    "loud",
+    "reckless"
+   ],
+   0,
+   "“Cautious” means careful."
+  ],
+  [
+   "Which is closest in meaning to “conceal”?",
+   [
+    "admire",
+    "reveal",
+    "hide",
+    "borrow"
+   ],
+   2,
+   "“Conceal” means hide."
+  ],
+  [
+   "Which is closest in meaning to “diligent”?",
+   [
+    "sleepy",
+    "careless",
+    "hard-working",
+    "rude"
+   ],
+   2,
+   "“Diligent” means hard-working."
+  ],
+  [
+   "Which is closest in meaning to “enormous”?",
+   [
+    "brief",
+    "gentle",
+    "huge",
+    "tiny"
+   ],
+   2,
+   "“Enormous” means huge."
+  ],
+  [
+   "Which is closest in meaning to “fragile”?",
+   [
+    "noisy",
+    "distant",
+    "sturdy",
+    "easily broken"
+   ],
+   3,
+   "“Fragile” means easily broken."
+  ],
+  [
+   "Which is closest in meaning to “generous”?",
+   [
+    "selfish",
+    "slow",
+    "giving",
+    "nervous"
+   ],
+   2,
+   "“Generous” means giving."
+  ],
+  [
+   "Which is closest in meaning to “hesitate”?",
+   [
+    "pause",
+    "laugh",
+    "arrive",
+    "rush"
+   ],
+   0,
+   "“Hesitate” means pause."
+  ],
+  [
+   "Which is closest in meaning to “immense”?",
+   [
+    "vast",
+    "narrow",
+    "quiet",
+    "ordinary"
+   ],
+   0,
+   "“Immense” means vast."
+  ],
+  [
+   "Which is closest in meaning to “jubilant”?",
+   [
+    "delighted",
+    "angry",
+    "weary",
+    "gloomy"
+   ],
+   0,
+   "“Jubilant” means delighted."
+  ],
+  [
+   "Which is closest in meaning to “keen”?",
+   [
+    "reluctant",
+    "clumsy",
+    "eager",
+    "timid"
+   ],
+   2,
+   "“Keen” means eager."
+  ],
+  [
+   "Which is closest in meaning to “lucid”?",
+   [
+    "confusing",
+    "dull",
+    "clear",
+    "heavy"
+   ],
+   2,
+   "“Lucid” means clear."
+  ],
+  [
+   "Which is closest in meaning to “modest”?",
+   [
+    "boastful",
+    "unassuming",
+    "ancient",
+    "furious"
+   ],
+   1,
+   "“Modest” means unassuming."
+  ],
+  [
+   "Which is closest in meaning to “nimble”?",
+   [
+    "agile",
+    "serious",
+    "awkward",
+    "sleepy"
+   ],
+   0,
+   "“Nimble” means agile."
+  ],
+  [
+   "Which is closest in meaning to “obscure”?",
+   [
+    "unclear",
+    "obvious",
+    "warm",
+    "brief"
+   ],
+   0,
+   "“Obscure” means unclear."
+  ],
+  [
+   "Which is closest in meaning to “perilous”?",
+   [
+    "safe",
+    "simple",
+    "dangerous",
+    "pleasant"
+   ],
+   2,
+   "“Perilous” means dangerous."
+  ],
+  [
+   "Which is closest in meaning to “quaint”?",
+   [
+    "enormous",
+    "old-fashioned",
+    "careless",
+    "modern"
+   ],
+   1,
+   "“Quaint” means old-fashioned."
+  ],
+  [
+   "Which is closest in meaning to “resilient”?",
+   [
+    "very quiet",
+    "easily defeated",
+    "able to recover",
+    "hard to see"
+   ],
+   2,
+   "“Resilient” means able to recover."
+  ],
+  [
+   "Which is closest in meaning to “scarce”?",
+   [
+    "eager",
+    "rare",
+    "plentiful",
+    "bright"
+   ],
+   1,
+   "“Scarce” means rare."
+  ],
+  [
+   "Which is closest in meaning to “tranquil”?",
+   [
+    "peaceful",
+    "difficult",
+    "hurried",
+    "noisy"
+   ],
+   0,
+   "“Tranquil” means peaceful."
+  ],
+  [
+   "Which is closest in meaning to “vivid”?",
+   [
+    "silent",
+    "strikingly clear",
+    "ordinary",
+    "faint"
+   ],
+   1,
+   "“Vivid” means strikingly clear."
+  ],
+  [
+   "Which is closest in meaning to “weary”?",
+   [
+    "tired",
+    "energetic",
+    "curious",
+    "angry"
+   ],
+   0,
+   "“Weary” means tired."
+  ],
+  [
+   "Which is closest in meaning to “amiable”?",
+   [
+    "hostile",
+    "careless",
+    "friendly",
+    "distant"
+   ],
+   2,
+   "“Amiable” means friendly."
+  ],
+  [
+   "Which is closest in meaning to “brisk”?",
+   [
+    "quick",
+    "gentle",
+    "sluggish",
+    "uncertain"
+   ],
+   0,
+   "“Brisk” means quick."
+  ],
+  [
+   "Which is closest in meaning to “crucial”?",
+   [
+    "essential",
+    "optional",
+    "hidden",
+    "fragile"
+   ],
+   0,
+   "“Crucial” means essential."
+  ],
+  [
+   "Which is closest in meaning to “deft”?",
+   [
+    "timid",
+    "clumsy",
+    "skilful",
+    "slow"
+   ],
+   2,
+   "“Deft” means skilful."
+  ],
+  [
+   "Which is closest in meaning to “elated”?",
+   [
+    "bored",
+    "overjoyed",
+    "worried",
+    "disappointed"
+   ],
+   1,
+   "“Elated” means overjoyed."
+  ],
+  [
+   "Which is closest in meaning to “frugal”?",
+   [
+    "untidy",
+    "wasteful",
+    "reckless",
+    "careful with money"
+   ],
+   3,
+   "“Frugal” means careful with money."
+  ],
+  [
+   "Which is closest in meaning to “genuine”?",
+   [
+    "authentic",
+    "ordinary",
+    "false",
+    "distant"
+   ],
+   0,
+   "“Genuine” means authentic."
+  ],
+  [
+   "Which is closest in meaning to “hasty”?",
+   [
+    "gentle",
+    "hurried",
+    "patient",
+    "quiet"
+   ],
+   1,
+   "“Hasty” means hurried."
+  ],
+  [
+   "Which is the opposite of “ancient”?",
+   [
+    "weathered",
+    "modern",
+    "old",
+    "historic"
+   ],
+   1,
+   "“Ancient” and “modern” have opposite meanings."
+  ],
+  [
+   "Which is the opposite of “arrogant”?",
+   [
+    "proud",
+    "confident",
+    "boastful",
+    "humble"
+   ],
+   3,
+   "“Arrogant” and “humble” have opposite meanings."
+  ],
+  [
+   "Which is the opposite of “barren”?",
+   [
+    "fertile",
+    "rocky",
+    "empty",
+    "dry"
+   ],
+   0,
+   "“Barren” and “fertile” have opposite meanings."
+  ],
+  [
+   "Which is the opposite of “complex”?",
+   [
+    "detailed",
+    "simple",
+    "intricate",
+    "difficult"
+   ],
+   1,
+   "“Complex” and “simple” have opposite meanings."
+  ],
+  [
+   "Which is the opposite of “expand”?",
+   [
+    "increase",
+    "contract",
+    "grow",
+    "stretch"
+   ],
+   1,
+   "“Expand” and “contract” have opposite meanings."
+  ],
+  [
+   "Which is the opposite of “frequent”?",
+   [
+    "common",
+    "rare",
+    "repeated",
+    "regular"
+   ],
+   1,
+   "“Frequent” and “rare” have opposite meanings."
+  ],
+  [
+   "Which is the opposite of “hostile”?",
+   [
+    "cold",
+    "unfriendly",
+    "friendly",
+    "angry"
+   ],
+   2,
+   "“Hostile” and “friendly” have opposite meanings."
+  ],
+  [
+   "Which is the opposite of “identical”?",
+   [
+    "alike",
+    "matching",
+    "equal",
+    "different"
+   ],
+   3,
+   "“Identical” and “different” have opposite meanings."
+  ],
+  [
+   "Which is the opposite of “increase”?",
+   [
+    "expand",
+    "decrease",
+    "grow",
+    "rise"
+   ],
+   1,
+   "“Increase” and “decrease” have opposite meanings."
+  ],
+  [
+   "Which is the opposite of “loyal”?",
+   [
+    "disloyal",
+    "reliable",
+    "devoted",
+    "faithful"
+   ],
+   0,
+   "“Loyal” and “disloyal” have opposite meanings."
+  ],
+  [
+   "Which is the opposite of “optimistic”?",
+   [
+    "cheerful",
+    "pessimistic",
+    "positive",
+    "hopeful"
+   ],
+   1,
+   "“Optimistic” and “pessimistic” have opposite meanings."
+  ],
+  [
+   "Which is the opposite of “permanent”?",
+   [
+    "fixed",
+    "temporary",
+    "lasting",
+    "enduring"
+   ],
+   1,
+   "“Permanent” and “temporary” have opposite meanings."
+  ],
+  [
+   "Which is the opposite of “precise”?",
+   [
+    "exact",
+    "accurate",
+    "specific",
+    "vague"
+   ],
+   3,
+   "“Precise” and “vague” have opposite meanings."
+  ],
+  [
+   "Which is the opposite of “rigid”?",
+   [
+    "inflexible",
+    "flexible",
+    "stiff",
+    "firm"
+   ],
+   1,
+   "“Rigid” and “flexible” have opposite meanings."
+  ],
+  [
+   "Which is the opposite of “shallow”?",
+   [
+    "deep",
+    "narrow",
+    "flat",
+    "low"
+   ],
+   0,
+   "“Shallow” and “deep” have opposite meanings."
+  ],
+  [
+   "Which is the opposite of “timid”?",
+   [
+    "nervous",
+    "bold",
+    "shy",
+    "hesitant"
+   ],
+   1,
+   "“Timid” and “bold” have opposite meanings."
+  ],
+  [
+   "Which is the opposite of “visible”?",
+   [
+    "noticeable",
+    "clear",
+    "obvious",
+    "hidden"
+   ],
+   3,
+   "“Visible” and “hidden” have opposite meanings."
+  ],
+  [
+   "Which is the opposite of “victory”?",
+   [
+    "defeat",
+    "achievement",
+    "triumph",
+    "success"
+   ],
+   0,
+   "“Victory” and “defeat” have opposite meanings."
+  ],
+  [
+   "Which is the opposite of “willing”?",
+   [
+    "ready",
+    "eager",
+    "reluctant",
+    "keen"
+   ],
+   2,
+   "“Willing” and “reluctant” have opposite meanings."
+  ],
+  [
+   "Which is the opposite of “yield”?",
+   [
+    "resist",
+    "surrender",
+    "submit",
+    "give way"
+   ],
+   0,
+   "“Yield” and “resist” have opposite meanings."
+  ],
+  [
+   "Which word is spelt correctly?",
+   [
+    "accomodation",
+    "acommodation",
+    "accommadation",
+    "accommodation"
+   ],
+   3,
+   "The correct spelling is “accommodation”."
+  ],
+  [
+   "Which word is spelt correctly?",
+   [
+    "achievment",
+    "achievement",
+    "acheivement",
+    "acheivment"
+   ],
+   1,
+   "The correct spelling is “achievement”."
+  ],
+  [
+   "Which word is spelt correctly?",
+   [
+    "arguement",
+    "argument",
+    "arguemant",
+    "argment"
+   ],
+   1,
+   "The correct spelling is “argument”."
+  ],
+  [
+   "Which word is spelt correctly?",
+   [
+    "begenning",
+    "beggining",
+    "begining",
+    "beginning"
+   ],
+   3,
+   "The correct spelling is “beginning”."
+  ],
+  [
+   "Which word is spelt correctly?",
+   [
+    "calandar",
+    "calendar",
+    "calender",
+    "callendar"
+   ],
+   1,
+   "The correct spelling is “calendar”."
+  ],
+  [
+   "Which word is spelt correctly?",
+   [
+    "commitee",
+    "committie",
+    "committee",
+    "comittee"
+   ],
+   2,
+   "The correct spelling is “committee”."
+  ],
+  [
+   "Which word is spelt correctly?",
+   [
+    "consciense",
+    "conscience",
+    "consience",
+    "concience"
+   ],
+   1,
+   "The correct spelling is “conscience”."
+  ],
+  [
+   "Which word is spelt correctly?",
+   [
+    "definate",
+    "definit",
+    "definite",
+    "defenite"
+   ],
+   2,
+   "The correct spelling is “definite”."
+  ],
+  [
+   "Which word is spelt correctly?",
+   [
+    "envirenment",
+    "enviroment",
+    "environment",
+    "environmant"
+   ],
+   2,
+   "The correct spelling is “environment”."
+  ],
+  [
+   "Which word is spelt correctly?",
+   [
+    "expecially",
+    "especially",
+    "especialy",
+    "especialley"
+   ],
+   1,
+   "The correct spelling is “especially”."
+  ],
+  [
+   "Which word is spelt correctly?",
+   [
+    "Febuary",
+    "February",
+    "Februery",
+    "Feburary"
+   ],
+   1,
+   "The correct spelling is “February”."
+  ],
+  [
+   "Which word is spelt correctly?",
+   [
+    "govornment",
+    "governmant",
+    "government",
+    "goverment"
+   ],
+   2,
+   "The correct spelling is “government”."
+  ],
+  [
+   "Which word is spelt correctly?",
+   [
+    "indepandent",
+    "independet",
+    "independant",
+    "independent"
+   ],
+   3,
+   "The correct spelling is “independent”."
+  ],
+  [
+   "Which word is spelt correctly?",
+   [
+    "knowledg",
+    "knowlage",
+    "knowledge",
+    "knowlege"
+   ],
+   2,
+   "The correct spelling is “knowledge”."
+  ],
+  [
+   "Which word is spelt correctly?",
+   [
+    "neccessary",
+    "necessary",
+    "neccesary",
+    "necessery"
+   ],
+   1,
+   "The correct spelling is “necessary”."
+  ],
+  [
+   "Which word is spelt correctly?",
+   [
+    "ocassion",
+    "ocasion",
+    "occassion",
+    "occasion"
+   ],
+   3,
+   "The correct spelling is “occasion”."
+  ],
+  [
+   "Which word is spelt correctly?",
+   [
+    "parliamentt",
+    "parliament",
+    "parlaiment",
+    "parliment"
+   ],
+   1,
+   "The correct spelling is “parliament”."
+  ],
+  [
+   "Which word is spelt correctly?",
+   [
+    "priviledge",
+    "privelege",
+    "privilege",
+    "privilage"
+   ],
+   2,
+   "The correct spelling is “privilege”."
+  ],
+  [
+   "Which word is spelt correctly?",
+   [
+    "recommend",
+    "reccomend",
+    "recommened",
+    "recomend"
+   ],
+   0,
+   "The correct spelling is “recommend”."
+  ],
+  [
+   "Which word is spelt correctly?",
+   [
+    "rythm",
+    "rhythem",
+    "rhythm",
+    "rhythym"
+   ],
+   2,
+   "The correct spelling is “rhythm”."
+  ],
+  [
+   "Which word is spelt correctly?",
+   [
+    "separite",
+    "separate",
+    "seperate",
+    "seperete"
+   ],
+   1,
+   "The correct spelling is “separate”."
+  ],
+  [
+   "Which word is spelt correctly?",
+   [
+    "sincerly",
+    "sincerelly",
+    "sincirely",
+    "sincerely"
+   ],
+   3,
+   "The correct spelling is “sincerely”."
+  ],
+  [
+   "Which word is spelt correctly?",
+   [
+    "sufficent",
+    "sufficient",
+    "suficient",
+    "sufficiant"
+   ],
+   1,
+   "The correct spelling is “sufficient”."
+  ],
+  [
+   "Which word is spelt correctly?",
+   [
+    "temperature",
+    "temprature",
+    "temparature",
+    "tempereture"
+   ],
+   0,
+   "The correct spelling is “temperature”."
+  ],
+  [
+   "Which word is spelt correctly?",
+   [
+    "tommorow",
+    "tomorrow",
+    "tommorrow",
+    "tomorow"
+   ],
+   1,
+   "The correct spelling is “tomorrow”."
+  ],
+  [
+   "Which sentence uses ‘their’ correctly?",
+   [
+    "They're coats are on the hooks.",
+    "Their coats are on the hooks.",
+    "There coats are on the hooks.",
+    "Theirs coats are on the hooks."
+   ],
+   1,
+   "‘Their’ shows that the coats belong to them."
+  ],
+  [
+   "Which sentence uses ‘there’ correctly?",
+   [
+    "The library is over they're.",
+    "The library is over their.",
+    "The library is over there.",
+    "The library is over theirs."
+   ],
+   2,
+   "‘There’ refers to a place."
+  ],
+  [
+   "Which sentence uses ‘they’re’ correctly?",
+   [
+    "Their going to the park.",
+    "There going to the park.",
+    "They’re going to the park.",
+    "Theirs going to the park."
+   ],
+   2,
+   "‘They’re’ is short for ‘they are’."
+  ],
+  [
+   "Which sentence uses ‘its’ correctly?",
+   [
+    "The cat cleaned its' paws.",
+    "The cat cleaned its paws.",
+    "The cat cleaned it’s' paws.",
+    "The cat cleaned it's paws."
+   ],
+   1,
+   "‘Its’ shows possession without an apostrophe."
+  ],
+  [
+   "Which sentence uses ‘it’s’ correctly?",
+   [
+    "It’s raining outside.",
+    "Its's raining outside.",
+    "Its’ raining outside.",
+    "Its raining outside."
+   ],
+   0,
+   "‘It’s’ is short for ‘it is’."
+  ],
+  [
+   "Which sentence uses a comma correctly?",
+   [
+    "After lunch we, went swimming.",
+    "After lunch we went, swimming.",
+    "After, lunch we went swimming.",
+    "After lunch, we went swimming."
+   ],
+   3,
+   "The comma separates the opening phrase from the main sentence."
+  ],
+  [
+   "Which is a complete sentence?",
+   [
+    "Flew across the garden.",
+    "The bird flew across the garden.",
+    "Across the garden.",
+    "The bird across the garden."
+   ],
+   1,
+   "It has a subject (‘the bird’) and a verb (‘flew’)."
+  ],
+  [
+   "Which sentence is in the past tense?",
+   [
+    "She walks to school.",
+    "She will walk to school.",
+    "She walked to school.",
+    "She is walking to school."
+   ],
+   2,
+   "‘Walked’ describes something that has already happened."
+  ],
+  [
+   "Which sentence is in the future tense?",
+   [
+    "We are visiting now.",
+    "We visited yesterday.",
+    "We will visit tomorrow.",
+    "We visit today."
+   ],
+   2,
+   "‘Will visit’ describes a future action."
+  ],
+  [
+   "Which sentence has the correct plural?",
+   [
+    "The mouses ran away.",
+    "The mouse ran away in groups.",
+    "The mices ran away.",
+    "The mice ran away."
+   ],
+   3,
+   "The plural of ‘mouse’ is ‘mice’."
+  ],
+  [
+   "Which sentence uses ‘fewer’ correctly?",
+   [
+    "Fewest pupils was absent today.",
+    "Fewer pupils were absent today.",
+    "Fewer water was needed today.",
+    "Less pupils were absent today."
+   ],
+   1,
+   "Use ‘fewer’ with things you can count, such as pupils."
+  ],
+  [
+   "Which sentence uses ‘less’ correctly?",
+   [
+    "There is fewer water in the jug.",
+    "There is less water in the jug.",
+    "There are less chairs in the room.",
+    "There are less cups on the table."
+   ],
+   1,
+   "Use ‘less’ with an amount such as water."
+  ],
+  [
+   "Which word is the adjective in ‘The bright moon shone’?",
+   [
+    "The",
+    "shone",
+    "bright",
+    "moon"
+   ],
+   2,
+   "‘Bright’ describes the moon."
+  ],
+  [
+   "Which word is the verb in ‘The puppy chased the ball’?",
+   [
+    "chased",
+    "ball",
+    "puppy",
+    "The"
+   ],
+   0,
+   "‘Chased’ is the action."
+  ],
+  [
+   "Which word is the noun in ‘A robin sang loudly’?",
+   [
+    "A",
+    "sang",
+    "robin",
+    "loudly"
+   ],
+   2,
+   "‘Robin’ names a bird."
+  ],
+  [
+   "Which word is an adverb in ‘He spoke softly’?",
+   [
+    "He",
+    "spoke",
+    "softly",
+    "none"
+   ],
+   2,
+   "‘Softly’ tells us how he spoke."
+  ],
+  [
+   "Which sentence has correct subject–verb agreement?",
+   [
+    "The children was playing.",
+    "The children is playing.",
+    "The children be playing.",
+    "The children are playing."
+   ],
+   3,
+   "The plural subject ‘children’ takes ‘are’."
+  ],
+  [
+   "Which sentence uses a question mark correctly?",
+   [
+    "Where is my bag?",
+    "Where is my bag.",
+    "Where? is my bag",
+    "Where is my bag!"
+   ],
+   0,
+   "A direct question ends with a question mark."
+  ],
+  [
+   "Which sentence has the correct possessive form?",
+   [
+    "The dog’s collar is red.",
+    "The dog's' collar is red.",
+    "The dogs collar is red.",
+    "The dogs’ collar is red."
+   ],
+   0,
+   "One dog owns the collar, so add ’s to ‘dog’."
+  ],
+  [
+   "Which sentence is punctuated correctly?",
+   [
+    "“Come here,” said Mum.",
+    "Come here, said Mum.",
+    "“Come here,” Said Mum.",
+    "“Come here”, said Mum."
+   ],
+   0,
+   "The comma belongs inside the speech marks and ‘said’ stays lowercase."
+  ]
+ ],
+ "Verbal reasoning": [
+  [
+   "Move every letter of CAT forward 1 place. What is the code?",
+   [
+    "DBU",
+    "ECV",
+    "GEX",
+    "FDW"
+   ],
+   0,
+   "Move each letter forward 1 place: CAT becomes DBU."
+  ],
+  [
+   "Move every letter of DOG forward 1 place. What is the code?",
+   [
+    "GRJ",
+    "FQI",
+    "HSK",
+    "EPH"
+   ],
+   3,
+   "Move each letter forward 1 place: DOG becomes EPH."
+  ],
+  [
+   "Move every letter of SUN forward 1 place. What is the code?",
+   [
+    "VXQ",
+    "TVO",
+    "UWP",
+    "WYR"
+   ],
+   1,
+   "Move each letter forward 1 place: SUN becomes TVO."
+  ],
+  [
+   "Move every letter of MAP forward 1 place. What is the code?",
+   [
+    "OCR",
+    "PDS",
+    "NBQ",
+    "QET"
+   ],
+   2,
+   "Move each letter forward 1 place: MAP becomes NBQ."
+  ],
+  [
+   "Move every letter of HEN forward 1 place. What is the code?",
+   [
+    "LIR",
+    "JGP",
+    "KHQ",
+    "IFO"
+   ],
+   3,
+   "Move each letter forward 1 place: HEN becomes IFO."
+  ],
+  [
+   "Move every letter of BOX forward 1 place. What is the code?",
+   [
+    "ERA",
+    "CPY",
+    "FSB",
+    "DQZ"
+   ],
+   1,
+   "Move each letter forward 1 place: BOX becomes CPY."
+  ],
+  [
+   "Move every letter of CAT forward 2 places. What is the code?",
+   [
+    "ECV",
+    "GEX",
+    "FDW",
+    "HFY"
+   ],
+   0,
+   "Move each letter forward 2 places: CAT becomes ECV."
+  ],
+  [
+   "Move every letter of DOG forward 2 places. What is the code?",
+   [
+    "HSK",
+    "GRJ",
+    "FQI",
+    "ITL"
+   ],
+   2,
+   "Move each letter forward 2 places: DOG becomes FQI."
+  ],
+  [
+   "Move every letter of SUN forward 2 places. What is the code?",
+   [
+    "XZS",
+    "UWP",
+    "WYR",
+    "VXQ"
+   ],
+   1,
+   "Move each letter forward 2 places: SUN becomes UWP."
+  ],
+  [
+   "Move every letter of MAP forward 2 places. What is the code?",
+   [
+    "QET",
+    "RFU",
+    "OCR",
+    "PDS"
+   ],
+   2,
+   "Move each letter forward 2 places: MAP becomes OCR."
+  ],
+  [
+   "Move every letter of HEN forward 2 places. What is the code?",
+   [
+    "MJS",
+    "KHQ",
+    "LIR",
+    "JGP"
+   ],
+   3,
+   "Move each letter forward 2 places: HEN becomes JGP."
+  ],
+  [
+   "Move every letter of BOX forward 2 places. What is the code?",
+   [
+    "DQZ",
+    "ERA",
+    "GTC",
+    "FSB"
+   ],
+   0,
+   "Move each letter forward 2 places: BOX becomes DQZ."
+  ],
+  [
+   "Move every letter of CAT forward 3 places. What is the code?",
+   [
+    "HFY",
+    "GEX",
+    "IGZ",
+    "FDW"
+   ],
+   3,
+   "Move each letter forward 3 places: CAT becomes FDW."
+  ],
+  [
+   "Move every letter of DOG forward 3 places. What is the code?",
+   [
+    "ITL",
+    "GRJ",
+    "HSK",
+    "JUM"
+   ],
+   1,
+   "Move each letter forward 3 places: DOG becomes GRJ."
+  ],
+  [
+   "Move every letter of SUN forward 3 places. What is the code?",
+   [
+    "XZS",
+    "WYR",
+    "VXQ",
+    "YAT"
+   ],
+   2,
+   "Move each letter forward 3 places: SUN becomes VXQ."
+  ],
+  [
+   "Move every letter of MAP forward 3 places. What is the code?",
+   [
+    "QET",
+    "RFU",
+    "PDS",
+    "SGV"
+   ],
+   2,
+   "Move each letter forward 3 places: MAP becomes PDS."
+  ],
+  [
+   "Move every letter of HEN forward 3 places. What is the code?",
+   [
+    "MJS",
+    "KHQ",
+    "NKT",
+    "LIR"
+   ],
+   1,
+   "Move each letter forward 3 places: HEN becomes KHQ."
+  ],
+  [
+   "Move every letter of BOX forward 3 places. What is the code?",
+   [
+    "GTC",
+    "FSB",
+    "ERA",
+    "HUD"
+   ],
+   2,
+   "Move each letter forward 3 places: BOX becomes ERA."
+  ],
+  [
+   "Move every letter of CAT forward 4 places. What is the code?",
+   [
+    "IGZ",
+    "GEX",
+    "JHA",
+    "HFY"
+   ],
+   1,
+   "Move each letter forward 4 places: CAT becomes GEX."
+  ],
+  [
+   "Move every letter of DOG forward 4 places. What is the code?",
+   [
+    "ITL",
+    "HSK",
+    "KVN",
+    "JUM"
+   ],
+   1,
+   "Move each letter forward 4 places: DOG becomes HSK."
+  ],
+  [
+   "Move every letter of SUN forward 4 places. What is the code?",
+   [
+    "WYR",
+    "XZS",
+    "YAT",
+    "ZBU"
+   ],
+   0,
+   "Move each letter forward 4 places: SUN becomes WYR."
+  ],
+  [
+   "Move every letter of MAP forward 4 places. What is the code?",
+   [
+    "THW",
+    "SGV",
+    "RFU",
+    "QET"
+   ],
+   3,
+   "Move each letter forward 4 places: MAP becomes QET."
+  ],
+  [
+   "Move every letter of HEN forward 4 places. What is the code?",
+   [
+    "NKT",
+    "LIR",
+    "MJS",
+    "OLU"
+   ],
+   1,
+   "Move each letter forward 4 places: HEN becomes LIR."
+  ],
+  [
+   "Move every letter of BOX forward 4 places. What is the code?",
+   [
+    "GTC",
+    "FSB",
+    "IVE",
+    "HUD"
+   ],
+   1,
+   "Move each letter forward 4 places: BOX becomes FSB."
+  ],
+  [
+   "Move every letter of CAT forward 5 places. What is the code?",
+   [
+    "KIB",
+    "HFY",
+    "IGZ",
+    "JHA"
+   ],
+   1,
+   "Move each letter forward 5 places: CAT becomes HFY."
+  ],
+  [
+   "Move every letter of DOG forward 5 places. What is the code?",
+   [
+    "ITL",
+    "JUM",
+    "KVN",
+    "LWO"
+   ],
+   0,
+   "Move each letter forward 5 places: DOG becomes ITL."
+  ],
+  [
+   "Move every letter of SUN forward 5 places. What is the code?",
+   [
+    "YAT",
+    "ACV",
+    "XZS",
+    "ZBU"
+   ],
+   2,
+   "Move each letter forward 5 places: SUN becomes XZS."
+  ],
+  [
+   "Move every letter of MAP forward 5 places. What is the code?",
+   [
+    "RFU",
+    "THW",
+    "UIX",
+    "SGV"
+   ],
+   0,
+   "Move each letter forward 5 places: MAP becomes RFU."
+  ],
+  [
+   "Move every letter of HEN forward 5 places. What is the code?",
+   [
+    "OLU",
+    "NKT",
+    "MJS",
+    "PMV"
+   ],
+   2,
+   "Move each letter forward 5 places: HEN becomes MJS."
+  ],
+  [
+   "Move every letter of BOX forward 5 places. What is the code?",
+   [
+    "GTC",
+    "HUD",
+    "JWF",
+    "IVE"
+   ],
+   0,
+   "Move each letter forward 5 places: BOX becomes GTC."
+  ],
+  [
+   "What comes next? 1, 4, 7, 10, …",
+   [
+    "12",
+    "13",
+    "14",
+    "16"
+   ],
+   1,
+   "Add 3 each time, so the next number is 13."
+  ],
+  [
+   "What comes next? 2, 6, 10, 14, …",
+   [
+    "17",
+    "18",
+    "22",
+    "19"
+   ],
+   1,
+   "Add 4 each time, so the next number is 18."
+  ],
+  [
+   "What comes next? 3, 8, 13, 18, …",
+   [
+    "22",
+    "23",
+    "24",
+    "28"
+   ],
+   1,
+   "Add 5 each time, so the next number is 23."
+  ],
+  [
+   "What comes next? 4, 10, 16, 22, …",
+   [
+    "34",
+    "29",
+    "27",
+    "28"
+   ],
+   3,
+   "Add 6 each time, so the next number is 28."
+  ],
+  [
+   "What comes next? 5, 7, 9, 11, …",
+   [
+    "13",
+    "12",
+    "15",
+    "14"
+   ],
+   0,
+   "Add 2 each time, so the next number is 13."
+  ],
+  [
+   "What comes next? 6, 9, 12, 15, …",
+   [
+    "18",
+    "21",
+    "19",
+    "17"
+   ],
+   0,
+   "Add 3 each time, so the next number is 18."
+  ],
+  [
+   "What comes next? 7, 11, 15, 19, …",
+   [
+    "24",
+    "23",
+    "22",
+    "27"
+   ],
+   1,
+   "Add 4 each time, so the next number is 23."
+  ],
+  [
+   "What comes next? 8, 13, 18, 23, …",
+   [
+    "27",
+    "33",
+    "28",
+    "29"
+   ],
+   2,
+   "Add 5 each time, so the next number is 28."
+  ],
+  [
+   "What comes next? 9, 15, 21, 27, …",
+   [
+    "32",
+    "34",
+    "33",
+    "39"
+   ],
+   2,
+   "Add 6 each time, so the next number is 33."
+  ],
+  [
+   "What comes next? 10, 12, 14, 16, …",
+   [
+    "19",
+    "20",
+    "18",
+    "17"
+   ],
+   2,
+   "Add 2 each time, so the next number is 18."
+  ],
+  [
+   "What comes next? 11, 14, 17, 20, …",
+   [
+    "26",
+    "22",
+    "23",
+    "24"
+   ],
+   2,
+   "Add 3 each time, so the next number is 23."
+  ],
+  [
+   "What comes next? 12, 16, 20, 24, …",
+   [
+    "32",
+    "28",
+    "27",
+    "29"
+   ],
+   1,
+   "Add 4 each time, so the next number is 28."
+  ],
+  [
+   "What comes next? 13, 18, 23, 28, …",
+   [
+    "38",
+    "33",
+    "32",
+    "34"
+   ],
+   1,
+   "Add 5 each time, so the next number is 33."
+  ],
+  [
+   "What comes next? 14, 20, 26, 32, …",
+   [
+    "44",
+    "39",
+    "38",
+    "37"
+   ],
+   2,
+   "Add 6 each time, so the next number is 38."
+  ],
+  [
+   "What comes next? 15, 17, 19, 21, …",
+   [
+    "25",
+    "24",
+    "23",
+    "22"
+   ],
+   2,
+   "Add 2 each time, so the next number is 23."
+  ],
+  [
+   "What comes next? 16, 19, 22, 25, …",
+   [
+    "31",
+    "29",
+    "28",
+    "27"
+   ],
+   2,
+   "Add 3 each time, so the next number is 28."
+  ],
+  [
+   "What comes next? 17, 21, 25, 29, …",
+   [
+    "37",
+    "32",
+    "33",
+    "34"
+   ],
+   2,
+   "Add 4 each time, so the next number is 33."
+  ],
+  [
+   "What comes next? 18, 23, 28, 33, …",
+   [
+    "37",
+    "39",
+    "38",
+    "43"
+   ],
+   2,
+   "Add 5 each time, so the next number is 38."
+  ],
+  [
+   "What comes next? 19, 25, 31, 37, …",
+   [
+    "49",
+    "43",
+    "42",
+    "44"
+   ],
+   1,
+   "Add 6 each time, so the next number is 43."
+  ],
+  [
+   "What comes next? 20, 22, 24, 26, …",
+   [
+    "27",
+    "29",
+    "30",
+    "28"
+   ],
+   3,
+   "Add 2 each time, so the next number is 28."
+  ],
+  [
+   "What comes next? 21, 24, 27, 30, …",
+   [
+    "34",
+    "33",
+    "36",
+    "32"
+   ],
+   1,
+   "Add 3 each time, so the next number is 33."
+  ],
+  [
+   "What comes next? 22, 26, 30, 34, …",
+   [
+    "42",
+    "38",
+    "39",
+    "37"
+   ],
+   1,
+   "Add 4 each time, so the next number is 38."
+  ],
+  [
+   "What comes next? 23, 28, 33, 38, …",
+   [
+    "43",
+    "44",
+    "48",
+    "42"
+   ],
+   0,
+   "Add 5 each time, so the next number is 43."
+  ],
+  [
+   "What comes next? 24, 30, 36, 42, …",
+   [
+    "47",
+    "49",
+    "54",
+    "48"
+   ],
+   3,
+   "Add 6 each time, so the next number is 48."
+  ],
+  [
+   "What comes next? 25, 27, 29, 31, …",
+   [
+    "33",
+    "35",
+    "32",
+    "34"
+   ],
+   0,
+   "Add 2 each time, so the next number is 33."
+  ],
+  [
+   "What comes next? 26, 29, 32, 35, …",
+   [
+    "39",
+    "41",
+    "37",
+    "38"
+   ],
+   3,
+   "Add 3 each time, so the next number is 38."
+  ],
+  [
+   "What comes next? 27, 31, 35, 39, …",
+   [
+    "47",
+    "44",
+    "42",
+    "43"
+   ],
+   3,
+   "Add 4 each time, so the next number is 43."
+  ],
+  [
+   "What comes next? 28, 33, 38, 43, …",
+   [
+    "53",
+    "49",
+    "48",
+    "47"
+   ],
+   2,
+   "Add 5 each time, so the next number is 48."
+  ],
+  [
+   "What comes next? 29, 35, 41, 47, …",
+   [
+    "53",
+    "54",
+    "52",
+    "59"
+   ],
+   0,
+   "Add 6 each time, so the next number is 53."
+  ],
+  [
+   "What comes next? 30, 32, 34, 36, …",
+   [
+    "38",
+    "39",
+    "40",
+    "37"
+   ],
+   0,
+   "Add 2 each time, so the next number is 38."
+  ],
+  [
+   "Bird is to nest as bee is to …",
+   [
+    "pond",
+    "burrow",
+    "den",
+    "hive"
+   ],
+   3,
+   "The same relationship gives “hive”."
+  ],
+  [
+   "Puppy is to dog as kitten is to …",
+   [
+    "cub",
+    "horse",
+    "mouse",
+    "cat"
+   ],
+   3,
+   "The same relationship gives “cat”."
+  ],
+  [
+   "Hand is to glove as foot is to …",
+   [
+    "scarf",
+    "coat",
+    "shoe",
+    "hat"
+   ],
+   2,
+   "The same relationship gives “shoe”."
+  ],
+  [
+   "Author is to book as composer is to …",
+   [
+    "paint",
+    "stone",
+    "garden",
+    "music"
+   ],
+   3,
+   "The same relationship gives “music”."
+  ],
+  [
+   "Day is to night as awake is to …",
+   [
+    "morning",
+    "early",
+    "bright",
+    "asleep"
+   ],
+   3,
+   "The same relationship gives “asleep”."
+  ],
+  [
+   "Hot is to cold as wet is to …",
+   [
+    "warm",
+    "rain",
+    "dry",
+    "water"
+   ],
+   2,
+   "The same relationship gives “dry”."
+  ],
+  [
+   "Wheel is to bicycle as wing is to …",
+   [
+    "ship",
+    "aeroplane",
+    "train",
+    "car"
+   ],
+   1,
+   "The same relationship gives “aeroplane”."
+  ],
+  [
+   "Leaf is to tree as petal is to …",
+   [
+    "grass",
+    "branch",
+    "root",
+    "flower"
+   ],
+   3,
+   "The same relationship gives “flower”."
+  ],
+  [
+   "Doctor is to hospital as teacher is to …",
+   [
+    "library",
+    "farm",
+    "shop",
+    "school"
+   ],
+   3,
+   "The same relationship gives “school”."
+  ],
+  [
+   "Paintbrush is to painter as pen is to …",
+   [
+    "baker",
+    "singer",
+    "writer",
+    "driver"
+   ],
+   2,
+   "The same relationship gives “writer”."
+  ],
+  [
+   "Chapter is to book as verse is to …",
+   [
+    "picture",
+    "map",
+    "poem",
+    "newspaper"
+   ],
+   2,
+   "The same relationship gives “poem”."
+  ],
+  [
+   "Seed is to plant as egg is to …",
+   [
+    "bird",
+    "tree",
+    "soil",
+    "fruit"
+   ],
+   0,
+   "The same relationship gives “bird”."
+  ],
+  [
+   "January is to February as June is to …",
+   [
+    "August",
+    "May",
+    "July",
+    "April"
+   ],
+   2,
+   "The same relationship gives “July”."
+  ],
+  [
+   "North is to south as east is to …",
+   [
+    "up",
+    "left",
+    "west",
+    "right"
+   ],
+   2,
+   "The same relationship gives “west”."
+  ],
+  [
+   "Minute is to hour as day is to …",
+   [
+    "morning",
+    "week",
+    "second",
+    "clock"
+   ],
+   1,
+   "The same relationship gives “week”."
+  ],
+  [
+   "Square is to four as triangle is to …",
+   [
+    "five",
+    "three",
+    "two",
+    "six"
+   ],
+   1,
+   "The same relationship gives “three”."
+  ],
+  [
+   "Ocean is to water as desert is to …",
+   [
+    "forest",
+    "sand",
+    "river",
+    "snow"
+   ],
+   1,
+   "The same relationship gives “sand”."
+  ],
+  [
+   "Helmet is to head as boot is to …",
+   [
+    "hand",
+    "foot",
+    "knee",
+    "arm"
+   ],
+   1,
+   "The same relationship gives “foot”."
+  ],
+  [
+   "Ruler is to length as scale is to …",
+   [
+    "speed",
+    "colour",
+    "temperature",
+    "weight"
+   ],
+   3,
+   "The same relationship gives “weight”."
+  ],
+  [
+   "Caterpillar is to butterfly as tadpole is to …",
+   [
+    "lizard",
+    "bird",
+    "frog",
+    "fish"
+   ],
+   2,
+   "The same relationship gives “frog”."
+  ],
+  [
+   "Which word does not belong?",
+   [
+    "Elm",
+    "Tulip",
+    "Oak",
+    "Ash"
+   ],
+   1,
+   "The first three are trees; tulip is a flower."
+  ],
+  [
+   "Which word does not belong?",
+   [
+    "Viola",
+    "Cello",
+    "Trumpet",
+    "Violin"
+   ],
+   2,
+   "The first three are string instruments; trumpet is a brass instrument."
+  ],
+  [
+   "Which word does not belong?",
+   [
+    "Gold",
+    "Copper",
+    "Iron",
+    "Granite"
+   ],
+   3,
+   "The first three are metals; granite is a rock."
+  ],
+  [
+   "Which word does not belong?",
+   [
+    "March",
+    "January",
+    "Tuesday",
+    "May"
+   ],
+   2,
+   "The first three are months; Tuesday is a day."
+  ],
+  [
+   "Which word does not belong?",
+   [
+    "Mars",
+    "Moon",
+    "Venus",
+    "Mercury"
+   ],
+   1,
+   "The first three are planets; the Moon is a natural satellite."
+  ],
+  [
+   "Which word does not belong?",
+   [
+    "Bat",
+    "Robin",
+    "Eagle",
+    "Sparrow"
+   ],
+   0,
+   "The first three are birds; a bat is a mammal."
+  ],
+  [
+   "Which word does not belong?",
+   [
+    "Square",
+    "Pentagon",
+    "Triangle",
+    "Sphere"
+   ],
+   3,
+   "The first three are flat shapes; a sphere is a solid."
+  ],
+  [
+   "Which word does not belong?",
+   [
+    "Clarinet",
+    "Oboe",
+    "Flute",
+    "Piano"
+   ],
+   3,
+   "The other three are woodwind instruments."
+  ],
+  [
+   "Which word does not belong?",
+   [
+    "Copper",
+    "Ruby",
+    "Emerald",
+    "Sapphire"
+   ],
+   0,
+   "The first three are gemstones; copper is a metal."
+  ],
+  [
+   "Which word does not belong?",
+   [
+    "Seal",
+    "Dolphin",
+    "Whale",
+    "Shark"
+   ],
+   3,
+   "The first three are mammals; a shark is a fish."
+  ],
+  [
+   "Which word does not belong?",
+   [
+    "Kilogram",
+    "Metre",
+    "Kilometre",
+    "Centimetre"
+   ],
+   0,
+   "The first three measure length; kilogram measures mass."
+  ],
+  [
+   "Which word does not belong?",
+   [
+    "Blue",
+    "Red",
+    "Yellow",
+    "Circle"
+   ],
+   3,
+   "The first three are colours; circle is a shape."
+  ],
+  [
+   "Which word does not belong?",
+   [
+    "Pear",
+    "Peach",
+    "Apple",
+    "Carrot"
+   ],
+   3,
+   "The first three are fruits; carrot is a root vegetable."
+  ],
+  [
+   "Which word does not belong?",
+   [
+    "Snow",
+    "Rain",
+    "Wind",
+    "Hail"
+   ],
+   2,
+   "The first three are forms of precipitation; wind is moving air."
+  ],
+  [
+   "Which word does not belong?",
+   [
+    "Baker",
+    "Pilot",
+    "Cook",
+    "Chef"
+   ],
+   1,
+   "The first three prepare food; a pilot flies aircraft."
+  ]
+ ],
+ "Non-verbal reasoning": [
+  [
+   "What comes next? ▲ ● ▲ ● ▲ …",
+   [
+    "●",
+    "▲",
+    "■",
+    "◆"
+   ],
+   0,
+   "The pattern alternates ▲, ●, so ● comes next."
+  ],
+  [
+   "What comes next? ▲ ■ ▲ ■ ▲ …",
+   [
+    "■",
+    "◆",
+    "▲",
+    "●"
+   ],
+   0,
+   "The pattern alternates ▲, ■, so ■ comes next."
+  ],
+  [
+   "What comes next? ▲ ◆ ▲ ◆ ▲ …",
+   [
+    "●",
+    "▲",
+    "◆",
+    "■"
+   ],
+   2,
+   "The pattern alternates ▲, ◆, so ◆ comes next."
+  ],
+  [
+   "What comes next? ▲ ★ ▲ ★ ▲ …",
+   [
+    "★",
+    "■",
+    "●",
+    "▲"
+   ],
+   0,
+   "The pattern alternates ▲, ★, so ★ comes next."
+  ],
+  [
+   "What comes next? ▲ ⬟ ▲ ⬟ ▲ …",
+   [
+    "●",
+    "■",
+    "⬟",
+    "▲"
+   ],
+   2,
+   "The pattern alternates ▲, ⬟, so ⬟ comes next."
+  ],
+  [
+   "What comes next? ● ■ ● ■ ● …",
+   [
+    "◆",
+    "▲",
+    "●",
+    "■"
+   ],
+   3,
+   "The pattern alternates ●, ■, so ■ comes next."
+  ],
+  [
+   "What comes next? ● ◆ ● ◆ ● …",
+   [
+    "◆",
+    "▲",
+    "●",
+    "■"
+   ],
+   0,
+   "The pattern alternates ●, ◆, so ◆ comes next."
+  ],
+  [
+   "What comes next? ● ★ ● ★ ● …",
+   [
+    "▲",
+    "★",
+    "■",
+    "●"
+   ],
+   1,
+   "The pattern alternates ●, ★, so ★ comes next."
+  ],
+  [
+   "What comes next? ● ⬟ ● ⬟ ● …",
+   [
+    "■",
+    "⬟",
+    "▲",
+    "●"
+   ],
+   1,
+   "The pattern alternates ●, ⬟, so ⬟ comes next."
+  ],
+  [
+   "What comes next? ■ ◆ ■ ◆ ■ …",
+   [
+    "■",
+    "◆",
+    "▲",
+    "●"
+   ],
+   1,
+   "The pattern alternates ■, ◆, so ◆ comes next."
+  ],
+  [
+   "What comes next? ■ ★ ■ ★ ■ …",
+   [
+    "★",
+    "▲",
+    "●",
+    "■"
+   ],
+   0,
+   "The pattern alternates ■, ★, so ★ comes next."
+  ],
+  [
+   "What comes next? ■ ⬟ ■ ⬟ ■ …",
+   [
+    "▲",
+    "⬟",
+    "■",
+    "●"
+   ],
+   1,
+   "The pattern alternates ■, ⬟, so ⬟ comes next."
+  ],
+  [
+   "What comes next? ◆ ★ ◆ ★ ◆ …",
+   [
+    "◆",
+    "●",
+    "▲",
+    "★"
+   ],
+   3,
+   "The pattern alternates ◆, ★, so ★ comes next."
+  ],
+  [
+   "What comes next? ◆ ⬟ ◆ ⬟ ◆ …",
+   [
+    "▲",
+    "●",
+    "⬟",
+    "◆"
+   ],
+   2,
+   "The pattern alternates ◆, ⬟, so ⬟ comes next."
+  ],
+  [
+   "What comes next? ★ ⬟ ★ ⬟ ★ …",
+   [
+    "●",
+    "▲",
+    "⬟",
+    "★"
+   ],
+   2,
+   "The pattern alternates ★, ⬟, so ⬟ comes next."
+  ],
+  [
+   "What comes next in this turning pattern? ↑ → ↓ ← …",
+   [
+    "↑",
+    "←",
+    "↓",
+    "→"
+   ],
+   0,
+   "Each arrow turns a quarter-turn clockwise."
+  ],
+  [
+   "What comes next in this turning pattern? → ↓ ← ↑ …",
+   [
+    "↓",
+    "←",
+    "↑",
+    "→"
+   ],
+   3,
+   "Each arrow turns a quarter-turn clockwise."
+  ],
+  [
+   "What comes next in this turning pattern? ↓ ← ↑ → …",
+   [
+    "→",
+    "↑",
+    "↓",
+    "←"
+   ],
+   2,
+   "Each arrow turns a quarter-turn clockwise."
+  ],
+  [
+   "What comes next in this turning pattern? ← ↑ → ↓ …",
+   [
+    "↑",
+    "↓",
+    "→",
+    "←"
+   ],
+   3,
+   "Each arrow turns a quarter-turn clockwise."
+  ],
+  [
+   "What comes next in this turning pattern? ↑ ← ↓ → …",
+   [
+    "↑",
+    "↓",
+    "←",
+    "→"
+   ],
+   0,
+   "Each arrow turns a quarter-turn anticlockwise."
+  ],
+  [
+   "What comes next in this turning pattern? ← ↓ → ↑ …",
+   [
+    "↑",
+    "↓",
+    "→",
+    "←"
+   ],
+   3,
+   "Each arrow turns a quarter-turn anticlockwise."
+  ],
+  [
+   "What comes next in this turning pattern? ↓ → ↑ ← …",
+   [
+    "←",
+    "→",
+    "↓",
+    "↑"
+   ],
+   2,
+   "Each arrow turns a quarter-turn anticlockwise."
+  ],
+  [
+   "What comes next in this turning pattern? → ↑ ← ↓ …",
+   [
+    "→",
+    "←",
+    "↓",
+    "↑"
+   ],
+   0,
+   "Each arrow turns a quarter-turn anticlockwise."
+  ],
+  [
+   "What comes next in this turning pattern? ◐ ◓ ◑ ◒ …",
+   [
+    "◒",
+    "◐",
+    "◑",
+    "◓"
+   ],
+   1,
+   "The shaded half turns a quarter-turn each time."
+  ],
+  [
+   "What comes next in this turning pattern? ◓ ◑ ◒ ◐ …",
+   [
+    "◓",
+    "◑",
+    "◐",
+    "◒"
+   ],
+   0,
+   "The shaded half turns a quarter-turn each time."
+  ],
+  [
+   "What comes next in this turning pattern? ◑ ◒ ◐ ◓ …",
+   [
+    "◐",
+    "◓",
+    "◒",
+    "◑"
+   ],
+   3,
+   "The shaded half turns a quarter-turn each time."
+  ],
+  [
+   "What comes next in this turning pattern? ◒ ◐ ◓ ◑ …",
+   [
+    "◓",
+    "◒",
+    "◐",
+    "◑"
+   ],
+   1,
+   "The shaded half turns a quarter-turn each time."
+  ],
+  [
+   "What comes next in this turning pattern? ◴ ◷ ◶ ◵ …",
+   [
+    "◴",
+    "◵",
+    "◷",
+    "◶"
+   ],
+   0,
+   "The marked quarter turns around the circle."
+  ],
+  [
+   "What comes next in this turning pattern? ◷ ◶ ◵ ◴ …",
+   [
+    "◴",
+    "◶",
+    "◷",
+    "◵"
+   ],
+   2,
+   "The marked quarter turns around the circle."
+  ],
+  [
+   "What comes next in this turning pattern? ◶ ◵ ◴ ◷ …",
+   [
+    "◴",
+    "◶",
+    "◵",
+    "◷"
+   ],
+   1,
+   "The marked quarter turns around the circle."
+  ],
+  [
+   "What comes next in this turning pattern? ◵ ◴ ◷ ◶ …",
+   [
+    "◴",
+    "◷",
+    "◵",
+    "◶"
+   ],
+   2,
+   "The marked quarter turns around the circle."
+  ],
+  [
+   "Which symbol continues the sequence? ● ■ ◆ ★ …",
+   [
+    "●",
+    "⬟",
+    "▲",
+    "■"
+   ],
+   1,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ★ comes ⬟."
+  ],
+  [
+   "Which symbol continues the sequence? ■ ◆ ★ ⬟ ▲ …",
+   [
+    "◆",
+    "▲",
+    "●",
+    "■"
+   ],
+   2,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ▲ comes ●."
+  ],
+  [
+   "Which symbol continues the sequence? ◆ ★ ⬟ ▲ ● ■ …",
+   [
+    "■",
+    "▲",
+    "●",
+    "◆"
+   ],
+   3,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ■ comes ◆."
+  ],
+  [
+   "Which symbol continues the sequence? ★ ⬟ ▲ ● ■ ◆ ★ …",
+   [
+    "●",
+    "⬟",
+    "▲",
+    "■"
+   ],
+   1,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ★ comes ⬟."
+  ],
+  [
+   "Which symbol continues the sequence? ⬟ ▲ ● …",
+   [
+    "■",
+    "▲",
+    "●",
+    "◆"
+   ],
+   0,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ● comes ■."
+  ],
+  [
+   "Which symbol continues the sequence? ▲ ● ■ ◆ …",
+   [
+    "★",
+    "■",
+    "▲",
+    "●"
+   ],
+   0,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ◆ comes ★."
+  ],
+  [
+   "Which symbol continues the sequence? ● ■ ◆ ★ ⬟ …",
+   [
+    "▲",
+    "●",
+    "■",
+    "◆"
+   ],
+   0,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ⬟ comes ▲."
+  ],
+  [
+   "Which symbol continues the sequence? ■ ◆ ★ ⬟ ▲ ● …",
+   [
+    "■",
+    "●",
+    "◆",
+    "▲"
+   ],
+   0,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ● comes ■."
+  ],
+  [
+   "Which symbol continues the sequence? ◆ ★ ⬟ ▲ ● ■ ◆ …",
+   [
+    "★",
+    "●",
+    "■",
+    "▲"
+   ],
+   0,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ◆ comes ★."
+  ],
+  [
+   "Which symbol continues the sequence? ★ ⬟ ▲ …",
+   [
+    "▲",
+    "◆",
+    "●",
+    "■"
+   ],
+   2,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ▲ comes ●."
+  ],
+  [
+   "Which symbol continues the sequence? ⬟ ▲ ● ■ …",
+   [
+    "▲",
+    "●",
+    "■",
+    "◆"
+   ],
+   3,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ■ comes ◆."
+  ],
+  [
+   "Which symbol continues the sequence? ▲ ● ■ ◆ ★ …",
+   [
+    "▲",
+    "■",
+    "⬟",
+    "●"
+   ],
+   2,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ★ comes ⬟."
+  ],
+  [
+   "Which symbol continues the sequence? ● ■ ◆ ★ ⬟ ▲ …",
+   [
+    "■",
+    "●",
+    "◆",
+    "▲"
+   ],
+   1,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ▲ comes ●."
+  ],
+  [
+   "Which symbol continues the sequence? ■ ◆ ★ ⬟ ▲ ● ■ …",
+   [
+    "▲",
+    "●",
+    "■",
+    "◆"
+   ],
+   3,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ■ comes ◆."
+  ],
+  [
+   "Which symbol continues the sequence? ◆ ★ ⬟ …",
+   [
+    "◆",
+    "■",
+    "▲",
+    "●"
+   ],
+   2,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ⬟ comes ▲."
+  ],
+  [
+   "Which symbol continues the sequence? ★ ⬟ ▲ ● …",
+   [
+    "■",
+    "◆",
+    "▲",
+    "●"
+   ],
+   0,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ● comes ■."
+  ],
+  [
+   "Which symbol continues the sequence? ⬟ ▲ ● ■ ◆ …",
+   [
+    "●",
+    "★",
+    "■",
+    "▲"
+   ],
+   1,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ◆ comes ★."
+  ],
+  [
+   "Which symbol continues the sequence? ▲ ● ■ ◆ ★ ⬟ …",
+   [
+    "▲",
+    "■",
+    "●",
+    "◆"
+   ],
+   0,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ⬟ comes ▲."
+  ],
+  [
+   "Which symbol continues the sequence? ● ■ ◆ ★ ⬟ ▲ ● …",
+   [
+    "●",
+    "▲",
+    "■",
+    "◆"
+   ],
+   2,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ● comes ■."
+  ],
+  [
+   "Which symbol continues the sequence? ■ ◆ ★ …",
+   [
+    "●",
+    "⬟",
+    "▲",
+    "■"
+   ],
+   1,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ★ comes ⬟."
+  ],
+  [
+   "Which symbol continues the sequence? ◆ ★ ⬟ ▲ …",
+   [
+    "■",
+    "●",
+    "▲",
+    "◆"
+   ],
+   1,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ▲ comes ●."
+  ],
+  [
+   "Which symbol continues the sequence? ★ ⬟ ▲ ● ■ …",
+   [
+    "▲",
+    "●",
+    "■",
+    "◆"
+   ],
+   3,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ■ comes ◆."
+  ],
+  [
+   "Which symbol continues the sequence? ⬟ ▲ ● ■ ◆ ★ …",
+   [
+    "■",
+    "●",
+    "▲",
+    "⬟"
+   ],
+   3,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ★ comes ⬟."
+  ],
+  [
+   "Which symbol continues the sequence? ▲ ● ■ ◆ ★ ⬟ ▲ …",
+   [
+    "▲",
+    "◆",
+    "■",
+    "●"
+   ],
+   3,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ▲ comes ●."
+  ],
+  [
+   "Which symbol continues the sequence? ● ■ ◆ …",
+   [
+    "■",
+    "●",
+    "★",
+    "▲"
+   ],
+   2,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ◆ comes ★."
+  ],
+  [
+   "Which symbol continues the sequence? ■ ◆ ★ ⬟ …",
+   [
+    "■",
+    "◆",
+    "●",
+    "▲"
+   ],
+   3,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ⬟ comes ▲."
+  ],
+  [
+   "Which symbol continues the sequence? ◆ ★ ⬟ ▲ ● …",
+   [
+    "◆",
+    "●",
+    "▲",
+    "■"
+   ],
+   3,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ● comes ■."
+  ],
+  [
+   "Which symbol continues the sequence? ★ ⬟ ▲ ● ■ ◆ …",
+   [
+    "●",
+    "■",
+    "▲",
+    "★"
+   ],
+   3,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ◆ comes ★."
+  ],
+  [
+   "Which symbol continues the sequence? ⬟ ▲ ● ■ ◆ ★ ⬟ …",
+   [
+    "▲",
+    "●",
+    "■",
+    "◆"
+   ],
+   0,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ⬟ comes ▲."
+  ],
+  [
+   "Which symbol continues the sequence? ▲ ● ■ …",
+   [
+    "■",
+    "●",
+    "▲",
+    "◆"
+   ],
+   3,
+   "The symbols follow a repeating order: ▲ ● ■ ◆ ★ ⬟. After ■ comes ◆."
+  ],
+  [
+   "Complete the grid. Top row: ● ■. Bottom row: ■ ? Each row swaps the symbols.",
+   [
+    "●",
+    "★",
+    "◆",
+    "▲"
+   ],
+   0,
+   "The bottom row reverses the top row, so ● fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ■ ◆. Bottom row: ◆ ? Each row swaps the symbols.",
+   [
+    "●",
+    "■",
+    "★",
+    "▲"
+   ],
+   1,
+   "The bottom row reverses the top row, so ■ fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ◆ ★. Bottom row: ★ ? Each row swaps the symbols.",
+   [
+    "◆",
+    "▲",
+    "■",
+    "●"
+   ],
+   0,
+   "The bottom row reverses the top row, so ◆ fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ★ ⬟. Bottom row: ⬟ ? Each row swaps the symbols.",
+   [
+    "▲",
+    "★",
+    "■",
+    "●"
+   ],
+   1,
+   "The bottom row reverses the top row, so ★ fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ⬟ ▲. Bottom row: ▲ ? Each row swaps the symbols.",
+   [
+    "⬟",
+    "■",
+    "●",
+    "◆"
+   ],
+   0,
+   "The bottom row reverses the top row, so ⬟ fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ▲ ■. Bottom row: ■ ? Each row swaps the symbols.",
+   [
+    "★",
+    "◆",
+    "▲",
+    "●"
+   ],
+   2,
+   "The bottom row reverses the top row, so ▲ fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ● ◆. Bottom row: ◆ ? Each row swaps the symbols.",
+   [
+    "▲",
+    "●",
+    "■",
+    "★"
+   ],
+   1,
+   "The bottom row reverses the top row, so ● fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ■ ★. Bottom row: ★ ? Each row swaps the symbols.",
+   [
+    "◆",
+    "●",
+    "■",
+    "▲"
+   ],
+   2,
+   "The bottom row reverses the top row, so ■ fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ◆ ⬟. Bottom row: ⬟ ? Each row swaps the symbols.",
+   [
+    "◆",
+    "■",
+    "●",
+    "▲"
+   ],
+   0,
+   "The bottom row reverses the top row, so ◆ fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ★ ▲. Bottom row: ▲ ? Each row swaps the symbols.",
+   [
+    "★",
+    "●",
+    "■",
+    "◆"
+   ],
+   0,
+   "The bottom row reverses the top row, so ★ fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ⬟ ●. Bottom row: ● ? Each row swaps the symbols.",
+   [
+    "■",
+    "◆",
+    "⬟",
+    "▲"
+   ],
+   2,
+   "The bottom row reverses the top row, so ⬟ fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ▲ ◆. Bottom row: ◆ ? Each row swaps the symbols.",
+   [
+    "■",
+    "●",
+    "★",
+    "▲"
+   ],
+   3,
+   "The bottom row reverses the top row, so ▲ fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ● ★. Bottom row: ★ ? Each row swaps the symbols.",
+   [
+    "●",
+    "▲",
+    "■",
+    "◆"
+   ],
+   0,
+   "The bottom row reverses the top row, so ● fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ■ ⬟. Bottom row: ⬟ ? Each row swaps the symbols.",
+   [
+    "▲",
+    "◆",
+    "●",
+    "■"
+   ],
+   3,
+   "The bottom row reverses the top row, so ■ fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ◆ ▲. Bottom row: ▲ ? Each row swaps the symbols.",
+   [
+    "●",
+    "★",
+    "◆",
+    "■"
+   ],
+   2,
+   "The bottom row reverses the top row, so ◆ fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ★ ●. Bottom row: ● ? Each row swaps the symbols.",
+   [
+    "▲",
+    "★",
+    "■",
+    "◆"
+   ],
+   1,
+   "The bottom row reverses the top row, so ★ fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ⬟ ■. Bottom row: ■ ? Each row swaps the symbols.",
+   [
+    "◆",
+    "●",
+    "▲",
+    "⬟"
+   ],
+   3,
+   "The bottom row reverses the top row, so ⬟ fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ▲ ★. Bottom row: ★ ? Each row swaps the symbols.",
+   [
+    "▲",
+    "◆",
+    "●",
+    "■"
+   ],
+   0,
+   "The bottom row reverses the top row, so ▲ fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ● ⬟. Bottom row: ⬟ ? Each row swaps the symbols.",
+   [
+    "●",
+    "■",
+    "▲",
+    "◆"
+   ],
+   0,
+   "The bottom row reverses the top row, so ● fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ■ ▲. Bottom row: ▲ ? Each row swaps the symbols.",
+   [
+    "■",
+    "●",
+    "★",
+    "◆"
+   ],
+   0,
+   "The bottom row reverses the top row, so ■ fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ◆ ●. Bottom row: ● ? Each row swaps the symbols.",
+   [
+    "★",
+    "◆",
+    "■",
+    "▲"
+   ],
+   1,
+   "The bottom row reverses the top row, so ◆ fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ★ ■. Bottom row: ■ ? Each row swaps the symbols.",
+   [
+    "▲",
+    "★",
+    "◆",
+    "●"
+   ],
+   1,
+   "The bottom row reverses the top row, so ★ fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ⬟ ◆. Bottom row: ◆ ? Each row swaps the symbols.",
+   [
+    "■",
+    "●",
+    "⬟",
+    "▲"
+   ],
+   2,
+   "The bottom row reverses the top row, so ⬟ fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ▲ ⬟. Bottom row: ⬟ ? Each row swaps the symbols.",
+   [
+    "■",
+    "●",
+    "◆",
+    "▲"
+   ],
+   3,
+   "The bottom row reverses the top row, so ▲ fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ● ▲. Bottom row: ▲ ? Each row swaps the symbols.",
+   [
+    "■",
+    "★",
+    "●",
+    "◆"
+   ],
+   2,
+   "The bottom row reverses the top row, so ● fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ■ ●. Bottom row: ● ? Each row swaps the symbols.",
+   [
+    "▲",
+    "★",
+    "■",
+    "◆"
+   ],
+   2,
+   "The bottom row reverses the top row, so ■ fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ◆ ■. Bottom row: ■ ? Each row swaps the symbols.",
+   [
+    "●",
+    "▲",
+    "★",
+    "◆"
+   ],
+   3,
+   "The bottom row reverses the top row, so ◆ fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ★ ◆. Bottom row: ◆ ? Each row swaps the symbols.",
+   [
+    "▲",
+    "■",
+    "★",
+    "●"
+   ],
+   2,
+   "The bottom row reverses the top row, so ★ fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ⬟ ★. Bottom row: ★ ? Each row swaps the symbols.",
+   [
+    "⬟",
+    "■",
+    "●",
+    "▲"
+   ],
+   0,
+   "The bottom row reverses the top row, so ⬟ fills the gap."
+  ],
+  [
+   "Complete the grid. Top row: ▲ ▲. Bottom row: ▲ ? Each row swaps the symbols.",
+   [
+    "◆",
+    "●",
+    "■",
+    "▲"
+   ],
+   3,
+   "The bottom row reverses the top row, so ▲ fills the gap."
+  ],
+  [
+   "What comes next? ● ○ ● ○ ● …",
+   [
+    "⬟",
+    "★",
+    "○",
+    "●"
+   ],
+   2,
+   "The filled and outline versions alternate, so ○ comes next."
+  ],
+  [
+   "What comes next? ■ □ ■ □ ■ …",
+   [
+    "□",
+    "★",
+    "⬟",
+    "■"
+   ],
+   0,
+   "The filled and outline versions alternate, so □ comes next."
+  ],
+  [
+   "What comes next? ▲ △ ▲ △ ▲ …",
+   [
+    "▲",
+    "★",
+    "⬟",
+    "△"
+   ],
+   3,
+   "The filled and outline versions alternate, so △ comes next."
+  ],
+  [
+   "What comes next? ◆ ◇ ◆ ◇ ◆ …",
+   [
+    "★",
+    "⬟",
+    "◇",
+    "◆"
+   ],
+   2,
+   "The filled and outline versions alternate, so ◇ comes next."
+  ]
+ ]
+}

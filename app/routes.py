@@ -45,6 +45,13 @@ APPS = [
         "endpoint": "main.story_starter",
     },
     {
+        "name": "11+ Examinator",
+        "tagline": "Friendly 11+ practice, plus the Spark Stumble race game.",
+        "emoji": "\U0001F3C1",
+        "ages": "11+ prep",
+        "endpoint": "elevenplus.index",
+    },
+    {
         "name": "Word Wizard",
         "tagline": "Build spells out of new and exciting words.",
         "emoji": "\U0001FA84",

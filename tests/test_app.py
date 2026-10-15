@@ -30,6 +30,18 @@ def test_home_lists_apps_and_links_to_story_starter(client):
     assert "Coming soon" in html
 
 
+def test_home_links_to_elevenplus_and_it_is_isolated(client):
+    assert 'href="/11plus/"' in client.get("/").data.decode()
+    r = client.get("/11plus/")
+    assert r.status_code == 200
+    html = r.data.decode()
+    assert "googletagmanager" not in html          # 11+ app stays tracker-free
+    assert "script-src 'self'" in r.headers["Content-Security-Policy"]
+    assert 'href="/"' in html                      # link back to the hub
+    # the hub keeps its own (CSP-free) behaviour
+    assert "Content-Security-Policy" not in client.get("/").headers
+
+
 def test_story_starter_renders(client):
     r = client.get("/story-starter")
     assert r.status_code == 200
