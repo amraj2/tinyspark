@@ -1,153 +1,133 @@
+import logging
 import os
 import random
-import logging
-from pathlib import Path
 from typing import Optional, Set
 
 
+logger = logging.getLogger(__name__)
+
 KID_SAFE_THEMES = [
-    "a friendly dragon reading a book in a sunny meadow"
+    "a friendly dragon reading a book in a sunny meadow",
+    "a small robot discovering a glowing flower in an old garden",
+    "two children building a raft to sail across a sparkling pond",
+    "a shy fox finding a tiny door at the bottom of a tree",
+    "a baby whale floating through the clouds above a sleepy town",
+    "a brave mouse steering a teacup boat through a puddle storm",
+    "a young inventor and a talking teapot opening a mysterious map",
+    "a kind giant planting a tiny star in a village garden",
+    "an octopus librarian sorting glowing books under the sea",
+    "a girl and her pet turtle riding a paper kite over the hills",
+    "a lost penguin finding a lighthouse that hums a lullaby",
+    "a boy and a cloud who has forgotten how to rain",
+    "a family of owls hosting a moonlit picnic in the forest",
+    "a snail racing a rocket-powered skateboard down a hill",
+    "a dinosaur learning to bake a birthday cake for a friend",
 ]
 
+SYSTEM_PROMPT = (
+    "You are a creative writing helper for children aged 6-11. Write one "
+    "imaginative, age-appropriate story starter as a single, simple "
+    "sentence that describes a scene involving an original character. "
+    "It should capture a key moment that could be the 'until one day' "
+    "turning point of a story: something that sparks adventure, change, "
+    "or discovery, in the spirit of classic animated family films. "
+    "Do not use the names of real people, brands, or existing "
+    "characters or franchises. No violence, fear, or romance. "
+    "Output ONLY the story starter text, nothing else."
+)
 
-def _get_used_prompts(generated_dir: Path) -> Set[str]:
-    """Get set of prompts that have already been generated."""
-    used = set()
+MAX_PROMPT_LEN = 200
+
+
+def _api_key() -> Optional[str]:
+    key = (os.environ.get("OPENAI_API_KEY") or "").strip()
+    return key if key.startswith("sk-") else None
+
+
+def is_prompt_safe(client, text: str) -> bool:
+    """Run text through OpenAI moderation. Fails closed on any error."""
     try:
-        if not generated_dir.exists():
-            return used
-
-        for file in generated_dir.glob("*.png"):
-            # Convert filename back to prompt
-            # Format: "a-friendly-dragon-reading-a-book-in-a-sunny-meadow.png"
-            prompt = file.stem.replace('-', ' ')
-            used.add(prompt.lower())
-    except Exception:
-        pass
-    return used
+        result = client.moderations.create(
+            model="omni-moderation-latest", input=text
+        )
+        return not result.results[0].flagged
+    except Exception as e:
+        logger.warning("Moderation check failed; rejecting prompt: %s", e)
+        return False
 
 
-def _generate_new_prompt_with_openai(
+def generate_new_prompt(
     existing_prompts: Optional[Set[str]] = None,
 ) -> Optional[str]:
-    """Generate a new kid-safe story prompt using OpenAI.
+    """Generate a new moderated kid-safe story prompt using OpenAI.
 
-    Args:
-        existing_prompts: Set of existing prompts to avoid duplicates.
+    Returns None if OpenAI is unavailable or the result is rejected.
     """
-    api_key = os.environ.get("OPENAI_API_KEY")
-    if not api_key or not api_key.startswith("sk-"):
+    api_key = _api_key()
+    if not api_key:
         return None
 
     try:
         from openai import OpenAI
 
-        client = OpenAI(api_key=api_key)
+        client = OpenAI(api_key=api_key, timeout=20.0, max_retries=0)
 
-        # Build user message with existing prompts
         user_content = (
-            "Generate a new, unique kid-safe story prompt for "
-            "image generation. Make it creative and completely different "
-            "from any existing ideas."
+            "Generate a new, unique story starter for kids. Make it "
+            "creative and different from any existing ideas."
         )
-
-        if existing_prompts and len(existing_prompts) > 0:
-            # Format existing prompts for the AI
-            prompts_list = list(existing_prompts)[:50]  # Limit to 50
-            prompts_text = "\n".join(
-                f"- {prompt}" for prompt in prompts_list
+        if existing_prompts:
+            sample = random.sample(
+                sorted(existing_prompts), min(len(existing_prompts), 40)
             )
+            listing = "\n".join(f"- {p}" for p in sample)
             user_content = (
-                "Generate a new, unique kid-safe story prompt for "
-                "image generation. The prompt must be COMPLETELY "
-                "DIFFERENT from all of these existing story ideas:\n\n"
-                f"{prompts_text}\n\n"
-                "Create something fresh, original, and imaginative that "
-                "does NOT repeat any themes, characters, or settings from "
-                "the list above. Think of a completely new scenario, "
-                "character, or adventure that kids aged 6-11 would find "
-                "exciting and inspiring."
+                "Generate a new, unique story starter. It must be "
+                "COMPLETELY DIFFERENT in character, setting and "
+                "situation from all of these existing ideas:\n\n"
+                f"{listing}"
             )
 
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                {
-                    "role": "system",
-                    "content": (
-                        "You are a creative writing helper for children "
-                        "aged 6–11. Create one imaginative, "
-                        "age-appropriate story starter written as a single, "
-                        "simple sentence that describes a scene or situation "
-                        "involving a character. The image prompt should "
-                        "inspire a story following the Pixar story formula:\n"
-                        "1. Once upon a time, there was...\n"
-                        "2. Every day, ______.\n"
-                        "3. Until one day, ______.\n"
-                        "4. Because of that, ______.\n"
-                        "5. Because of that, ______.\n"
-                        "6. Until finally, ______.\n\n"
-                        "Your prompt should capture a key moment that could "
-                        "be the 'until one day' turning point or a "
-                        "'because of that' consequence moment - something "
-                        "that sparks adventure, change, or discovery. Take "
-                        "inspiration from Disney, Marvel, Pixar, Dreamworks "
-                        "Animation, Illumination, Sony Pictures Animation, "
-                        "Universal Pictures, Warner Bros, Studio Ghibli, "
-                        "Steven Spielberg, Chris Meledandri or Glen Keane. "
-                        "Output ONLY the story starter text, nothing else."
-                    ),
-                },
-                {
-                    "role": "user",
-                    "content": user_content,
-                },
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": user_content},
             ],
-            max_tokens=50,
+            max_tokens=60,
             temperature=0.9,
         )
 
-        prompt = response.choices[0].message.content.strip()
-        # Remove quotes if present
-        prompt = prompt.strip('"').strip("'")
+        prompt = " ".join(
+            (response.choices[0].message.content or "").split()
+        ).strip("\"'")
+        if not prompt or len(prompt) > MAX_PROMPT_LEN:
+            return None
+        if not is_prompt_safe(client, prompt):
+            logger.warning("Generated prompt rejected by moderation")
+            return None
         return prompt
     except Exception as e:
-        logger = logging.getLogger(__name__)
         logger.warning("Failed to generate new prompt with OpenAI: %s", e)
         return None
 
 
-def get_unused_prompt(generated_dir: Path) -> str:
-    """Get a random prompt that hasn't been used yet.
+def get_unused_prompt(used_prompts: Set[str]) -> str:
+    """Return a prompt that is not in used_prompts (lowercased).
 
-    If all prompts have been used, generates a new one with OpenAI.
+    Prefers the built-in themes, then asks OpenAI, and finally repeats a
+    theme if nothing else is available.
     """
-    used_prompts = _get_used_prompts(generated_dir)
-
-    # Get prompts that haven't been used
     available = [
-        prompt for prompt in KID_SAFE_THEMES
-        if prompt.lower() not in used_prompts
+        p for p in KID_SAFE_THEMES if p.lower() not in used_prompts
     ]
-
     if available:
         return random.choice(available)
 
-    # All prompts have been used, generate a new one with OpenAI
-    logger = logging.getLogger(__name__)
-    logger.info("All prompts exhausted, generating new prompt with OpenAI")
-    new_prompt = _generate_new_prompt_with_openai(
-        existing_prompts=used_prompts
-    )
-
-    if new_prompt:
+    logger.info("All themes used; generating a new prompt with OpenAI")
+    new_prompt = generate_new_prompt(existing_prompts=used_prompts)
+    if new_prompt and new_prompt.lower() not in used_prompts:
         return new_prompt
 
-    # Fallback if OpenAI fails
-    logger.warning("OpenAI prompt generation failed, using random existing")
-    return random.choice(KID_SAFE_THEMES)
-
-
-def random_kid_safe_prompt() -> str:
-    """Legacy function for backward compatibility."""
+    logger.warning("Prompt generation unavailable; repeating a theme")
     return random.choice(KID_SAFE_THEMES)

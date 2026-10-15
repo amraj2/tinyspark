@@ -31,30 +31,48 @@ Health check: `GET /healthz` returns `{ "status": "ok" }`.
 
 ## Environment Variables
 
-Create a `.env` file in the project root to configure the app:
-
 ```bash
-cp .env.example .env
-# Then edit .env and add your OpenAI API key
+cp .env.example .env   # then edit
 ```
 
-**Available variables:**
-- `OPENAI_API_KEY` (optional) - Enables AI image generation with OpenAI. If not set, the app uses fallback kid-friendly stock images.
-- `SECRET_KEY` (optional) - Flask session secret. Defaults to "dev" in development.
- - `OPENAI_IMAGE_TIMEOUT_SEC` (optional) - Max seconds to wait for an AI image before falling back (default: 2.5).
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `OPENAI_API_KEY` | – | Enables AI prompt + image generation. Without it the app serves saved/stock images. |
+| `SECRET_KEY` | random per process | Flask secret key. |
+| `ADMIN_TOKEN` | – | Required (header `X-Admin-Token`) for `POST /genseed`. Endpoint is disabled when unset. |
+| `GENERATE_LIMIT_PER_HOUR` | 5 | Max new images per client IP per hour. |
+| `DAILY_GENERATION_CAP` | 100 | Max new images per UTC day (per worker process). |
+| `PROXY_HOPS` | 0 | Trusted reverse-proxy hops, so rate limiting sees the real client IP. |
+| `OPENAI_IMAGE_MODEL` | `dall-e-3` | Image model. |
+| `OPENAI_IMAGE_SIZE` | `1024x1024` | Image size. |
+| `OPENAI_IMAGE_TIMEOUT_SEC` | 45 | Max wait for an image. Keep below the gunicorn timeout. |
+| `GA_MEASUREMENT_ID` | existing ID | Google Analytics, loaded only after the visitor accepts. Empty disables it. |
+| `LOG_LEVEL` | `INFO` | Logging level. |
 
-**Alternative:** You can also set environment variables directly:
+When a limit is hit, the app serves an existing image instead of failing.
+
+## API
+
+- `GET /api/existing-images?limit=24` → `{ images: [{url, prompt}], total }` (random sample, max 100)
+- `POST /api/random-image` with `{ "generate_new": true }` → `{ prompt, image_url, generated }`
+- `POST /genseed` (admin) with `{ "count": 20 }` → generation summary
+- `GET /healthz`
+
+Generated prompts are checked with OpenAI moderation before an image is made
+(fails closed). Prompts are stored in `app/static/generated/index.json`
+next to the PNGs. Generated images need a persistent volume in production.
+
+## Seeding images
+
 ```bash
-export OPENAI_API_KEY=YOUR_KEY
-python app.py
+flask --app app:create_app seed --count 20
 ```
 
-The endpoint `POST /api/random-image` returns `{ prompt, image_url }`.
-
-## Production (Gunicorn)
+## Tests
 
 ```bash
-gunicorn -w 2 -b 0.0.0.0:8000 wsgi:app
+pip install -r requirements-dev.txt
+pytest
 ```
 
 ## Project Structure
@@ -65,8 +83,10 @@ tinyspark/
     __init__.py
     routes.py
     services/
-      prompts.py          # kid‑safe prompt list
-      image_service.py    # OpenAI image gen + fallback URLs
+      prompts.py          # themes, prompt generation, moderation
+      image_service.py    # image gen, atomic saves, prompt index
+      limits.py           # rate limiter + daily cap
+      seeding.py          # batch generation (CLI + /genseed)
     templates/
       index.html
     static/
@@ -74,4 +94,6 @@ tinyspark/
   app.py
   wsgi.py
   requirements.txt
+  requirements-dev.txt
+  tests/
 ```

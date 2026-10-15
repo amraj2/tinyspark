@@ -6,21 +6,10 @@
     <title>{{ title or "TinySpark" }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
   </head>
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-WZYRDCTXQS"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-WZYRDCTXQS');
-</script>
-
   <body>
     <div class="header-section">
       <div class="header-content">
-        <h1 style="color: white; margin: 0; font-size: 1.75rem; font-weight: 700;">TinySpark Story Starter</h1>
+        <h1 class="site-title">TinySpark Story Starter</h1>
         <p class="header-subtitle">Generate creative images to inspire young writers aged 6-11</p>
       </div>
     </div>
@@ -29,18 +18,16 @@
 
       <div class="button-container">
         <button id="generateBtn" class="kid-button">Generate Story</button>
-        <span id="status" class="status-text">Ready</span>
+        <span id="status" class="status-text" role="status" aria-live="polite">Ready</span>
       </div>
 
       <div class="content-wrapper">
         <div class="image-container">
-          <img id="image" alt="Story inspiration image" style="display:none;" />
-          <p id="placeholder" class="placeholder-text">
-            <!-- Your generated image will appear here -->
-          </p>
+          <img id="image" alt="" hidden />
+          <p id="placeholder" class="placeholder-text"></p>
         </div>
 
-        <div id="promptBox" class="prompt-box"></div>
+        <div id="promptBox" class="prompt-box" aria-live="polite"></div>
       </div>
 
       <section class="tips-section">
@@ -56,23 +43,23 @@
     </main>
 
     <a href="https://buymeacoffee.com/amraj" target="_blank" rel="noopener noreferrer" class="coffee-button">
-      <span class="coffee-icon">☕</span>
+      <span class="coffee-icon" aria-hidden="true">☕</span>
      Give feedback
     </a>
 
     <!-- Loading overlay for new image generation -->
-    <div id="loadingOverlay" class="loading-overlay">
+    <div id="loadingOverlay" class="loading-overlay" role="status" aria-live="polite">
       <div class="loading-content">
         <h2 class="loading-title">Creating Your Story Image!</h2>
-        <div class="loading-spinner">
+        <div class="loading-spinner" aria-hidden="true">
           <div class="spinner-ring"></div>
           <div class="spinner-ring"></div>
           <div class="spinner-ring"></div>
         </div>
         <p class="loading-message">
-          <span class="loading-emoji">🎨</span>
+          <span class="loading-emoji" aria-hidden="true">🎨</span>
           Our artists are working hard!
-          <span class="loading-emoji">✨</span>
+          <span class="loading-emoji" aria-hidden="true">✨</span>
         </p>
         <p class="loading-subtitle" id="loadingSubtitle">
           This might take a moment...
@@ -80,7 +67,72 @@
       </div>
     </div>
 
+    {% if ga_id %}
+    <div id="consentBanner" class="consent-banner" role="region" aria-label="Analytics choice" hidden>
+      <p>May we use analytics cookies to learn how TinySpark is used? Grown-ups, please choose.</p>
+      <div class="consent-actions">
+        <button id="consentAccept" class="consent-btn consent-accept">Accept</button>
+        <button id="consentDecline" class="consent-btn">No thanks</button>
+      </div>
+    </div>
+    {% endif %}
+
     <script>
+      const GA_ID = {{ (ga_id or '')|tojson }};
+      const CONSENT_KEY = 'tinyspark-analytics-consent';
+
+      // ---- Analytics (only after consent) ----
+      function loadAnalytics() {
+        if (!GA_ID || window.gtag) return;
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function () { dataLayer.push(arguments); };
+        const s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(GA_ID);
+        document.head.appendChild(s);
+        gtag('js', new Date());
+        gtag('config', GA_ID);
+      }
+
+      function readConsent() {
+        try { return localStorage.getItem(CONSENT_KEY); } catch (e) { return null; }
+      }
+
+      function writeConsent(value) {
+        try { localStorage.setItem(CONSENT_KEY, value); } catch (e) { /* ignore */ }
+      }
+
+      (function initConsent() {
+        const banner = document.getElementById('consentBanner');
+        if (!GA_ID || !banner) return;
+        const stored = readConsent();
+        if (stored === 'granted') { loadAnalytics(); return; }
+        if (stored === 'denied') return;
+        banner.hidden = false;
+        document.getElementById('consentAccept').addEventListener('click', () => {
+          writeConsent('granted');
+          banner.hidden = true;
+          loadAnalytics();
+        });
+        document.getElementById('consentDecline').addEventListener('click', () => {
+          writeConsent('denied');
+          banner.hidden = true;
+        });
+      })();
+
+      // ---- App ----
+      const GENERATE_EVERY = 4;          // every Nth click makes a brand-new image
+      const SPIN_MS = 3000;              // roulette duration
+      const GENERATE_TIMEOUT_MS = 70000; // give up on generation after this
+      const funMessages = [
+        'Mixing colors and magic...',
+        'Drawing your amazing story...',
+        'Almost there, just a bit more...',
+        'Creating something special...',
+        'Your story is coming to life!',
+        'Adding the finishing touches...',
+      ];
+
       const btn = document.getElementById('generateBtn');
       const img = document.getElementById('image');
       const statusEl = document.getElementById('status');
@@ -88,282 +140,130 @@
       const placeholder = document.getElementById('placeholder');
       const loadingOverlay = document.getElementById('loadingOverlay');
       const loadingSubtitle = document.getElementById('loadingSubtitle');
-      
-      let allImages = [];
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      let images = [];
       let clickCount = 0;
       let subtitleInterval = null;
-      let rouletteTimeout = null;
-      let preloadedImages = new Map();
-
-      const funMessages = [
-        "Mixing colors and magic...",
-        "Drawing your amazing story...",
-        "Almost there, just a bit more...",
-        "Creating something special...",
-        "Your story is coming to life!",
-        "Adding the finishing touches...",
-      ];
+      let spinTimeout = null;
 
       function showLoadingOverlay() {
         loadingOverlay.classList.add('active');
-        let messageIndex = 0;
-        
-        // Rotate through fun messages every 4 seconds
+        let i = 0;
         subtitleInterval = setInterval(() => {
-          loadingSubtitle.textContent = funMessages[messageIndex];
-          messageIndex = (messageIndex + 1) % funMessages.length;
+          loadingSubtitle.textContent = funMessages[i];
+          i = (i + 1) % funMessages.length;
         }, 4000);
       }
 
       function hideLoadingOverlay() {
         loadingOverlay.classList.remove('active');
-        if (subtitleInterval) {
-          clearInterval(subtitleInterval);
-          subtitleInterval = null;
-        }
+        clearInterval(subtitleInterval);
+        subtitleInterval = null;
       }
 
-      async function loadAllImages() {
+      function render(item, spinning) {
+        img.src = item.url;
+        img.alt = item.prompt;
+        img.hidden = false;
+        img.classList.toggle('roulette-spinning', spinning);
+        placeholder.style.display = 'none';
+        promptBox.textContent = item.prompt;
+        promptBox.style.display = 'block';
+      }
+
+      function preload(url) {
+        return new Promise((resolve, reject) => {
+          const probe = new Image();
+          probe.onload = () => resolve();
+          probe.onerror = () => reject(new Error('Image failed to load'));
+          probe.src = url;
+        });
+      }
+
+      async function loadImages() {
         try {
-          const res = await fetch('/api/existing-images');
-          if (res.ok) {
-            const data = await res.json();
-            allImages = data.images || [];
-            console.log('Loaded', allImages.length, 'images');
-            // Shuffle the array for random order
-            for (let i = allImages.length - 1; i > 0; i--) {
-              const j = Math.floor(Math.random() * (i + 1));
-              [allImages[i], allImages[j]] = [allImages[j], allImages[i]];
-            }
-            // Preload all images for smooth roulette effect
-            preloadImages();
-          }
+          const res = await fetch('/api/existing-images?limit=24');
+          if (!res.ok) return;
+          const data = await res.json();
+          images = data.images || [];
+          images.forEach((item) => { new Image().src = item.url; });
         } catch (e) {
           console.error('Failed to load images:', e);
         }
       }
 
-      function preloadImages() {
-        allImages.forEach((imageData, index) => {
-          const img = new Image();
-          img.src = imageData.url;
-          preloadedImages.set(imageData.url, img);
+      function spinTo(target) {
+        return new Promise((resolve) => {
+          if (reducedMotion || images.length < 2) {
+            render(target, false);
+            resolve();
+            return;
+          }
+          const start = Date.now();
+          let delay = 50;
+          statusEl.textContent = 'Spinning...';
+          const step = () => {
+            if (Date.now() - start >= SPIN_MS) {
+              render(target, false);
+              resolve();
+              return;
+            }
+            render(images[Math.floor(Math.random() * images.length)], true);
+            delay = Math.min(delay + 15, 300);
+            spinTimeout = setTimeout(step, delay);
+          };
+          step();
         });
       }
 
-      function showRouletteEffect(targetIndex, onComplete) {
-        if (allImages.length === 0) {
-          if (onComplete) onComplete();
-          return;
-        }
-
-        let currentCycleIndex = 0;
-        let delay = 50; // Start fast (50ms)
-        const minDelay = 300; // Slow down to 300ms
-        const delayIncrement = 15; // Gradually increase delay
-        const minCycles = 3; // Minimum number of full cycles
-        const totalCycles = minCycles + Math.floor(Math.random() * 2); // 3-4 full cycles
-        let cyclesCompleted = 0;
-        let isSlowing = false;
-        const maxDuration = 3000; // Maximum 3 seconds
-        const startTime = Date.now();
-        let animationComplete = false;
-
-        // Calculate how many images to cycle through
-        const totalImages = allImages.length;
-        const totalSteps = totalCycles * totalImages + targetIndex;
-
-        function stopOnTarget() {
-          if (animationComplete) return;
-          animationComplete = true;
-          
-          // Clear any pending timeout
-          if (rouletteTimeout) {
-            clearTimeout(rouletteTimeout);
-            rouletteTimeout = null;
-          }
-          
-          // Stop on target image
-          const targetImage = allImages[targetIndex];
-          img.src = targetImage.url;
-          img.classList.remove('roulette-spinning');
-          img.style.display = 'block';
-          placeholder.style.display = 'none';
-          promptBox.textContent = targetImage.prompt;
-          promptBox.style.display = 'block';
-          statusEl.textContent = '';
-          btn.disabled = false;
-          if (onComplete) onComplete();
-        }
-
-        // Set maximum duration timeout
-        const maxDurationTimeout = setTimeout(() => {
-          stopOnTarget();
-        }, maxDuration);
-
-        function cycleImage() {
-          // Check if 5 seconds have passed
-          const elapsed = Date.now() - startTime;
-          if (elapsed >= maxDuration) {
-            clearTimeout(maxDurationTimeout);
-            stopOnTarget();
-            return;
-          }
-
-          if (currentCycleIndex >= totalSteps) {
-            clearTimeout(maxDurationTimeout);
-            stopOnTarget();
-            return;
-          }
-
-          // Show current image in cycle
-          const displayIndex = currentCycleIndex % totalImages;
-          const currentImage = allImages[displayIndex];
-          
-          img.src = currentImage.url;
-          img.style.display = 'block';
-          img.classList.add('roulette-spinning');
-          placeholder.style.display = 'none';
-          promptBox.textContent = currentImage.prompt;
-          promptBox.style.display = 'block';
-
-          currentCycleIndex++;
-
-          // Check if we've completed a full cycle
-          if (displayIndex === totalImages - 1) {
-            cyclesCompleted++;
-            // Start slowing down after minimum cycles
-            if (cyclesCompleted >= minCycles && !isSlowing) {
-              isSlowing = true;
-            }
-          }
-
-          // Gradually slow down
-          if (isSlowing && delay < minDelay) {
-            delay = Math.min(delay + delayIncrement, minDelay);
-          }
-
-          rouletteTimeout = setTimeout(cycleImage, delay);
-        }
-
-        // Start the roulette effect
-        statusEl.textContent = 'Spinning...';
-        cycleImage();
-      }
-
-      async function getRandomImage() {
+      async function generateNew() {
+        showLoadingOverlay();
+        statusEl.textContent = 'Generating new image...';
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), GENERATE_TIMEOUT_MS);
         try {
-          // Clear any existing roulette timeout
-          if (rouletteTimeout) {
-            clearTimeout(rouletteTimeout);
-            rouletteTimeout = null;
-          }
-
-          // Load all images if we haven't yet
-          if (allImages.length === 0) {
-            await loadAllImages();
-          }
-          
-          clickCount++;
-          
-          btn.disabled = true;
-          img.style.display = 'none';
-          placeholder.style.display = 'block';
-          promptBox.style.display = 'none';
-          
-          // On 4th click, generate new image; otherwise show random existing (1st-3rd)
-          const generateNew = clickCount === 4;
-          
-          if (generateNew) {
-            // Generate new image with OpenAI (4th click)
-            showLoadingOverlay();
-            statusEl.textContent = 'Generating new image...';
-            
-            const res = await fetch('/api/random-image', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ generate_new: true }),
-            });
-            
-            if (!res.ok) throw new Error('Request failed');
-            
-            const data = await res.json();
-            promptBox.textContent = data.prompt;
-            promptBox.style.display = 'block';
-            
-            img.src = data.image_url;
-            img.onload = () => { 
-              img.style.display = 'block';
-              placeholder.style.display = 'none';
-              hideLoadingOverlay();
-              
-              // Reset counter and reload images to include the new one
-              clickCount = 0;
-              loadAllImages().then(() => {
-                btn.disabled = false;
-              });
-            };
-            
-            statusEl.textContent = '';
-          } else {
-            // Show random existing image (1st-3rd clicks)
-            if (allImages.length > 0) {
-              // Pick a random image index
-              const randomIndex = Math.floor(Math.random() * allImages.length);
-              
-              // Use roulette effect ending on the random image
-              showRouletteEffect(randomIndex, () => {
-                btn.disabled = false;
-              });
-            } else {
-              // No images available, generate new one
-              showLoadingOverlay();
-              statusEl.textContent = 'Generating new image...';
-              
-              const res = await fetch('/api/random-image', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ generate_new: true }),
-              });
-              
-              if (!res.ok) throw new Error('Request failed');
-              
-              const data = await res.json();
-              promptBox.textContent = data.prompt;
-              promptBox.style.display = 'block';
-              
-              img.src = data.image_url;
-              img.onload = () => { 
-                img.style.display = 'block';
-                placeholder.style.display = 'none';
-                hideLoadingOverlay();
-                clickCount = 0;
-                loadAllImages().then(() => {
-                  btn.disabled = false;
-                });
-              };
-              
-              statusEl.textContent = '';
-            }
-          }
-        } catch (e) {
-          statusEl.textContent = 'Error - please try again';
-          placeholder.style.display = 'block';
+          const res = await fetch('/api/random-image', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ generate_new: true }),
+            signal: controller.signal,
+          });
+          if (!res.ok) throw new Error('Request failed');
+          const data = await res.json();
+          await preload(data.image_url);
+          render({ url: data.image_url, prompt: data.prompt }, false);
+          clickCount = 0;
+          await loadImages();
+        } finally {
+          clearTimeout(timer);
           hideLoadingOverlay();
+        }
+      }
+
+      async function onGenerateClick() {
+        clearTimeout(spinTimeout);
+        btn.disabled = true;
+        clickCount++;
+        try {
+          if (images.length === 0) await loadImages();
+          if (clickCount >= GENERATE_EVERY || images.length === 0) {
+            await generateNew();
+          } else {
+            const target = images[Math.floor(Math.random() * images.length)];
+            await spinTo(target);
+          }
+          statusEl.textContent = '';
+        } catch (e) {
+          console.error(e);
+          statusEl.textContent = 'Something went wrong - please try again';
+        } finally {
           btn.disabled = false;
         }
       }
 
-      // Load images on page load
-      loadAllImages();
-
-      btn.addEventListener('click', getRandomImage);
+      loadImages();
+      btn.addEventListener('click', onGenerateClick);
     </script>
   </body>
-  </html>
-
-
+</html>
